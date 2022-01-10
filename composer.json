@@ -1,0 +1,16 @@
+{
+    "name": "urban-brussels/nova-api",
+    "description": "PHP wrapper for Nova API. Nova is a shared IT platform of the Brussels-Capital Region dedicated to the file management of planning permits, land division permits and environmental licences.",
+    "homepage": "https://github.com/urban-brussels/nova-api",
+    "keywords": ["Brussels","Planning permits","Environmental licences"],
+    "require": {
+        "php": "^8.0",
+        "symfony/http-client": "6.*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "UrbanBrussels\\ResourcespaceApi\\": "src/"
+        }
+    }
+}
