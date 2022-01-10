@@ -10,7 +10,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "UrbanBrussels\\ResourcespaceApi\\": "src/"
+            "UrbanBrussels\\NovaApi\\": "src/"
         }
     }
 }
