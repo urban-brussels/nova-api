@@ -26,6 +26,7 @@ class Permit
     public ?\DateTime $date_submission;
     public ?\DateTime $date_cc;
     public ?\DateTime $date_notification;
+    public array $links;
 
     public function __construct(string $refnova)
     {
@@ -122,6 +123,17 @@ class Permit
         $references['ref_mixed_permit'] = $this->attributes_array['ref_mixed_permit'] ?? $this->attributes_array['refmixedpermit'] ?? null;
 
         return $references;
+    }
+
+    private function setLinks(): array
+    {
+        $links['openpermits']['fr'] = 'https://openpermits.brussels/fr/_'.$this->refnova;
+        $links['openpermits']['nl'] = 'https://openpermits.brussels/nl/_'.$this->refnova;
+        $link['nova'] = 'https://openpermits.brussels/fr/_'.$this->refnova;
+        $link['nova_api'] = 'https://openpermits.brussels/fr/_'.$this->refnova;
+
+
+        return $links;
     }
 
     private function setType(): string
@@ -226,7 +238,7 @@ class Permit
 
     private function setDateNotification(): ?\DateTime
     {
-        $date = $this->attributes_array['date_cc'] ?? $this->attributes_array['datenotifdecision'] ?? null;
+        $date = $this->attributes_array['date_notif_decision'] ?? $this->attributes_array['datenotifdecision'] ?? null;
         if (is_null($date)) {
             return null;
         }
