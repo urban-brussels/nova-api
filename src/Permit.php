@@ -35,43 +35,6 @@ class Permit
         $this->setAttributes();
     }
 
-    public function getType(): string {
-        if (str_contains($this->refnova, 'IPE')
-            || str_contains($this->refnova, 'CL')
-            || str_contains($this->refnova,'IRCE')
-            || str_contains($this->refnova, 'ICE')
-            || str_contains($this->refnova, 'C_')
-            || str_contains($this->refnova, 'PLP')
-            || str_contains($this->refnova, 'IRPE')) {
-            return "PE";
-        }
-
-        return "PU";
-    }
-
-    private function getSource(): array {
-        if ($this->type === 'PE') {
-            $source = ['base_path' => 'https://geoservices-others.irisnet.be/geoserver/Nova/ows', 'layer_name' => 'Nova:vm_nova_pe', '' => ''];
-            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=ref_nova=\''.$this->refnova.'\'';
-        }
-        else {
-            $source = ['base_path' => 'https://geoservices-others.irisnet.be/geoserver/ows', 'layer_name' => 'Nova:vmnovaurbanview', 'query_url' => ''];
-            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=refnova=\''.$this->refnova.'\'';
-        }
-
-        return $source;
-    }
-
-    public function getAttributesArray(): ?array {
-        $wfs = new WfsLayer($this->source['base_path'], $this->source['layer_name']);
-        $permits = $wfs->setCqlFilter(($this->type === 'PE' ? 'ref_nova' : 'refnova').'=\''.$this->refnova.'\'')
-            ->setCount(1)
-            ->setOutputSrs(4326)
-            ->getPropertiesArray(true);
-
-        return $permits[0] ?? null;
-    }
-
     private function setAttributes(): void
     {
         $this->validation = $this->setValidation();
@@ -252,5 +215,47 @@ class Permit
         $advices['instances'] = $this->setAdviceInstances();
 
         return $advices;
+    }
+
+
+    public function getType(): string {
+        if (str_contains($this->refnova, 'IPE')
+            || str_contains($this->refnova, 'CL')
+            || str_contains($this->refnova,'IRCE')
+            || str_contains($this->refnova, 'ICE')
+            || str_contains($this->refnova, 'C_')
+            || str_contains($this->refnova, 'PLP')
+            || str_contains($this->refnova, 'IRPE')) {
+            return "PE";
+        }
+
+        return "PU";
+    }
+
+    private function getSource(): array {
+        if ($this->type === 'PE') {
+            $source = ['base_path' => 'https://geoservices-others.irisnet.be/geoserver/Nova/ows', 'layer_name' => 'Nova:vm_nova_pe', '' => ''];
+            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=ref_nova=\''.$this->refnova.'\'';
+        }
+        else {
+            $source = ['base_path' => 'https://geoservices-others.irisnet.be/geoserver/ows', 'layer_name' => 'Nova:vmnovaurbanview', 'query_url' => ''];
+            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=refnova=\''.$this->refnova.'\'';
+        }
+
+        return $source;
+    }
+
+    public function getAttributesArray(): ?array {
+        $wfs = new WfsLayer($this->source['base_path'], $this->source['layer_name']);
+        $permits = $wfs->setCqlFilter(($this->type === 'PE' ? 'ref_nova' : 'refnova').'=\''.$this->refnova.'\'')
+            ->setCount(1)
+            ->setOutputSrs(4326)
+            ->getPropertiesArray(true);
+
+        return $permits[0] ?? null;
+    }
+
+    public function getAddress(): array {
+      return $this->address;
     }
 }

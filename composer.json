@@ -5,7 +5,12 @@
     "keywords": ["Brussels","Planning permits","Environmental licences"],
     "require": {
         "php": "^8.0",
-        "symfony/http-client": "6.*"
+        "symfony/http-client": "6.*",
+        "ici-be/ici-tools": "^0.3.0"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
     },
     "license": "MIT",
     "autoload": {
