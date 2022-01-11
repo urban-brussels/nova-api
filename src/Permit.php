@@ -331,9 +331,64 @@ class Permit
         return $this->address;
     }
 
-    public function getValidation(): array
+    public function getValidation(): bool
     {
         return $this->validation;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    public function getDateInquiryBegin(): ?\DateTime
+    {
+        return $this->date_inquiry_begin;
+    }
+
+    public function getDateInquiryEnd(): ?\DateTime
+    {
+        return $this->date_inquiry_end;
+    }
+
+    public function getDateCc(): ?\DateTime
+    {
+        return $this->date_cc;
+    }
+
+    public function getDateArc(): ?\DateTime
+    {
+        return $this->date_arc;
+    }
+
+    public function getDateAri(): ?\DateTime
+    {
+        return $this->date_ari;
+    }
+
+    public function getDateSubmission(): ?\DateTime
+    {
+        return $this->date_submission;
+    }
+
+    public function getDateNotification(): ?\DateTime
+    {
+        return $this->date_notification;
+    }
+
+    public function getInquiryActive(): bool
+    {
+        return $this->inquiry_active;
+    }
+
+    public function getAdvices(): array
+    {
+        return $this->advices;
+    }
+
+    public function getReferences(): array
+    {
+        return $this->references;
     }
 
     public function getType(): string
