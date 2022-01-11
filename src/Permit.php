@@ -52,6 +52,7 @@ class Permit
         $this->date_arc = $this->setDateArc();
         $this->date_ari = $this->setDateAri();
         $this->date_submission = $this->setDateSubmission();
+        $this->date_notification = $this->setDateNotification();
         $this->date_cc = $this->setDateCc();
         $this->language = $this->setLanguage();
         $this->address = $this->setAddress();
