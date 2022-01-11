@@ -30,7 +30,7 @@ class Permit
     public function __construct(string $refnova)
     {
         $this->refnova = strtoupper(trim($refnova));
-        $this->type = $this->getType();
+        $this->type = $this->setType();
         $this->source = $this->getSource();
         $this->attributes_array = $this->getAttributesArray();
         $this->setAttributes();
@@ -46,7 +46,6 @@ class Permit
         $this->setInquiry();
         $this->advices = $this->setAdvices();
         $this->references = $this->setReferences();
-        $this->type = $this->setType();
         $this->subtype = $this->setSubtype();
         $this->object = $this->setObject();
         $this->date_arc = $this->setDateArc();
