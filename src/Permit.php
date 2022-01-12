@@ -3,6 +3,7 @@
 namespace UrbanBrussels\NovaApi;
 
 use ici\ici_tools\WfsLayer;
+use JetBrains\PhpStorm\ArrayShape;
 
 class Permit
 {
@@ -32,8 +33,8 @@ class Permit
     {
         $this->refnova = strtoupper(trim($refnova));
         $this->type = $this->setType();
-        $this->source = $this->getSource();
-        $this->attributes_array = $this->getAttributesArray();
+        $this->source = $this->setSource();
+        $this->attributes_array = $this->setAttributesArray();
         $this->setAttributes();
     }
 
@@ -57,6 +58,7 @@ class Permit
         $this->language = $this->setLanguage();
         $this->address = $this->setAddress();
         $this->area_typology = $this->setAreaTypology();
+        $this->links = $this->setLinks();
     }
 
     private function setValidation(): bool
@@ -130,8 +132,8 @@ class Permit
     {
         $links['openpermits']['fr'] = 'https://openpermits.brussels/fr/_'.$this->refnova;
         $links['openpermits']['nl'] = 'https://openpermits.brussels/nl/_'.$this->refnova;
-        $link['nova'] = 'https://nova.brussels/nova-ui/page/open/request/AcmDisplayCase.xhtml?ids=&id='.$this->references['nova_seq'].'&uniqueCase=true';
-        $link['nova_api'] = $this->source['query_url'];
+        $links['nova'] = 'https://nova.brussels/nova-ui/page/open/request/AcmDisplayCase.xhtml?ids=&id='.$this->references['nova_seq'].'&uniqueCase=true';
+        $links['nova_api'] = $this->source['query_url'];
 
         return $links;
     }
@@ -246,6 +248,17 @@ class Permit
         return \DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new \DateTimeZone('Europe/Brussels'));
     }
 
+    public function setAttributesArray(): ?array
+    {
+        $wfs = new WfsLayer($this->source['base_path'], $this->source['layer_name']);
+        $permits = $wfs->setCqlFilter(($this->type === 'PE' ? 'ref_nova' : 'refnova').'=\''.$this->refnova.'\'')
+            ->setCount(1)
+            ->setOutputSrs(4326)
+            ->getPropertiesArray(true);
+
+        return $permits[0] ?? null;
+    }
+
     public function setAddress(): array
     {
         $address['streetname']['fr'] = $this->attributes_array['streetname_fr'] ?? $this->attributes_array['streetnamefr'] ?? null;
@@ -292,7 +305,7 @@ class Permit
         return $advices;
     }
 
-    public function getSource(): array
+    public function setSource(): array
     {
         if ($this->type === 'PE') {
             $source = [
@@ -309,17 +322,6 @@ class Permit
         }
 
         return $source;
-    }
-
-    public function getAttributesArray(): ?array
-    {
-        $wfs = new WfsLayer($this->source['base_path'], $this->source['layer_name']);
-        $permits = $wfs->setCqlFilter(($this->type === 'PE' ? 'ref_nova' : 'refnova').'=\''.$this->refnova.'\'')
-            ->setCount(1)
-            ->setOutputSrs(4326)
-            ->getPropertiesArray(true);
-
-        return $permits[0] ?? null;
     }
 
     public function getRefnova(): string
