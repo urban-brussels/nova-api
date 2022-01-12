@@ -28,6 +28,7 @@ class Permit
     public ?\DateTime $date_cc;
     public ?\DateTime $date_notification;
     public array $links;
+    public ?string $status;
 
     public function __construct(string $refnova)
     {
@@ -59,6 +60,7 @@ class Permit
         $this->address = $this->setAddress();
         $this->area_typology = $this->setAreaTypology();
         $this->links = $this->setLinks();
+        $this->status = $this->setStatus();
     }
 
     private function setValidation(): bool
@@ -150,6 +152,38 @@ class Permit
             return "PE";
         }
         return "PU";
+    }
+
+    private function setStatus(): ?string
+    {
+        $status_fr = $this->attributes_array['statutpermisfr'] ?? null;
+        $final_state = $this->attributes_array['statut_dossier'] ?? $this->attributes_array['etatfinal'];
+
+        if($status_fr === "Annulé") {
+            return 'canceled';
+        }
+
+        if($final_state === "R") {
+            return 'appeal';
+        }
+
+        if($final_state === "S") {
+            return 'suspended';
+        }
+
+        if($final_state === "S") {
+            return 'instruction';
+        }
+
+        if($final_state === "V") {
+            return 'delivered';
+        }
+
+        if($final_state === "NV") {
+            return 'refused';
+        }
+
+        return null;
     }
 
     private function setSubtype(): array
@@ -417,5 +451,10 @@ class Permit
     public function getLinks(): array
     {
         return $this->links;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
     }
 }
