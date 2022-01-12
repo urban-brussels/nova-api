@@ -470,4 +470,9 @@ class Permit
     {
         return $this->status;
     }
+
+    public function getAuthority(): ?string
+    {
+        return $this->authority;
+    }
 }
