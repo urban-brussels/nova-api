@@ -411,4 +411,9 @@ class Permit
     {
         return $this->area_typology;
     }
+
+    public function getLinks(): array
+    {
+        return $this->links;
+    }
 }
