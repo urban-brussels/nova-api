@@ -15,7 +15,7 @@ composer require urban-brussels/nova-api
 ```php 
 use UrbanBrussels\NovaApi\Permit;
 
-// Create instance of Nova Permit
+// Create instance of Nova Permit, with a regional reference (planning or environment)
 $permit = new Permit('01/PFD/123456');
 
 // Get all References in an array (municipal reference, regional reference, uuid, etc)
