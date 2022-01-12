@@ -34,9 +34,6 @@ $permit->getLinks();
 // Get Description of the requested permit, in an array FR/NL
 $permit->getObject();
 
-// Check if the reference matches en existing permit request
-$permit->getValidation();
-
 // Get Public inquiry dates
 $permit->getDateInquiryBegin();
 $permit->getDateInquiryEnd();
