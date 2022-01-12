@@ -40,6 +40,10 @@ class Permit
         $this->source = $this->setSource();
         $this->attributes_array = $this->setAttributesArray();
         $this->setAttributes();
+
+        if ($this->getValidation() === false) {
+            throw new \UnexpectedValueException('This class only accepts valid Nova references. Input was: '.$refnova);
+        }
     }
 
     private function setAttributes(): void
@@ -368,35 +372,35 @@ class Permit
         $now = new DateTime();
         $older_date = new DateTime('1800-01-01');
 
-        if($this->getDateSubmission() > $now) {
+        if ($this->getDateSubmission() > $now) {
             $errors[] = 'Submission date should not be in the future';
         }
 
-        if($this->getDateSubmission() < $older_date) {
+        if ($this->getDateSubmission() < $older_date) {
             $errors[] = 'Submission date is too old';
         }
 
-        if(is_null($this->getDateSubmission())) {
+        if (is_null($this->getDateSubmission())) {
             $errors[] = 'Submission date should not be null';
         }
 
-        if(!is_null($this->getDateNotification()) && $this->getDateSubmission() > $this->getDateNotification()) {
+        if (!is_null($this->getDateNotification()) && $this->getDateSubmission() > $this->getDateNotification()) {
             $errors[] = 'Notification date should not be anterior to Submission date';
         }
 
-        if($this->getDateCc() < $this->getDateSubmission()) {
+        if ($this->getDateCc() < $this->getDateSubmission()) {
             $errors[] = 'Concertation date should not be anterior to Submission date';
         }
 
-        if($this->getDateInquiryBegin()>$this->getDateInquiryEnd()) {
+        if ($this->getDateInquiryBegin() > $this->getDateInquiryEnd()) {
             $errors[] = 'End of inquiry date should not be anterior to Begin of inquiry date';
         }
 
-        if($this->getAddress()['zipcode'] === "") {
+        if ($this->getAddress()['zipcode'] === "") {
             $errors[] = 'Zipcode should not be empty';
         }
 
-        if($this->getAddress()['streetname']['fr'] === "" || $this->getAddress()['streetname']['nl'] === "") {
+        if ($this->getAddress()['streetname']['fr'] === "" || $this->getAddress()['streetname']['nl'] === "") {
             $errors[] = 'Streetname should not be empty in french or dutch';
         }
 
