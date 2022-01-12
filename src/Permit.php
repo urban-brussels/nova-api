@@ -2,6 +2,8 @@
 
 namespace UrbanBrussels\NovaApi;
 
+use DateTime;
+use DateTimeZone;
 use ici\ici_tools\WfsLayer;
 
 class Permit
@@ -13,19 +15,19 @@ class Permit
     private ?array $attributes_array;
     public array $source;
     public bool $validation;
-    public ?\DateTime $date_inquiry_begin;
-    public ?\DateTime $date_inquiry_end;
+    public ?DateTime $date_inquiry_begin;
+    public ?DateTime $date_inquiry_end;
     public bool $inquiry_active;
     public array $advices;
     public array $references;
     public ?string $language;
     public array $address;
     public array $area_typology;
-    public ?\DateTime $date_arc;
-    public ?\DateTime $date_ari;
-    public ?\DateTime $date_submission;
-    public ?\DateTime $date_cc;
-    public ?\DateTime $date_notification;
+    public ?DateTime $date_arc;
+    public ?DateTime $date_ari;
+    public ?DateTime $date_submission;
+    public ?DateTime $date_cc;
+    public ?DateTime $date_notification;
     public array $links;
     public ?string $status;
     public ?string $authority;
@@ -74,7 +76,7 @@ class Permit
         $this->date_inquiry_begin = $this->setDateInquiryBegin();
         $this->date_inquiry_end = $this->setDateInquiryEnd();
 
-        $now = new \DateTime();
+        $now = new DateTime();
         if ($this->date_inquiry_end > $now && $this->date_inquiry_begin < $now) {
             $this->inquiry_active = true;
         } else {
@@ -82,24 +84,24 @@ class Permit
         }
     }
 
-    private function setDateInquiryBegin(): \DateTime|null|bool
+    private function setDateInquiryBegin(): DateTime|null|bool
     {
         $date = $this->attributes_array['date_debut_mpp'] ?? $this->attributes_array['datedebutmpp'] ?? null;
         if (is_null($date)) {
             return null;
         }
 
-        return \DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new \DateTimeZone('Europe/Brussels'));
+        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
     }
 
-    private function setDateInquiryEnd(): \DateTime|null|bool
+    private function setDateInquiryEnd(): DateTime|null|bool
     {
         $date = $this->attributes_array['date_fin_mpp'] ?? $this->attributes_array['datefinmpp'] ?? null;
         if (is_null($date)) {
             return null;
         }
 
-        return \DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new \DateTimeZone('Europe/Brussels'));
+        return DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
     }
 
     private function setAdviceInstances(): array
@@ -152,6 +154,7 @@ class Permit
             || str_contains($this->refnova, 'IRPE')) {
             return "PE";
         }
+
         return "PU";
     }
 
@@ -160,27 +163,27 @@ class Permit
         $status_fr = $this->attributes_array['statutpermisfr'] ?? null;
         $final_state = $this->attributes_array['statut_dossier'] ?? $this->attributes_array['etatfinal'];
 
-        if($status_fr === "Annulé") {
+        if ($status_fr === "Annulé") {
             return 'canceled';
         }
 
-        if($final_state === "R") {
+        if ($final_state === "R") {
             return 'appeal';
         }
 
-        if($final_state === "S") {
+        if ($final_state === "S") {
             return 'suspended';
         }
 
-        if($final_state === "S") {
+        if ($final_state === "I") {
             return 'instruction';
         }
 
-        if($final_state === "V") {
+        if ($final_state === "V") {
             return 'delivered';
         }
 
-        if($final_state === "NV") {
+        if ($final_state === "NV") {
             return 'refused';
         }
 
@@ -199,9 +202,14 @@ class Permit
     private function setAuthority(): ?string
     {
         $subtype = $this->getSubtype()['code'];
-        if (in_array($subtype, ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD"])) {
+        if (in_array(
+            $subtype,
+            ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD"]
+        )) {
             return "region";
-        } elseif (!is_null($subtype)) {
+        }
+
+        if (!is_null($subtype)) {
             return "municipality";
         }
 
@@ -245,54 +253,54 @@ class Permit
         return $typology;
     }
 
-    private function setDateArc(): ?\DateTime
+    private function setDateArc(): ?DateTime
     {
         $date = $this->attributes_array['date_arc'] ?? $this->attributes_array['datearclast'] ?? null;
         if (is_null($date)) {
             return null;
         }
 
-        return \DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new \DateTimeZone('Europe/Brussels'));
+        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
     }
 
-    private function setDateAri(): ?\DateTime
+    private function setDateAri(): ?DateTime
     {
         $date = $this->attributes_array['date_ari'] ?? $this->attributes_array['datearilast'] ?? null;
         if (is_null($date)) {
             return null;
         }
 
-        return \DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new \DateTimeZone('Europe/Brussels'));
+        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
     }
 
-    private function setDateSubmission(): ?\DateTime
+    private function setDateSubmission(): ?DateTime
     {
         $date = $this->attributes_array['date_depot'] ?? $this->attributes_array['datedepot'] ?? null;
         if (is_null($date)) {
             return null;
         }
 
-        return \DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new \DateTimeZone('Europe/Brussels'));
+        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
     }
 
-    private function setDateCc(): ?\DateTime
+    private function setDateCc(): ?DateTime
     {
         $date = $this->attributes_array['date_cc'] ?? $this->attributes_array['datecc'] ?? null;
         if (is_null($date)) {
             return null;
         }
 
-        return \DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new \DateTimeZone('Europe/Brussels'));
+        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
     }
 
-    private function setDateNotification(): ?\DateTime
+    private function setDateNotification(): ?DateTime
     {
         $date = $this->attributes_array['date_notif_decision'] ?? $this->attributes_array['datenotifdecision'] ?? null;
         if (is_null($date)) {
             return null;
         }
 
-        return \DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new \DateTimeZone('Europe/Brussels'));
+        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
     }
 
     public function setAttributesArray(): ?array
@@ -401,37 +409,37 @@ class Permit
         return $this->language;
     }
 
-    public function getDateInquiryBegin(): ?\DateTime
+    public function getDateInquiryBegin(): ?DateTime
     {
         return $this->date_inquiry_begin;
     }
 
-    public function getDateInquiryEnd(): ?\DateTime
+    public function getDateInquiryEnd(): ?DateTime
     {
         return $this->date_inquiry_end;
     }
 
-    public function getDateCc(): ?\DateTime
+    public function getDateCc(): ?DateTime
     {
         return $this->date_cc;
     }
 
-    public function getDateArc(): ?\DateTime
+    public function getDateArc(): ?DateTime
     {
         return $this->date_arc;
     }
 
-    public function getDateAri(): ?\DateTime
+    public function getDateAri(): ?DateTime
     {
         return $this->date_ari;
     }
 
-    public function getDateSubmission(): ?\DateTime
+    public function getDateSubmission(): ?DateTime
     {
         return $this->date_submission;
     }
 
-    public function getDateNotification(): ?\DateTime
+    public function getDateNotification(): ?DateTime
     {
         return $this->date_notification;
     }
