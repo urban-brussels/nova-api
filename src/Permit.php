@@ -3,7 +3,6 @@
 namespace UrbanBrussels\NovaApi;
 
 use ici\ici_tools\WfsLayer;
-use JetBrains\PhpStorm\ArrayShape;
 
 class Permit
 {
@@ -29,6 +28,7 @@ class Permit
     public ?\DateTime $date_notification;
     public array $links;
     public ?string $status;
+    public ?string $authority;
 
     public function __construct(string $refnova)
     {
@@ -61,6 +61,7 @@ class Permit
         $this->area_typology = $this->setAreaTypology();
         $this->links = $this->setLinks();
         $this->status = $this->setStatus();
+        $this->authority = $this->setAuthority();
     }
 
     private function setValidation(): bool
@@ -193,6 +194,18 @@ class Permit
         $subtype['nl'] = $this->attributes_array['case_subtype_nl'] ?? $this->attributes_array['typedossiernl'] ?? null;
 
         return $subtype;
+    }
+
+    private function setAuthority(): ?string
+    {
+        $subtype = $this->getSubtype()['code'];
+        if (in_array($subtype, ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD"])) {
+            return "region";
+        } elseif (!is_null($subtype)) {
+            return "municipality";
+        }
+
+        return null;
     }
 
     private function setLanguage(): ?string
