@@ -31,6 +31,7 @@ class Permit
     public array $links;
     public ?string $status;
     public ?string $authority;
+    public array $errors;
 
     public function __construct(string $refnova)
     {
@@ -358,6 +359,43 @@ class Permit
         $advices['instances'] = $this->setAdviceInstances();
 
         return $advices;
+    }
+
+    public function setErrors(): array
+    {
+        $errors = [];
+        $now = new DateTime();
+        $older_date = new DateTime('1800-01-01');
+
+        if($this->getDateSubmission()>$now) {
+            $errors[] = 'Submission date should not be in the future';
+        }
+
+        if($this->getDateSubmission()<$older_date) {
+            $errors[] = 'Submission date is too old';
+        }
+
+        if($this->getDateSubmission()>$this->getDateNotification()) {
+            $errors[] = 'Notification date should not be anterior to Submission date';
+        }
+
+        if($this->getDateCc()<$this->getDateSubmission()) {
+            $errors[] = 'Concertation date should not be anterior to Submission date';
+        }
+
+        if($this->getDateInquiryBegin()>$this->getDateInquiryEnd()) {
+            $errors[] = 'End of inquiry date should not be anterior to Begin of inquiry date';
+        }
+
+        if($this->getAddress()['zipcode'] === "") {
+            $errors[] = 'Zipcode should not be empty';
+        }
+
+        if($this->getAddress()['street_name']['fr'] === "" || $this->getAddress()['street_name']['nl'] === "") {
+            $errors[] = 'Streetname should not be empty in french or dutch';
+        }
+
+        return $errors;
     }
 
     public function setSource(): array
