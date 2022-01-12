@@ -65,6 +65,7 @@ class Permit
         $this->links = $this->setLinks();
         $this->status = $this->setStatus();
         $this->authority = $this->setAuthority();
+        $this->errors = $this->setErrors();
     }
 
     private function setValidation(): bool
@@ -520,5 +521,10 @@ class Permit
     public function getAuthority(): ?string
     {
         return $this->authority;
+    }
+
+    public function getErrors(): array
+    {
+        return $this->errors;
     }
 }
