@@ -368,19 +368,23 @@ class Permit
         $now = new DateTime();
         $older_date = new DateTime('1800-01-01');
 
-        if($this->getDateSubmission()>$now) {
+        if($this->getDateSubmission() > $now) {
             $errors[] = 'Submission date should not be in the future';
         }
 
-        if($this->getDateSubmission()<$older_date) {
+        if($this->getDateSubmission() < $older_date) {
             $errors[] = 'Submission date is too old';
         }
 
-        if($this->getDateSubmission()>$this->getDateNotification()) {
+        if(is_null($this->getDateSubmission())) {
+            $errors[] = 'Submission date should not be null';
+        }
+
+        if(!is_null($this->getDateNotification()) && $this->getDateSubmission() > $this->getDateNotification()) {
             $errors[] = 'Notification date should not be anterior to Submission date';
         }
 
-        if($this->getDateCc()<$this->getDateSubmission()) {
+        if($this->getDateCc() < $this->getDateSubmission()) {
             $errors[] = 'Concertation date should not be anterior to Submission date';
         }
 
@@ -392,7 +396,7 @@ class Permit
             $errors[] = 'Zipcode should not be empty';
         }
 
-        if($this->getAddress()['street_name']['fr'] === "" || $this->getAddress()['street_name']['nl'] === "") {
+        if($this->getAddress()['streetname']['fr'] === "" || $this->getAddress()['streetname']['nl'] === "") {
             $errors[] = 'Streetname should not be empty in french or dutch';
         }
 
