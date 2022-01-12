@@ -29,6 +29,8 @@ class Permits
 
     public function getResults(): array
     {
+        $this->cql_filter = '';
+
         $wfs = new WfsLayer($this->path, $this->layer);
         return $wfs->setCqlFilter($this->cql_filter)
             ->setCount(1)
