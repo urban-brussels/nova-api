@@ -1,8 +1,8 @@
 # Nova API
 
-PHP wrapper for the API of [Nova](https://bric.brussels/en/our-solutions/business-solutions/nova-1?set_language=en).    
-Nova is a shared IT platform of the Brussels-Capital Region dedicated to the file management of planning permits, land division permits and environmental licence.        
-More features coming soon.
+PHP wrapper for the API of [Nova](https://bric.brussels/en/our-solutions/business-solutions/nova-1?set_language=en).
+Nova is a shared IT platform of the Brussels-Capital Region dedicated to the file management of planning permits, land
+division permits and environmental licence.
 
 ## Installation
 
@@ -18,6 +18,30 @@ use UrbanBrussels\NovaApi\Permit;
 // Create instance of Nova Permit
 $permit = new Permit('01/PFD/123456');
 
+// Get Address in an array (street name FR/NL, street number, municipality FR/NL, zipcode)
+$permit->getAddress();
+
+// Get Type and Subtype
 $permit->getType();
+$permit->getSubtype();
+
+// Get Description of the requested permit, in an array FR/NL
+$permit->getObject();
+
+// Check if the reference matches en existing permit request
+$permit->getValidation();
+
+// Get Public inquiry dates
+$permit->getDateInquiryBegin();
+$permit->getDateInquiryEnd();
+
+// Get Submission Date
+$permit->getDateSubmission();
+
+// Get Notification Date
+$permit->getDateNotification();
+
+// Get Area Typology
+$permit->getAreaTypology();
 
 ```

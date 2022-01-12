@@ -130,9 +130,8 @@ class Permit
     {
         $links['openpermits']['fr'] = 'https://openpermits.brussels/fr/_'.$this->refnova;
         $links['openpermits']['nl'] = 'https://openpermits.brussels/nl/_'.$this->refnova;
-        $link['nova'] = 'https://openpermits.brussels/fr/_'.$this->refnova;
-        $link['nova_api'] = 'https://openpermits.brussels/fr/_'.$this->refnova;
-
+        $link['nova'] = 'https://nova.brussels/nova-ui/page/open/request/AcmDisplayCase.xhtml?ids=&id='.$this->references['nova_seq'].'&uniqueCase=true';
+        $link['nova_api'] = $this->source['query_url'];
 
         return $links;
     }
@@ -406,5 +405,10 @@ class Permit
     public function getType(): string
     {
         return $this->type;
+    }
+
+    public function getAreaTypology(): array
+    {
+        return $this->area_typology;
     }
 }
