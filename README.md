@@ -10,8 +10,8 @@ division permits and environmental licence. Permit applications can be viewed on
 composer require urban-brussels/nova-api
 ```
 
-## Usage
-
+## Usages
+### Class Permit
 ```php 
 use UrbanBrussels\NovaApi\Permit;
 
@@ -47,4 +47,21 @@ $permit->getDateNotification();
 // Get a multidimensional array with the Area Typology (existing, projected, authorized areas for each type)
 $permit->getAreaTypology();
 
+```
+
+### Class PermitList
+
+```php 
+use UrbanBrussels\NovaApi\PermitList;
+
+// Retrieve all requests in public inquiry for the date 2022-01-01 (PU for planning requests, PE for environmental requests)
+$list = new PermitList('PU');
+$permits = $list->filterByInquiryDate('2022-01-01')->getResults()->all();
+
+// You now have an array of Permit objects, that can be used in a loop
+foreach ($permits as $permit) {
+    echo $permit->->getRefnova();
+    echo $permit->->getAddress();
+    echo $permit->->echo $permit->->getAddress();
+}
 ```
