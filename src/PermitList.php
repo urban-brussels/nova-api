@@ -4,7 +4,7 @@ namespace UrbanBrussels\NovaApi;
 
 use ici\ici_tools\WfsLayer;
 
-class Permits
+class PermitList
 {
     private const PU_PATH = 'https://geoservices-others.irisnet.be/geoserver/Nova/ows';
     private const PE_PATH = self::PU_PATH;
@@ -33,6 +33,25 @@ class Permits
     {
         $id_dossier = ($this->type === "PE") ? 'nova_seq' : 's_iddossier';
         $this->cql_filter = $id_dossier.'='.$id;
+
+        return $this;
+    }
+
+    public function filterByIncidence(?int $year = null): self
+    {
+        if ($this->type === "PE") {
+            $filter = '(rapport_incidence=true or etude_incidence=true)';
+            if (!is_null($year)) {
+                $filter .= " and date_debut_mpp >= '".$year."-01-01' and date_debut_mpp <= '".$year."-12-31'";
+            }
+        } else {
+            $filter = '(ri=true or ei=true)';
+            if (!is_null($year)) {
+                $filter .= " and datedebutmpp >= '".$year."-01-01' and datedebutmpp <= '".$year."-12-31'";
+            }
+        }
+
+        $this->cql_filter = $filter;
 
         return $this;
     }
