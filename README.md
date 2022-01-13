@@ -63,6 +63,6 @@ $permits = $list->filterByInquiryDate('2022-01-01')->getResults()->all();
 foreach ($permits as $permit) {
     echo $permit->getRefnova();
     echo $permit->getAddress();
-    echo $permit->echo $permit->getAddress();
+    echo $permit->getDateInquiryEnd();
 }
 ```
