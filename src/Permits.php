@@ -65,6 +65,8 @@ class Permits
             ->setCount($max_count)
             ->getPropertiesArray(false);
 
+        $list = [];
+
         foreach ($results as $result) {
             $list[] = new Permit(($result['ref_nova'] ?? $result['refnova']), $result);
         }
@@ -74,14 +76,14 @@ class Permits
         return $this;
     }
 
-    public function first(): array
+    public function first(): ?Permit
     {
-        return $this->results[0] ?? [];
+        return $this->results[0] ?? null;
     }
 
     public function all(): array
     {
-        return $this->results ?? [];
+        return $this->results;
     }
 
 }
