@@ -34,7 +34,7 @@ class Permits
     public function filterById(int $id): self
     {
         $id_dossier = ($this->type === "PE") ? 'nova_seq' : 's_iddossier';
-        $this->cql_filter = '\''. $id_dossier. '\'=' . $id;
+        $this->cql_filter = $id_dossier. '=' . $id;
 
         return $this;
     }
