@@ -58,15 +58,18 @@ class Permits
         return $this;
     }
 
-    public function getResults(int $max_count = 1000, array $property_names = []): self
+    public function getResults(int $max_count = 1000): self
     {
-        $properties = $this->setPropertyNames($property_names);
-
         $wfs = new WfsLayer($this->path, $this->layer);
-        $this->results = $wfs->setCqlFilter($this->cql_filter)
+        $results = $wfs->setCqlFilter($this->cql_filter)
             ->setCount($max_count)
-            ->setPropertyName($properties)
             ->getPropertiesArray(false);
+
+        foreach ($results as $result) {
+            $list[] = new Permit(($result['ref_nova'] ?? $result['refnova']), $result);
+        }
+
+        $this->results = $list;
 
         return $this;
     }
@@ -81,16 +84,4 @@ class Permits
         return $this->results ?? [];
     }
 
-    private function setPropertyNames(array $property_names = []): string
-    {
-        if (empty($property_names)) {
-            if ($this->type === "PE") {
-                $property_names = ['s_iddossier', 'ref_nova', 'streetname_fr', 'streetname_nl', 'number_from', 'number_to', 'zipcode', 'date_depot', 'date_debut_mpp', 'date_fin_mpp', 'date_notif_decision'];
-            } else {
-                $property_names = ['s_iddossier', 'refnova', 'streetnamefr', 'streetnamenl', 'numberpartfrom', 'numberpartto', 'zipcode', 'datedepot', 'datedebutmpp', 'datefinmpp', 'datenotifdecision'];
-            }
-        }
-
-        return implode(",", $property_names);
-    }
 }

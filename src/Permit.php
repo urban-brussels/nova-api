@@ -33,12 +33,17 @@ class Permit
     public ?string $authority;
     public array $errors;
 
-    public function __construct(string $refnova)
+    public function __construct(string $refnova, array $attributes_array = [])
     {
         $this->refnova = strtoupper(trim($refnova));
         $this->type = $this->setType();
         $this->source = $this->setSource();
-        $this->attributes_array = $this->setAttributesArray();
+        if(!empty($attributes_array)) {
+            $this->attributes_array = $attributes_array;
+        }
+        else {
+            $this->attributes_array = $this->setAttributesArray();
+        }
         $this->setAttributes();
 
         if ($this->getValidation() === false) {
