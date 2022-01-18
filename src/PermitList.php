@@ -77,6 +77,13 @@ class PermitList
         return $this;
     }
 
+    public function filterByRawCQL(string $cql_filter): self
+    {
+        $this->cql_filter = $cql_filter;
+
+        return $this;
+    }
+
     public function getResults(int $max_count = 1000): self
     {
         $wfs = new WfsLayer($this->path, $this->layer);
