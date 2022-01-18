@@ -102,13 +102,10 @@ class PermitList
     public function getResults(): self
     {
         $wfs = new WfsLayer($this->path, $this->layer);
-        $results = $wfs->setCqlFilter($this->cql_filter)
+        $wfs->setCqlFilter($this->cql_filter)
             ->setCount($this->limit);
 
-        if(!is_null($this->order[0])) {
-            $results->setSortBy($this->order[0], $this->order[1]);
-        }
-        $results->getPropertiesArray(false);
+        $results = $wfs->getPropertiesArray(false);
 
         $list = [];
 
