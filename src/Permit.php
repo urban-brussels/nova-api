@@ -267,16 +267,7 @@ class Permit
     private function setDateArc(): ?DateTime
     {
         $date = $this->attributes_array['date_arc'] ?? $this->attributes_array['datearclast'] ?? null;
-        if (is_null($date)) {
-            return null;
-        }
-
-        // Two formats needed because of inconsistencies in Nova data
-        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
-        if(!$date_time) {
-            $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
-        }
-        return $date_time;
+        return self::toDatetime($date);
     }
 
     private function setDateAri(): ?DateTime
@@ -285,58 +276,25 @@ class Permit
         if (is_null($date)) {
             return null;
         }
-
-        // Two formats needed because of inconsistencies in Nova data
-        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
-        if(!$date_time) {
-            $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
-        }
-        return $date_time;
+        return self::toDatetime($date);
     }
 
     private function setDateSubmission(): ?DateTime
     {
         $date = $this->attributes_array['date_depot'] ?? $this->attributes_array['datedepot'] ?? null;
-        if (is_null($date)) {
-            return null;
-        }
-
-        // Two formats needed because of inconsistencies in Nova data
-        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
-        if(!$date_time) {
-            $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
-        }
-        return $date_time;
+        return self::toDatetime($date);
     }
 
     private function setDateCc(): ?DateTime
     {
         $date = $this->attributes_array['date_cc'] ?? $this->attributes_array['datecc'] ?? null;
-        if (is_null($date)) {
-            return null;
-        }
-
-        // Two formats needed because of inconsistencies in Nova data
-        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
-        if(!$date_time) {
-            $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
-        }
-        return $date_time;
+        return self::toDatetime($date);
     }
 
     private function setDateNotification(): ?DateTime
     {
         $date = $this->attributes_array['date_notif_decision'] ?? $this->attributes_array['datenotifdecision'] ?? null;
-        if (is_null($date)) {
-            return null;
-        }
-
-        // Two formats needed because of inconsistencies in Nova data
-        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
-        if(!$date_time) {
-            $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
-        }
-        return $date_time;
+        return self::toDatetime($date);
     }
 
     public function setAttributesArray(): ?array
@@ -564,5 +522,18 @@ class Permit
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    private static function toDatetime(?string $date): ?DateTime {
+        if (is_null($date)) {
+            return null;
+        }
+
+        // Two formats needed because of inconsistencies in Nova data
+        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
+        if(!$date_time) {
+            $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
+        }
+        return $date_time;
     }
 }
