@@ -28,10 +28,13 @@ class Permit
     public ?DateTime $date_submission;
     public ?DateTime $date_cc;
     public ?DateTime $date_notification;
+    public ?DateTime $date_additional_elements;
     public array $links;
     public ?string $status;
     public ?string $authority;
     public array $errors;
+    public ?int $charges;
+    public array $suspensions;
 
     public function __construct(string $refnova, array $attributes_array = [])
     {
@@ -68,13 +71,18 @@ class Permit
         $this->date_submission = $this->setDateSubmission();
         $this->date_notification = $this->setDateNotification();
         $this->date_cc = $this->setDateCc();
+        $this->date_additional_elements = $this->setDateAdditionalElements();
         $this->language = $this->setLanguage();
         $this->address = $this->setAddress();
         $this->area_typology = $this->setAreaTypology();
         $this->links = $this->setLinks();
         $this->status = $this->setStatus();
         $this->authority = $this->setAuthority();
+        $this->charges = $this->setCharges();
+        $this->suspensions = $this->setSuspensions();
         $this->errors = $this->setErrors();
+
+        unset($this->attributes_array);
     }
 
     private function setValidation(): bool
@@ -142,6 +150,11 @@ class Permit
         $references['ref_mixed_permit'] = $this->attributes_array['ref_mixed_permit'] ?? $this->attributes_array['refmixedpermit'] ?? null;
 
         return $references;
+    }
+
+    private function setCharges(): ?int
+    {
+        return $this->attributes_array['deliveredpermittotalcharge'] ?? null;
     }
 
     private function setLinks(): array
@@ -264,6 +277,27 @@ class Permit
         return $typology;
     }
 
+    private function setSuspensions(): array
+    {
+        $suspensions = [];
+
+        $json_suspensions = $this->attributes_array['suspensions'];
+            if(is_null($json_suspensions)) {
+                return $suspensions;
+            }
+
+            $array_suspensions = json_decode($json_suspensions);
+
+            foreach($array_suspensions as $suspension) {
+                $suspensions['fr'] = $suspension['suspension']['motif-fr'];
+                $suspensions['nl'] = $suspension['suspension']['motif-nl'];
+                $suspensions['from'] = DateTime::createFromFormat('Y-m-d', $suspension['suspension']['date-from'], new DateTimeZone('Europe/Brussels'));
+                $suspensions['to'] = DateTime::createFromFormat('Y-m-d', $suspension['suspension']['date-to'], new DateTimeZone('Europe/Brussels'));
+            }
+
+        return $suspensions;
+    }
+
     private function setDateArc(): ?DateTime
     {
         $date = $this->attributes_array['date_arc'] ?? $this->attributes_array['datearclast'] ?? null;
@@ -288,6 +322,12 @@ class Permit
     private function setDateCc(): ?DateTime
     {
         $date = $this->attributes_array['date_cc'] ?? $this->attributes_array['datecc'] ?? null;
+        return self::toDatetime($date);
+    }
+
+    private function setDateAdditionalElements(): ?DateTime
+    {
+        $date = $this->attributes_array['date_cc'] ?? $this->attributes_array['dateelemcomplast'] ?? null;
         return self::toDatetime($date);
     }
 
