@@ -16,6 +16,8 @@ class PermitList
     private string $cql_filter;
     private array $results;
     private string $type;
+    private int $limit = 1000;
+    private array $order;
 
     public function __construct(string $type)
     {
@@ -84,12 +86,29 @@ class PermitList
         return $this;
     }
 
-    public function getResults(int $max_count = 1000): self
+    public function setLimit(int $limit): self
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    public function setOrder(Attribute $attribute, Order $order = Order::DESC): self
+    {
+        $this->order = [$attribute->wfs(), $order->wfs()];
+        return $this;
+    }
+
+    public function getResults(): self
     {
         $wfs = new WfsLayer($this->path, $this->layer);
         $results = $wfs->setCqlFilter($this->cql_filter)
-            ->setCount($max_count)
-            ->getPropertiesArray(false);
+            ->setCount($this->limit);
+
+        if(!is_null($this->order[0])) {
+            $results->setSortBy($this->order[0], $this->order[1]);
+        }
+        $results->getPropertiesArray(false);
 
         $list = [];
 

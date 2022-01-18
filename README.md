@@ -60,7 +60,7 @@ $list = new PermitList('PU');
 // Retrieve all requests in public inquiry for the date 2022-01-01 (PU for planning requests, PE for environmental requests)
 $permits = $list->filterByInquiryDate('2022-01-01')->getResults()->all();
 
-// If you use a raw [cql_filter](https://docs.geoserver.org/stable/en/user/services/wfs/vendor.html), you can query what you want (e.g. every permit request for a given Street + Zipcode)    
+// If you use a raw cql_filter, you can query what you want (e.g. every permit request for a given Street + Zipcode)    
 $permits = $list->filterByRawCQL("streetnamefr = 'Rue de Dublin' AND zipcode='1050'" )->getResults()->all()
 
 // You now have an array of Permit objects, that can be used in a loop
