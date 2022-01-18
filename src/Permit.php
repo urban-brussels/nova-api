@@ -282,18 +282,19 @@ class Permit
         $suspensions = [];
 
         $json_suspensions = $this->attributes_array['suspensions'];
-            if(is_null($json_suspensions)) {
-                return $suspensions;
-            }
+        if(is_null($json_suspensions)) {
+            return $suspensions;
+        }
 
-            $array_suspensions = json_decode($json_suspensions);
+        $array_suspensions = json_decode($json_suspensions, true);
 
-            foreach($array_suspensions as $suspension) {
-                $suspensions['fr'] = $suspension['suspension']['motif-fr'];
-                $suspensions['nl'] = $suspension['suspension']['motif-nl'];
-                $suspensions['from'] = DateTime::createFromFormat('Y-m-d', $suspension['suspension']['date-from'], new DateTimeZone('Europe/Brussels'));
-                $suspensions['to'] = DateTime::createFromFormat('Y-m-d', $suspension['suspension']['date-to'], new DateTimeZone('Europe/Brussels'));
-            }
+        foreach($array_suspensions as $suspension) {
+            print_r($suspension); echo $this->refnova;
+            $suspensions['fr'] = $suspension[0]['suspension']['motif-fr'];
+            $suspensions['nl'] = $suspension[0]['suspension']['motif-nl'];
+            $suspensions['from'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-from'], new DateTimeZone('Europe/Brussels'));
+            $suspensions['to'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-to'], new DateTimeZone('Europe/Brussels'));
+        }
 
         return $suspensions;
     }
