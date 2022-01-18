@@ -271,7 +271,9 @@ class Permit
             return null;
         }
 
-        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
+        // Two formats needed because of inconsistencies in Nova data
+        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels')) ?? DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
+        return $date_time;
     }
 
     private function setDateAri(): ?DateTime
@@ -281,7 +283,9 @@ class Permit
             return null;
         }
 
-        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
+        // Two formats needed because of inconsistencies in Nova data
+        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels')) ?? DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
+        return $date_time;
     }
 
     private function setDateSubmission(): ?DateTime
@@ -291,7 +295,9 @@ class Permit
             return null;
         }
 
-        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
+        // Two formats needed because of inconsistencies in Nova data
+        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels')) ?? DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
+        return $date_time;
     }
 
     private function setDateCc(): ?DateTime
@@ -301,7 +307,9 @@ class Permit
             return null;
         }
 
-        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
+        // Two formats needed because of inconsistencies in Nova data
+        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels')) ?? DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
+        return $date_time;
     }
 
     private function setDateNotification(): ?DateTime
@@ -311,7 +319,9 @@ class Permit
             return null;
         }
 
-        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
+        // Two formats needed because of inconsistencies in Nova data
+        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels')) ?? DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
+        return $date_time;
     }
 
     public function setAttributesArray(): ?array
