@@ -95,7 +95,7 @@ class PermitList
 
     public function setOrder(Attribute $attribute, Order $order = Order::DESC): self
     {
-        $this->order = [$attribute->wfs(), $order->wfs()];
+        $this->order = [$this->contextAttribute($attribute), $order->wfs()];
         return $this;
     }
 
@@ -104,6 +104,10 @@ class PermitList
         $wfs = new WfsLayer($this->path, $this->layer);
         $wfs->setCqlFilter($this->cql_filter)
             ->setCount($this->limit);
+
+        if(!empty($this->order)) {
+           $wfs->setSortBy($this->order[0], $this->order[1]);
+        }
 
         $results = $wfs->getPropertiesArray(false);
 
@@ -126,6 +130,11 @@ class PermitList
     public function all(): array
     {
         return $this->results;
+    }
+
+    private function contextAttribute(Attribute $attribute): string
+    {
+        return $this->type === "PU" ? $attribute->pu() : $attribute->pe();
     }
 
 }

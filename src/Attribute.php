@@ -4,17 +4,27 @@ namespace UrbanBrussels\NovaApi;
 
 enum Attribute
 {
-    case SUBMISSION;
-    case ARC;
-    case ARI;
+    case DATE_ARC;
+    case DATE_ARI;
+    case DATE_SUBMISSION;
 
-    public function wfs(): array
+    public function pu(): string
     {
         return match($this)
         {
-            self::SUBMISSION => ['datedepot', 'date_depot'],
-            self::ARC => ['date_arc', 'datearclast'],
-            self::ARI => ['date_ari', 'datearilast'],
+            self::DATE_ARC => 'date_arc',
+            self::DATE_ARI => 'date_ari',
+            self::DATE_SUBMISSION => 'datedepot',
+        };
+    }
+
+    public function pe(): string
+    {
+        return match($this)
+        {
+            self::DATE_ARC => 'datearclast',
+            self::DATE_ARI => 'datearilast',
+            self::DATE_SUBMISSION => 'date_depot',
         };
     }
 }
