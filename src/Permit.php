@@ -289,7 +289,6 @@ class Permit
         $array_suspensions = json_decode($json_suspensions, true);
 
         foreach($array_suspensions as $suspension) {
-            print_r($suspension); echo $this->refnova;
             $suspensions['fr'] = $suspension[0]['suspension']['motif-fr'];
             $suspensions['nl'] = $suspension[0]['suspension']['motif-nl'];
             $suspensions['from'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-from'], new DateTimeZone('Europe/Brussels'));
@@ -341,7 +340,7 @@ class Permit
     public function setAttributesArray(): ?array
     {
         $wfs = new WfsLayer($this->source['base_path'], $this->source['layer_name']);
-        $permits = $wfs->setCqlFilter(($this->type === 'PE' ? 'ref_nova' : 'refnova').'=\''.$this->refnova.'\'')
+        $permits = $wfs->setCqlFilter($this->contextAttribute(Attribute::REFNOVA).'=\''.$this->refnova.'\'')
             ->setCount(1)
             ->setOutputSrs(4326)
             ->getPropertiesArray(true);
@@ -576,5 +575,10 @@ class Permit
             $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
         }
         return $date_time;
+    }
+
+    private function contextAttribute(Attribute $attribute): string
+    {
+        return $this->type === "PU" ? $attribute->pu() : $attribute->pe();
     }
 }
