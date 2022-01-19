@@ -416,7 +416,7 @@ class Permit
             $errors[] = 'Notification date should not be anterior to Submission date';
         }
 
-        if ($this->getDateCc() < $this->getDateSubmission()) {
+        if (!is_null($this->getDateCc()) && $this->getDateCc() < $this->getDateSubmission()) {
             $errors[] = 'Concertation date should not be anterior to Submission date';
         }
 
