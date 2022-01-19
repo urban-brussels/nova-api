@@ -12,8 +12,8 @@ enum Attribute
     {
         return match($this)
         {
-            self::DATE_ARC => 'date_arc',
-            self::DATE_ARI => 'date_ari',
+            self::DATE_ARC => 'datearclast',
+            self::DATE_ARI => 'datearilast',
             self::DATE_SUBMISSION => 'datedepot',
         };
     }
@@ -22,8 +22,8 @@ enum Attribute
     {
         return match($this)
         {
-            self::DATE_ARC => 'datearclast',
-            self::DATE_ARI => 'datearilast',
+            self::DATE_ARC => 'date_arc',
+            self::DATE_ARI => 'date_ari',
             self::DATE_SUBMISSION => 'date_depot',
         };
     }
