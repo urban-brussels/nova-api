@@ -327,7 +327,7 @@ class Permit
 
     private function setDateAdditionalElements(): ?DateTime
     {
-        $date = $this->attributes_array['date_cc'] ?? $this->attributes_array['dateelemcomplast'] ?? null;
+        $date = $this->attributes_array['dateelemcomplast'] ?? null; // Todo: check for PE
         return self::toDatetime($date);
     }
 
