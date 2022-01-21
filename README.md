@@ -61,7 +61,10 @@ $list = new PermitList('PU');
 $permits = $list->filterByInquiryDate('2022-01-01')->getResults()->all();
 
 // If you use a raw cql_filter, you can query what you want (e.g. every permit request for a given Street + Zipcode)    
-$permits = $list->filterByRawCQL("streetnamefr = 'Rue de Dublin' AND zipcode='1050'" )->getResults()->all()
+$permits = $list->filterByRawCQL("streetnamefr = 'Rue de Dublin' AND zipcode='1050'" )->getResults()->all();
+
+// Filter by Nova References, order by desending submission date
+$permits = $list->filterByReferences(['04/PFD/1796029', '04/PFD/1795271'], Attribute::REFERENCE_NOVA)->setOrder(Attribute::DATE_SUBMISSION, Order::DESC)->getResults()->all();
 
 // You now have an array of Permit objects, that can be used in a loop
 foreach ($permits as $permit) {
