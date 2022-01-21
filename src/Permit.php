@@ -105,19 +105,19 @@ class Permit
 
     private function setDateInquiryBegin(): DateTime|null|bool
     {
-        $date = $this->attributes_array[$this->contextAttribute(Attribute::DATE_INQUIRY_BEGIN)];
+        $date = $this->fromArray($this->contextAttribute(Attribute::DATE_INQUIRY_BEGIN));
         return self::toDatetime($date);
     }
 
     private function setDateInquiryEnd(): DateTime|null|bool
     {
-        $date = $this->attributes_array[$this->contextAttribute(Attribute::DATE_INQUIRY_END)];
+        $date = $this->fromArray($this->contextAttribute(Attribute::DATE_INQUIRY_END));
         return self::toDatetime($date);
     }
 
     private function setAdviceInstances(): array
     {
-        $json_advices = $this->attributes_array['avis_instances'] ?? null;
+        $json_advices = $this->fromArray('avis_instances');
         if (is_null($json_advices)) {
             return [];
         }
@@ -136,17 +136,17 @@ class Permit
 
     private function setReferences(): array
     {
-        $references['uuid'] = $this->attributes_array['uuid'] ?? null;
-        $references['reference_dossier'] = $this->attributes_array[$this->contextAttribute(Attribute::REFERENCE_DOSSIER)];
-        $references['reference_municipality'] = $this->attributes_array[$this->contextAttribute(Attribute::REFERENCE_MUNICIPALITY)];
-        $references['reference_mixed_permit'] = $this->attributes_array['ref_mixed_permit'] ?? $this->attributes_array['refmixedpermit'] ?? null;
+        $references['uuid'] = $this->fromArray('uuid');
+        $references['reference_dossier'] = $this->fromArray($this->contextAttribute(Attribute::REFERENCE_DOSSIER));
+        $references['reference_municipality'] = $this->fromArray($this->contextAttribute(Attribute::REFERENCE_MUNICIPALITY));
+        $references['reference_mixed_permit'] = $this->fromArray('ref_mixed_permit') ?? $this->fromArray('refmixedpermit');
 
         return $references;
     }
 
     private function setCharges(): ?int
     {
-        return $this->attributes_array['deliveredpermittotalcharge'] ?? null;
+        return $this->fromArray('deliveredpermittotalcharge');
     }
 
     private function setLinks(): array
@@ -176,8 +176,8 @@ class Permit
 
     private function setStatus(): ?string
     {
-        $status_fr = $this->attributes_array['statutpermisfr'] ?? null;
-        $final_state = $this->attributes_array['statut_dossier'] ?? $this->attributes_array['etatfinal'];
+        $status_fr = $this->fromArray('statutpermisfr');
+        $final_state = $this->fromArray('statut_dossier') ?? $this->fromArray('etatfinal');
 
         if ($status_fr === "Annulé") {
             return 'canceled';
@@ -208,9 +208,9 @@ class Permit
 
     private function setSubtype(): array
     {
-        $subtype['code'] = $this->attributes_array['case_subtype'] ?? $this->attributes_array['typedossier'] ?? null;
-        $subtype['fr'] = $this->attributes_array['case_subtype_fr'] ?? $this->attributes_array['typedossierfr'] ?? null;
-        $subtype['nl'] = $this->attributes_array['case_subtype_nl'] ?? $this->attributes_array['typedossiernl'] ?? null;
+        $subtype['code'] = $this->fromArray('case_subtype') ?? $this->fromArray('typedossier');
+        $subtype['fr'] = $this->fromArray('case_subtype_fr') ?? $this->fromArray('typedossierfr');
+        $subtype['nl'] = $this->fromArray('case_subtype_nl') ?? $this->fromArray('typedossiernl');
 
         return $subtype;
     }
@@ -239,11 +239,11 @@ class Permit
 
     private function setObject(): array
     {
-        $object['fr']['standard'] = $this->attributes_array['object_fr'] ?? $this->attributes_array['objectfr'] ?? null;
-        $object['nl']['standard'] = $this->attributes_array['object_nl'] ?? $this->attributes_array['objectnl'] ?? null;
+        $object['fr']['standard'] = $this->fromArray('object_fr') ?? $this->fromArray('objectfr');
+        $object['nl']['standard'] = $this->fromArray('object_nl') ?? $this->fromArray('objectnl');
 
-        $object['fr']['real'] = $this->attributes_array[$this->contextAttribute(Attribute::OBJECT_FR)];
-        $object['nl']['real'] = $this->attributes_array[$this->contextAttribute(Attribute::OBJECT_NL)];
+        $object['fr']['real'] = $this->fromArray($this->contextAttribute(Attribute::OBJECT_FR));
+        $object['nl']['real'] = $this->fromArray($this->contextAttribute(Attribute::OBJECT_NL));
 
         return $object;
     }
@@ -273,7 +273,7 @@ class Permit
     {
         $suspensions = [];
 
-        $json_suspensions = $this->attributes_array['suspensions'];
+        $json_suspensions = $this->fromArray('suspensions');
         if(is_null($json_suspensions)) {
             return $suspensions;
         }
@@ -292,13 +292,13 @@ class Permit
 
     private function setDateArc(): ?DateTime
     {
-        $date = $this->attributes_array[$this->contextAttribute(Attribute::DATE_ARC)];
+        $date = $this->fromArray($this->contextAttribute(Attribute::DATE_ARC));
         return self::toDatetime($date);
     }
 
     private function setDateAri(): ?DateTime
     {
-        $date = $this->attributes_array[$this->contextAttribute(Attribute::DATE_ARI)];
+        $date = $this->fromArray($this->contextAttribute(Attribute::DATE_ARI));
         if (is_null($date)) {
             return null;
         }
@@ -307,25 +307,25 @@ class Permit
 
     private function setDateSubmission(): ?DateTime
     {
-        $date = $this->attributes_array[$this->contextAttribute(Attribute::DATE_SUBMISSION)];
+        $date = $this->fromArray($this->contextAttribute(Attribute::DATE_SUBMISSION));
         return self::toDatetime($date);
     }
 
     private function setDateCc(): ?DateTime
     {
-        $date = $this->attributes_array[$this->contextAttribute(Attribute::DATE_CC)];
+        $date = $this->fromArray($this->contextAttribute(Attribute::DATE_CC));
         return self::toDatetime($date);
     }
 
     private function setDateAdditionalElements(): ?DateTime
     {
-        $date = $this->attributes_array[$this->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS)]; // Todo: check for PE
+        $date = $this->fromArray($this->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS)); // Todo: check for PE
         return self::toDatetime($date);
     }
 
     private function setDateNotification(): ?DateTime
     {
-        $date = $this->attributes_array[$this->contextAttribute(Attribute::DATE_NOTIFICATION)];
+        $date = $this->fromArray($this->contextAttribute(Attribute::DATE_NOTIFICATION));
         return self::toDatetime($date);
     }
 
@@ -342,22 +342,22 @@ class Permit
 
     public function setAddress(): array
     {
-        $address['streetname']['fr'] = $this->attributes_array[$this->contextAttribute(Attribute::STREET_NAME_FR)];
-        $address['streetname']['nl'] = $this->attributes_array[$this->contextAttribute(Attribute::STREET_NAME_NL)];
-        if ($address['streetname']['fr'] === "") {
+        $address['streetname']['fr'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NAME_FR));
+        $address['streetname']['nl'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NAME_NL));
+        if (empty($address['streetname']['fr'])) {
             $address['streetname']['fr'] = null;
         }
-        if ($address['streetname']['nl'] === "") {
+        if (empty($address['streetname']['nl'])) {
             $address['streetname']['nl'] = null;
         }
 
-        $address['number']['from'] = $this->attributes_array[$this->contextAttribute(Attribute::STREET_NUMBER_FROM)];
-        $address['number']['to'] = $this->attributes_array[$this->contextAttribute(Attribute::STREET_NUMBER_TO)];
+        $address['number']['from'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NUMBER_FROM));
+        $address['number']['to'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NUMBER_TO));
 
-        if ($address['number']['from'] === "") {
+        if (empty($address['number']['from'])) {
             $address['number']['from'] = null;
         }
-        if ($address['number']['to'] === "") {
+        if (empty($address['number']['to'])) {
             $address['number']['to'] = null;
         }
 
@@ -365,10 +365,10 @@ class Permit
                 $address['number']['to']
             )) ? $address['number']['from'].'-'.$address['number']['to'] : $address['number']['from'];
 
-        $address['municipality']['fr'] = $this->attributes_array[$this->contextAttribute(Attribute::MUNICIPALITY_FR)];
-        $address['municipality']['nl'] = $this->attributes_array[$this->contextAttribute(Attribute::MUNICIPALITY_NL)];
+        $address['municipality']['fr'] = $this->fromArray($this->contextAttribute(Attribute::MUNICIPALITY_FR));
+        $address['municipality']['nl'] = $this->fromArray($this->contextAttribute(Attribute::MUNICIPALITY_NL));
 
-        $address['zipcode'] = (int)$this->attributes_array['zipcode'];
+        $address['zipcode'] = (int)$this->fromArray('zipcode');
 
         return $address;
     }
@@ -377,9 +377,9 @@ class Permit
     {
         $advices = [];
 
-        $advices['college'] = $this->attributes_array['avis_cbe'] ?? $this->attributes_array['cbe'] ?? null;
-        $advices['cc'] = $this->attributes_array['avis_cc'] ?? $this->attributes_array['aviscc'] ?? null;
-        $advices['fd'] = $this->attributes_array['avis_fd'] ?? $this->attributes_array['avisfd'] ?? null;
+        $advices['college'] = $this->fromArray('avis_cbe') ?? $this->fromArray('cbe');
+        $advices['cc'] = $this->fromArray('avis_cc') ?? $this->fromArray('aviscc');
+        $advices['fd'] = $this->fromArray('avis_fd') ?? $this->fromArray('avisfd');
 
         $advices['instances'] = $this->setAdviceInstances();
 
@@ -572,5 +572,10 @@ class Permit
     private function contextAttribute(Attribute $attribute): string
     {
         return $this->type === "PU" ? $attribute->pu() : $attribute->pe();
+    }
+
+    private function fromArray(string $attribute)
+    {
+        return $this->attributes_array[$attribute] ?? null;
     }
 }
