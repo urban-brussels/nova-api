@@ -106,21 +106,13 @@ class Permit
     private function setDateInquiryBegin(): DateTime|null|bool
     {
         $date = $this->contextAttribute(Attribute::DATE_INQUIRY_BEGIN);
-        if (is_null($date)) {
-            return null;
-        }
-
-        return DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
+        return self::toDatetime($date);
     }
 
     private function setDateInquiryEnd(): DateTime|null|bool
     {
         $date = $this->contextAttribute(Attribute::DATE_INQUIRY_END);
-        if (is_null($date)) {
-            return null;
-        }
-
-        return DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
+        return self::toDatetime($date);
     }
 
     private function setAdviceInstances(): array
