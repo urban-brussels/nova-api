@@ -8,7 +8,7 @@ use ici\ici_tools\WfsLayer;
 
 class Permit
 {
-    public string $refnova;
+    public string $reference_nova;
     public string $type;
     public array $subtype;
     public array $object;
@@ -38,7 +38,7 @@ class Permit
 
     public function __construct(string $refnova, array $attributes_array = [])
     {
-        $this->refnova = strtoupper(trim($refnova));
+        $this->reference_nova = strtoupper(trim($refnova));
         $this->type = $this->setType();
         $this->source = $this->setSource();
         if(!empty($attributes_array)) {
@@ -105,7 +105,7 @@ class Permit
 
     private function setDateInquiryBegin(): DateTime|null|bool
     {
-        $date = $this->attributes_array['date_debut_mpp'] ?? $this->attributes_array['datedebutmpp'] ?? null;
+        $date = $this->contextAttribute(Attribute::DATE_INQUIRY_BEGIN);
         if (is_null($date)) {
             return null;
         }
@@ -115,7 +115,7 @@ class Permit
 
     private function setDateInquiryEnd(): DateTime|null|bool
     {
-        $date = $this->attributes_array['date_fin_mpp'] ?? $this->attributes_array['datefinmpp'] ?? null;
+        $date = $this->contextAttribute(Attribute::DATE_INQUIRY_END);
         if (is_null($date)) {
             return null;
         }
@@ -145,9 +145,9 @@ class Permit
     private function setReferences(): array
     {
         $references['uuid'] = $this->attributes_array['uuid'] ?? null;
-        $references['nova_seq'] = $this->attributes_array['nova_seq'] ?? $this->attributes_array['s_iddossier'] ?? null;
-        $references['ref_com'] = $this->attributes_array['ref_com'] ?? $this->attributes_array['referencespecifique'] ?? null;
-        $references['ref_mixed_permit'] = $this->attributes_array['ref_mixed_permit'] ?? $this->attributes_array['refmixedpermit'] ?? null;
+        $references['reference_dossier'] = $this->contextAttribute(Attribute::REFERENCE_DOSSIER);
+        $references['reference_municipality'] = $this->contextAttribute(Attribute::REFERENCE_MUNICIPALITY);
+        $references['reference_mixed_permit'] = $this->attributes_array['ref_mixed_permit'] ?? $this->attributes_array['refmixedpermit'] ?? null;
 
         return $references;
     }
@@ -159,9 +159,9 @@ class Permit
 
     private function setLinks(): array
     {
-        $links['openpermits']['fr'] = 'https://openpermits.brussels/fr/_'.$this->refnova;
-        $links['openpermits']['nl'] = 'https://openpermits.brussels/nl/_'.$this->refnova;
-        $links['nova'] = 'https://nova.brussels/nova-ui/page/open/request/AcmDisplayCase.xhtml?ids=&id='.$this->references['nova_seq'].'&uniqueCase=true';
+        $links['openpermits']['fr'] = 'https://openpermits.brussels/fr/_'.$this->reference_nova;
+        $links['openpermits']['nl'] = 'https://openpermits.brussels/nl/_'.$this->reference_nova;
+        $links['nova'] = 'https://nova.brussels/nova-ui/page/open/request/AcmDisplayCase.xhtml?ids=&id='.$this->references['reference_dossier'].'&uniqueCase=true';
         $links['nova_api'] = $this->source['query_url'];
 
         return $links;
@@ -169,13 +169,13 @@ class Permit
 
     private function setType(): string
     {
-        if (str_contains($this->refnova, 'IPE')
-            || str_contains($this->refnova, 'CL')
-            || str_contains($this->refnova, 'IRCE')
-            || str_contains($this->refnova, 'ICE')
-            || str_contains($this->refnova, 'C_')
-            || str_contains($this->refnova, 'PLP')
-            || str_contains($this->refnova, 'IRPE')) {
+        if (str_contains($this->reference_nova, 'IPE')
+            || str_contains($this->reference_nova, 'CL')
+            || str_contains($this->reference_nova, 'IRCE')
+            || str_contains($this->reference_nova, 'ICE')
+            || str_contains($this->reference_nova, 'C_')
+            || str_contains($this->reference_nova, 'PLP')
+            || str_contains($this->reference_nova, 'IRPE')) {
             return "PE";
         }
 
@@ -242,7 +242,7 @@ class Permit
 
     private function setLanguage(): ?string
     {
-        return $this->attributes_array['langue_demande'] ?? $this->attributes_array['languedemande'] ?? null;
+        return $this->contextAttribute(Attribute::LANGUAGE);
     }
 
     private function setObject(): array
@@ -250,8 +250,8 @@ class Permit
         $object['fr']['standard'] = $this->attributes_array['object_fr'] ?? $this->attributes_array['objectfr'] ?? null;
         $object['nl']['standard'] = $this->attributes_array['object_nl'] ?? $this->attributes_array['objectnl'] ?? null;
 
-        $object['fr']['real'] = $this->attributes_array['real_object_fr'] ?? $this->attributes_array['realobjectfr'] ?? null;
-        $object['nl']['real'] = $this->attributes_array['real_object_nl'] ?? $this->attributes_array['realobjectnl'] ?? null;
+        $object['fr']['real'] = $this->contextAttribute(Attribute::OBJECT_FR);
+        $object['nl']['real'] = $this->contextAttribute(Attribute::OBJECT_NL);
 
         return $object;
     }
@@ -300,13 +300,13 @@ class Permit
 
     private function setDateArc(): ?DateTime
     {
-        $date = $this->attributes_array['date_arc'] ?? $this->attributes_array['datearclast'] ?? null;
+        $date = $this->contextAttribute(Attribute::DATE_ARC);
         return self::toDatetime($date);
     }
 
     private function setDateAri(): ?DateTime
     {
-        $date = $this->attributes_array['date_ari'] ?? $this->attributes_array['datearilast'] ?? null;
+        $date = $this->contextAttribute(Attribute::DATE_ARI);
         if (is_null($date)) {
             return null;
         }
@@ -315,32 +315,32 @@ class Permit
 
     private function setDateSubmission(): ?DateTime
     {
-        $date = $this->attributes_array['date_depot'] ?? $this->attributes_array['datedepot'] ?? null;
+        $date = $this->contextAttribute(Attribute::DATE_SUBMISSION);
         return self::toDatetime($date);
     }
 
     private function setDateCc(): ?DateTime
     {
-        $date = $this->attributes_array['date_cc'] ?? $this->attributes_array['datecc'] ?? null;
+        $date = $this->contextAttribute(Attribute::DATE_CC);
         return self::toDatetime($date);
     }
 
     private function setDateAdditionalElements(): ?DateTime
     {
-        $date = $this->attributes_array['dateelemcomplast'] ?? null; // Todo: check for PE
+        $date = $this->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS); // Todo: check for PE
         return self::toDatetime($date);
     }
 
     private function setDateNotification(): ?DateTime
     {
-        $date = $this->attributes_array['date_notif_decision'] ?? $this->attributes_array['datenotifdecision'] ?? null;
+        $date = $this->contextAttribute(Attribute::DATE_NOTIFICATION);
         return self::toDatetime($date);
     }
 
     public function setAttributesArray(): ?array
     {
         $wfs = new WfsLayer($this->source['base_path'], $this->source['layer_name']);
-        $permits = $wfs->setCqlFilter($this->contextAttribute(Attribute::REFNOVA).'=\''.$this->refnova.'\'')
+        $permits = $wfs->setCqlFilter($this->contextAttribute(Attribute::REFERENCE_NOVA).'=\''.$this->reference_nova.'\'')
             ->setCount(1)
             ->setOutputSrs(4326)
             ->getPropertiesArray(true);
@@ -350,8 +350,8 @@ class Permit
 
     public function setAddress(): array
     {
-        $address['streetname']['fr'] = $this->attributes_array['streetname_fr'] ?? $this->attributes_array['streetnamefr'] ?? null;
-        $address['streetname']['nl'] = $this->attributes_array['streetname_nl'] ?? $this->attributes_array['streetnamenl'] ?? null;
+        $address['streetname']['fr'] = $this->contextAttribute(Attribute::STREET_NAME_FR);
+        $address['streetname']['nl'] = $this->contextAttribute(Attribute::STREET_NAME_NL);
         if ($address['streetname']['fr'] === "") {
             $address['streetname']['fr'] = null;
         }
@@ -359,8 +359,8 @@ class Permit
             $address['streetname']['nl'] = null;
         }
 
-        $address['number']['from'] = $this->attributes_array['number_from'] ?? $this->attributes_array['numberpartfrom'] ?? null;
-        $address['number']['to'] = $this->attributes_array['number_to'] ?? $this->attributes_array['numberpartto'] ?? null;
+        $address['number']['from'] = $this->contextAttribute(Attribute::STREET_NUMBER_FROM);
+        $address['number']['to'] = $this->contextAttribute(Attribute::STREET_NUMBER_TO);
 
         if ($address['number']['from'] === "") {
             $address['number']['from'] = null;
@@ -373,8 +373,8 @@ class Permit
                 $address['number']['to']
             )) ? $address['number']['from'].'-'.$address['number']['to'] : $address['number']['from'];
 
-        $address['municipality']['fr'] = $this->attributes_array['municipality_fr'] ?? $this->attributes_array['municipalityfr'] ?? null;
-        $address['municipality']['nl'] = $this->attributes_array['municipality_nl'] ?? $this->attributes_array['municipalitynl'] ?? null;
+        $address['municipality']['fr'] = $this->contextAttribute(Attribute::MUNICIPALITY_FR);
+        $address['municipality']['nl'] = $this->contextAttribute(Attribute::MUNICIPALITY_NL);
 
         $address['zipcode'] = (int)$this->attributes_array['zipcode'];
 
@@ -442,21 +442,21 @@ class Permit
                 'base_path' => 'https://geoservices-others.irisnet.be/geoserver/Nova/ows',
                 'layer_name' => 'Nova:vm_nova_pe',
             ];
-            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=ref_nova=\''.$this->refnova.'\'';
+            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=ref_nova=\''.$this->reference_nova.'\'';
         } else {
             $source = [
                 'base_path' => 'https://geoservices-others.irisnet.be/geoserver/ows',
                 'layer_name' => 'Nova:vmnovaurbanview',
             ];
-            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=refnova=\''.$this->refnova.'\'';
+            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=refnova=\''.$this->reference_nova.'\'';
         }
 
         return $source;
     }
 
-    public function getRefnova(): string
+    public function getReferencenova(): string
     {
-        return $this->refnova;
+        return $this->reference_nova;
     }
 
     public function getSubtype(): array

@@ -14,11 +14,17 @@ enum Attribute
     case DATE_NOTIFICATION;
     case DATE_SUBMISSION;
     case LANGUAGE;
+    case MUNICIPALITY_FR;
+    case MUNICIPALITY_NL;
     case OBJECT_FR;
     case OBJECT_NL;
-    case REFNOVA;
+    case REFERENCE_DOSSIER;
+    case REFERENCE_MUNICIPALITY;
+    case REFERENCE_NOVA;
     case STREET_NAME_FR;
     case STREET_NAME_NL;
+    case STREET_NUMBER_FROM;
+    case STREET_NUMBER_TO;
     case SUBTYPE;
 
     public function pu(): string
@@ -35,12 +41,18 @@ enum Attribute
             self::DATE_NOTIFICATION => 'datenotifdecision',
             self::DATE_SUBMISSION => 'datedepot',
             self::LANGUAGE => 'languedemande',
-            self::OBJECT_FR => '',
-            self::OBJECT_NL => '',
-            self::REFNOVA => 'refnova',
+            self::MUNICIPALITY_FR => 'municipalityfr',
+            self::MUNICIPALITY_NL => 'municipalitynl',
+            self::OBJECT_FR => 'realobjectfr',
+            self::OBJECT_NL => 'realobjectnl',
+            self::REFERENCE_DOSSIER => 's_iddossier',
+            self::REFERENCE_MUNICIPALITY => 'referencespecifique',
+            self::REFERENCE_NOVA => 'refnova',
             self::SUBTYPE => 'typedossier',
             self::STREET_NAME_FR => 'streetnamefr',
             self::STREET_NAME_NL => 'streetnamenl',
+            self::STREET_NUMBER_FROM => 'numberpartfrom',
+            self::STREET_NUMBER_TO => 'numberpartto',
         };
     }
 
@@ -58,12 +70,18 @@ enum Attribute
             self::DATE_NOTIFICATION => 'date_notif_decision',
             self::DATE_SUBMISSION => 'date_depot',
             self::LANGUAGE => 'langue_demande',
-            self::OBJECT_FR => '',
-            self::OBJECT_NL => '',
-            self::REFNOVA => 'ref_nova',
+            self::MUNICIPALITY_FR => 'municipality_fr',
+            self::MUNICIPALITY_NL => 'municipality_nl',
+            self::OBJECT_FR => 'object_fr',
+            self::OBJECT_NL => 'object_nl',
+            self::REFERENCE_DOSSIER => 'nova_seq',
+            self::REFERENCE_MUNICIPALITY => 'ref_com',
+            self::REFERENCE_NOVA => 'ref_nova',
             self::SUBTYPE => 'case_subtype',
             self::STREET_NAME_FR => 'streetname_fr',
             self::STREET_NAME_NL => 'streetname_nl',
+            self::STREET_NUMBER_FROM => 'number_from',
+            self::STREET_NUMBER_TO => 'number_to',
         };
     }
 }

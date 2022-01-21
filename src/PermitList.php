@@ -86,6 +86,13 @@ class PermitList
         return $this;
     }
 
+    public function filterByReferences(array $references, Attribute $attribute): self
+    {
+        $this->cql_filter = $this->contextAttribute($attribute) . " IN ('" . implode("','", $references)."')";
+
+        return $this;
+    }
+
     public function setLimit(int $limit): self
     {
         $this->limit = $limit;
