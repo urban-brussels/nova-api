@@ -234,7 +234,7 @@ class Permit
 
     private function setLanguage(): ?string
     {
-        return $this->contextAttribute(Attribute::LANGUAGE);
+        return $this->fromArray($this->contextAttribute(Attribute::LANGUAGE));
     }
 
     private function setObject(): array
