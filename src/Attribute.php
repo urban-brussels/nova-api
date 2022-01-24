@@ -26,6 +26,7 @@ enum Attribute
     case STREET_NUMBER_FROM;
     case STREET_NUMBER_TO;
     case SUBTYPE;
+    case ZIPCODE;
 
     public function pu(): string
     {
@@ -53,6 +54,7 @@ enum Attribute
             self::STREET_NAME_NL => 'streetnamenl',
             self::STREET_NUMBER_FROM => 'numberpartfrom',
             self::STREET_NUMBER_TO => 'numberpartto',
+            self::ZIPCODE => 'zipcode',
         };
     }
 
@@ -82,6 +84,7 @@ enum Attribute
             self::STREET_NAME_NL => 'streetname_nl',
             self::STREET_NUMBER_FROM => 'number_from',
             self::STREET_NUMBER_TO => 'number_to',
+            self::ZIPCODE => 'zipcode',
         };
     }
 }
