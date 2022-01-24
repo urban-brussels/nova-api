@@ -139,6 +139,12 @@ class PermitList
         return $this->results;
     }
 
+
+    public function count(): int
+    {
+        return count($this->results) ?? 0;
+    }
+
     private function contextAttribute(Attribute $attribute): string
     {
         return $this->type === "PU" ? $attribute->pu() : $attribute->pe();
