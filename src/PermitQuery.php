@@ -126,8 +126,8 @@ class PermitQuery
         foreach ($results as $result) {
             $permit = new Permit($result[$this->contextAttribute(Attribute::REFERENCE_NOVA)]);
             $permit->setLanguage($result[$this->contextAttribute(Attribute::LANGUAGE)]);
-            //$permit->setType($this->type);
-            $permit->setSubtype($result[$this->contextAttribute(Attribute::SUBTYPE)]);
+            $permit->setType($this->type);
+            //$permit->setSubtype($result[$this->contextAttribute(Attribute::SUBTYPE)]);
             $permit->setDateSubmission(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_SUBMISSION)]));
             $permit->setDateArc(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARC)]));
             $permit->setDateAri(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARI)]));
