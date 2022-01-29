@@ -9,24 +9,24 @@ class Permit
     public string $reference_nova;
     public string $type;
     public array $subtype;
-    public array $object;
-    private ?array $attributes_array;
-    public array $source;
-    public bool $validation;
+    public ?string $language;
+
+    public ?DateTime $date_submission;
+    public ?DateTime $date_arc;
+    public ?DateTime $date_ari;
+    public ?DateTime $date_additional_elements;
     public ?DateTime $date_inquiry_begin;
     public ?DateTime $date_inquiry_end;
+    public ?DateTime $date_cc;
+    public ?DateTime $date_notification;
+    public array $object;
     public bool $inquiry_active;
     public array $advices;
     public array $references;
-    public ?string $language;
+    public array $source;
+    public bool $validation;
     public array $address;
     public array $area_typology;
-    public ?DateTime $date_arc;
-    public ?DateTime $date_ari;
-    public ?DateTime $date_submission;
-    public ?DateTime $date_cc;
-    public ?DateTime $date_notification;
-    public ?DateTime $date_additional_elements;
     public array $links;
     public ?string $status;
     public ?string $authority;
@@ -102,22 +102,6 @@ class Permit
     public function setObject(array $object): void
     {
         $this->object = $object;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getAttributesArray(): ?array
-    {
-        return $this->attributes_array;
-    }
-
-    /**
-     * @param array|null $attributes_array
-     */
-    public function setAttributesArray(?array $attributes_array): void
-    {
-        $this->attributes_array = $attributes_array;
     }
 
     /**

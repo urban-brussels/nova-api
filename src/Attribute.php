@@ -35,7 +35,7 @@ enum Attribute
             self::CHARGES => 'deliveredpermittotalcharge',
             self::DATE_ADDITIONAL_ELEMENTS => 'dateelemcomplast',
             self::DATE_ARC => 'datearclast',
-            self::DATE_ARI => 'datearilast',
+            self::DATE_ARI => 'datearifirst',
             self::DATE_CC => 'datecc',
             self::DATE_INQUIRY_BEGIN => 'datedebutmpp',
             self::DATE_INQUIRY_END => 'datefinmpp',

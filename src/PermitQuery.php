@@ -133,6 +133,7 @@ class PermitQuery
             $permit->setDateCc(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_CC)]));
             $permit->setDateInquiryBegin(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_INQUIRY_BEGIN)]));
             $permit->setDateNotification(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_NOTIFICATION)]));
+            $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
             $permit->setType($this->type);
 
             $this->permits->addPermit($permit);
@@ -173,6 +174,27 @@ class PermitQuery
             $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
         }
         return $date_time;
+    }
+
+    private function defineAreaTypologyFromAttributes(array $attributes): array
+    {
+        if ($this->type === "PE") {
+            return [];
+        }
+        $typology = [];
+
+        foreach ($area_typology as $k => $v) {
+            if (!is_null($v) && (str_contains($k, 'autorized') || str_contains($k, 'existing') || str_contains(
+                        $k,
+                        'projected'
+                    ))) {
+                $type = str_replace(['autorized', 'existing', 'projected'], '', $k);
+                $subtype = str_replace($type, '', $k);
+                $typology[$type][$subtype] = $v;
+            }
+        }
+
+        return $typology;
     }
 
 }
