@@ -183,7 +183,7 @@ class PermitQuery
         }
         $typology = [];
 
-        foreach ($area_typology as $k => $v) {
+        foreach ($attributes as $k => $v) {
             if (!is_null($v) && (str_contains($k, 'autorized') || str_contains($k, 'existing') || str_contains(
                         $k,
                         'projected'
