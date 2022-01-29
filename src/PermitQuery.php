@@ -2,9 +2,11 @@
 
 namespace UrbanBrussels\NovaApi;
 
+use DateTime;
+use DateTimeZone;
 use ici\ici_tools\WfsLayer;
 
-class PermitList
+class PermitQuery
 {
     private const PU_PATH = 'https://geoservices-others.irisnet.be/geoserver/Nova/ows';
     private const PE_PATH = self::PU_PATH;
@@ -18,6 +20,7 @@ class PermitList
     private string $type;
     private int $limit = 1000;
     private array $order;
+    public PermitCollection $permits;
 
     public function __construct(string $type)
     {
@@ -29,6 +32,8 @@ class PermitList
             $this->path = self::PU_PATH;
             $this->layer = self::PU_LAYER_NAME;
         }
+
+        $this->permits = new PermitCollection();
     }
 
     public function filterById(int $id): self
@@ -106,7 +111,7 @@ class PermitList
         return $this;
     }
 
-    public function getResults(): self
+    public function getResults(): PermitCollection
     {
         $wfs = new WfsLayer($this->path, $this->layer);
         $wfs->setCqlFilter($this->cql_filter)
@@ -118,15 +123,15 @@ class PermitList
 
         $results = $wfs->getPropertiesArray(false);
 
-        $list = [];
-
         foreach ($results as $result) {
-            $list[] = new OldPermit(($result['ref_nova'] ?? $result['refnova']), $result);
+            $permit = new Permit($result[$this->contextAttribute(Attribute::REFERENCE_DOSSIER)]);
+            $permit->setLanguage($result[$this->contextAttribute(Attribute::LANGUAGE)]);
+            $permit->setType($this->type);
+
+            $this->permits->addPermit($permit);
         }
 
-        $this->results = $list;
-
-        return $this;
+        return $this->permits;
     }
 
     public function first(): ?OldPermit
@@ -147,6 +152,20 @@ class PermitList
     private function contextAttribute(Attribute $attribute): string
     {
         return $this->type === "PU" ? $attribute->pu() : $attribute->pe();
+    }
+
+
+    private static function toDatetime(?string $date): ?DateTime {
+        if (is_null($date)) {
+            return null;
+        }
+
+        // Two formats needed because of inconsistencies in Nova data
+        $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $date, new DateTimeZone('Europe/Brussels'));
+        if(!$date_time) {
+            $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
+        }
+        return $date_time;
     }
 
 }
