@@ -212,7 +212,7 @@ class PermitQuery
     {
         $advices = [];
 
-        $advices['college'] = $attributes['avis_cbe'] ?? $attributes['cbe'];
+        $advices['college'] = $attributes['avis_cbe'] ?? $attributes['aviscbe'];
         $advices['cc'] = $attributes['avis_cc'] ?? $attributes['aviscc'];
         $advices['fd'] = $attributes['avis_fd'] ?? $attributes['avisfd'];
 
