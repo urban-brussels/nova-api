@@ -124,8 +124,15 @@ class PermitQuery
         $results = $wfs->getPropertiesArray(false);
 
         foreach ($results as $result) {
-            $permit = new Permit($result[$this->contextAttribute(Attribute::REFERENCE_DOSSIER)]);
+            $permit = new Permit($result[$this->contextAttribute(Attribute::REFERENCE_NOVA)]);
             $permit->setLanguage($result[$this->contextAttribute(Attribute::LANGUAGE)]);
+            $permit->setDateSubmission(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_SUBMISSION)]));
+            $permit->setDateArc(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARC)]));
+            $permit->setDateAri(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARI)]));
+            $permit->setDateAdditionalElements(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS)]));
+            $permit->setDateCc(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_CC)]));
+            $permit->setDateInquiryBegin(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_INQUIRY_BEGIN)]));
+            $permit->setDateNotification(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_NOTIFICATION)]));
             $permit->setType($this->type);
 
             $this->permits->addPermit($permit);
