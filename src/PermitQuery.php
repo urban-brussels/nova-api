@@ -142,6 +142,7 @@ class PermitQuery
             $permit->setAdvices($this->defineAdvicesFromAttributes($result));
             $permit->setAddress($this->defineAddressFromAttributes($result));
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
+            $permit->setSuspensions($this->defineSuspensions($result['suspensions'] ?? null));
 
             $this->permits->addPermit($permit);
         }
@@ -284,5 +285,26 @@ class PermitQuery
         }
 
         return $source;
+    }
+
+
+    private function defineSuspensions(?string $json_suspensions): array
+    {
+        $suspensions = [];
+
+        if(is_null($json_suspensions)) {
+            return $suspensions;
+        }
+
+        $array_suspensions = json_decode($json_suspensions, true);
+
+        foreach($array_suspensions as $suspension) {
+            $suspensions['fr'] = $suspension[0]['suspension']['motif-fr'];
+            $suspensions['nl'] = $suspension[0]['suspension']['motif-nl'];
+            $suspensions['from'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-from'], new DateTimeZone('Europe/Brussels'));
+            $suspensions['to'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-to'], new DateTimeZone('Europe/Brussels'));
+        }
+
+        return $suspensions;
     }
 }
