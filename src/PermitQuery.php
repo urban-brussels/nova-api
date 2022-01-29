@@ -138,6 +138,7 @@ class PermitQuery
             $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
             $permit->setAdvices($this->defineAdviceInstances($result['avis_instances'] ?? null));
             $permit->setAddress($this->defineAddressFromAttributes($result));
+            $permit->setSource($this->defineSource($permit->getReferenceNova()));
 
             $this->permits->addPermit($permit);
         }
@@ -250,5 +251,25 @@ class PermitQuery
         $address['zipcode'] = (int)$attributes['zipcode'];
 
         return $address;
+    }
+
+
+    public function defineSource($reference_nova): array
+    {
+        if ($this->type === 'PE') {
+            $source = [
+                'base_path' => self::PE_PATH,
+                'layer_name' => self::PE_LAYER_NAME,
+            ];
+            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=ref_nova=\''.$reference_nova.'\'';
+        } else {
+            $source = [
+                'base_path' => self::PU_PATH,
+                'layer_name' => self::PU_LAYER_NAME,
+            ];
+            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=refnova=\''.$reference_nova.'\'';
+        }
+
+        return $source;
     }
 }
