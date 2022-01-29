@@ -126,7 +126,7 @@ class PermitQuery
         foreach ($results as $result) {
             $permit = new Permit($result[$this->contextAttribute(Attribute::REFERENCE_NOVA)]);
             $permit->setLanguage($result[$this->contextAttribute(Attribute::LANGUAGE)]);
-            $permit->setType($this->type);
+            //$permit->setType($this->type);
             $permit->setSubtype($result[$this->contextAttribute(Attribute::SUBTYPE)]);
             $permit->setDateSubmission(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_SUBMISSION)]));
             $permit->setDateArc(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARC)]));
@@ -221,8 +221,8 @@ class PermitQuery
 
     public function defineAddressFromAttributes(array $attributes): array
     {
-        $address['streetname']['fr'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NAME_FR));
-        $address['streetname']['nl'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NAME_NL));
+        $address['streetname']['fr'] = $attributes[$this->contextAttribute(Attribute::STREET_NAME_FR)] ?? null;
+        $address['streetname']['nl'] = $attributes[$this->contextAttribute(Attribute::STREET_NAME_NL)] ?? null;
         if (empty($address['streetname']['fr'])) {
             $address['streetname']['fr'] = null;
         }
@@ -230,8 +230,8 @@ class PermitQuery
             $address['streetname']['nl'] = null;
         }
 
-        $address['number']['from'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NUMBER_FROM));
-        $address['number']['to'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NUMBER_TO));
+        $address['number']['from'] = $attributes[$this->contextAttribute(Attribute::STREET_NUMBER_FROM)] ?? null;
+        $address['number']['to'] = $attributes[$this->contextAttribute(Attribute::STREET_NUMBER_TO)] ?? null;
 
         if (empty($address['number']['from'])) {
             $address['number']['from'] = null;
@@ -244,16 +244,11 @@ class PermitQuery
                 $address['number']['to']
             )) ? $address['number']['from'].'-'.$address['number']['to'] : $address['number']['from'];
 
-        $address['municipality']['fr'] = $this->fromArray($this->contextAttribute(Attribute::MUNICIPALITY_FR));
-        $address['municipality']['nl'] = $this->fromArray($this->contextAttribute(Attribute::MUNICIPALITY_NL));
+        $address['municipality']['fr'] = $attributes[$this->contextAttribute(Attribute::MUNICIPALITY_FR)];
+        $address['municipality']['nl'] = $attributes[$this->contextAttribute(Attribute::MUNICIPALITY_NL)];
 
-        $address['zipcode'] = (int)$this->fromArray('zipcode');
+        $address['zipcode'] = (int)$attributes['zipcode'];
 
         return $address;
-    }
-
-    private function fromArray(string $attribute)
-    {
-        return $this->attributes_array[$attribute] ?? null;
     }
 }
