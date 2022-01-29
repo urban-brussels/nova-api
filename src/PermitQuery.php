@@ -126,6 +126,8 @@ class PermitQuery
         foreach ($results as $result) {
             $permit = new Permit($result[$this->contextAttribute(Attribute::REFERENCE_NOVA)]);
             $permit->setLanguage($result[$this->contextAttribute(Attribute::LANGUAGE)]);
+            $permit->setType($this->type);
+            $permit->setSubtype($result[$this->contextAttribute(Attribute::SUBTYPE)]);
             $permit->setDateSubmission(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_SUBMISSION)]));
             $permit->setDateArc(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARC)]));
             $permit->setDateAri(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARI)]));
@@ -134,7 +136,8 @@ class PermitQuery
             $permit->setDateInquiryBegin(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_INQUIRY_BEGIN)]));
             $permit->setDateNotification(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_NOTIFICATION)]));
             $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
-            $permit->setType($this->type);
+            $permit->setAdvices($this->defineAdviceInstances($result['avis_instances'] ?? null));
+            $permit->setAddress($this->defineAddressFromAttributes($result));
 
             $this->permits->addPermit($permit);
         }
@@ -197,4 +200,60 @@ class PermitQuery
         return $typology;
     }
 
+    private function defineAdviceInstances(?string $advice_instances): array
+    {
+        $json_advices = $advice_instances ?? null;
+        if (is_null($json_advices)) {
+            return [];
+        }
+        $json_advices = json_decode($json_advices, true, 512, JSON_THROW_ON_ERROR);
+
+        $instances['fr'] = [];
+        $instances['nl'] = [];
+
+        foreach ($json_advices['data']['Case_Advice_Instance_List']['elements'] as $instance) {
+            $instances['fr'][] = $instance['translations'][0]['label'];
+            $instances['nl'][] = $instance['translations'][1]['label'];
+        }
+
+        return $instances;
+    }
+
+    public function defineAddressFromAttributes(array $attributes): array
+    {
+        $address['streetname']['fr'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NAME_FR));
+        $address['streetname']['nl'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NAME_NL));
+        if (empty($address['streetname']['fr'])) {
+            $address['streetname']['fr'] = null;
+        }
+        if (empty($address['streetname']['nl'])) {
+            $address['streetname']['nl'] = null;
+        }
+
+        $address['number']['from'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NUMBER_FROM));
+        $address['number']['to'] = $this->fromArray($this->contextAttribute(Attribute::STREET_NUMBER_TO));
+
+        if (empty($address['number']['from'])) {
+            $address['number']['from'] = null;
+        }
+        if (empty($address['number']['to'])) {
+            $address['number']['to'] = null;
+        }
+
+        $address['number']['full'] = (!is_null($address['number']['from']) && !is_null(
+                $address['number']['to']
+            )) ? $address['number']['from'].'-'.$address['number']['to'] : $address['number']['from'];
+
+        $address['municipality']['fr'] = $this->fromArray($this->contextAttribute(Attribute::MUNICIPALITY_FR));
+        $address['municipality']['nl'] = $this->fromArray($this->contextAttribute(Attribute::MUNICIPALITY_NL));
+
+        $address['zipcode'] = (int)$this->fromArray('zipcode');
+
+        return $address;
+    }
+
+    private function fromArray(string $attribute)
+    {
+        return $this->attributes_array[$attribute] ?? null;
+    }
 }
