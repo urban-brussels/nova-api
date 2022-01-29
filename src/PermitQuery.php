@@ -111,6 +111,9 @@ class PermitQuery
         return $this;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function getResults(): PermitCollection
     {
         $wfs = new WfsLayer($this->path, $this->layer);
@@ -136,7 +139,7 @@ class PermitQuery
             $permit->setDateInquiryBegin(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_INQUIRY_BEGIN)]));
             $permit->setDateNotification(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_NOTIFICATION)]));
             $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
-            $permit->setAdvices($this->defineAdviceInstances($result['avis_instances'] ?? null));
+            $permit->setAdvices($this->defineAdvicesFromAttributes($result));
             $permit->setAddress($this->defineAddressFromAttributes($result));
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
 
@@ -146,7 +149,7 @@ class PermitQuery
         return $this->permits;
     }
 
-    public function first(): ?OldPermit
+    public function first(): ?Permit
     {
         return $this->results[0] ?? null;
     }
@@ -201,11 +204,21 @@ class PermitQuery
         return $typology;
     }
 
-    private function defineAdviceInstances(?string $advice_instances): array
+    /**
+     * @throws \JsonException
+     */
+    private function defineAdvicesFromAttributes(array $attributes): array
     {
-        $json_advices = $advice_instances ?? null;
+        $advices = [];
+
+        $advices['college'] = $attributes['avis_cbe'] ?? $attributes['cbe'];
+        $advices['cc'] = $attributes['avis_cc'] ?? $attributes['aviscc'];
+        $advices['fd'] = $attributes['avis_fd'] ?? $attributes['avisfd'];
+
+
+        $json_advices = $attributes['avis_instances'] ?? null;
         if (is_null($json_advices)) {
-            return [];
+            return $advices;
         }
         $json_advices = json_decode($json_advices, true, 512, JSON_THROW_ON_ERROR);
 
@@ -217,7 +230,7 @@ class PermitQuery
             $instances['nl'][] = $instance['translations'][1]['label'];
         }
 
-        return $instances;
+        return $advices['instances'] = $instances;
     }
 
     public function defineAddressFromAttributes(array $attributes): array
