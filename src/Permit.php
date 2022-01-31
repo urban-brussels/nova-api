@@ -30,8 +30,6 @@ class Permit
     public array $address;
     public array $area_typology;
     public ?string $status;
-    public ?string $authority;
-    public array $errors;
     public ?int $charges;
     public array $suspensions;
 
@@ -411,38 +409,6 @@ class Permit
     }
 
     /**
-     * @return string|null
-     */
-    public function getAuthority(): ?string
-    {
-        return $this->authority;
-    }
-
-    /**
-     * @param string|null $authority
-     */
-    public function setAuthority(?string $authority): void
-    {
-        $this->authority = $authority;
-    }
-
-    /**
-     * @return array
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
-    }
-
-    /**
-     * @param array $errors
-     */
-    public function setErrors(array $errors): void
-    {
-        $this->errors = $errors;
-    }
-
-    /**
      * @return int|null
      */
     public function getCharges(): ?int
@@ -539,5 +505,22 @@ class Permit
         $references['mixed_permit'] = $this->getReferenceMixedPermit();
 
         return $references;
+    }
+
+    private function getAuthority(): ?string
+    {
+        $subtype = $this->getSubtype();
+        if (in_array(
+            $this->getSubtype(),
+            ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD"]
+        )) {
+            return "region";
+        }
+
+        if (!is_null($subtype)) {
+            return "municipality";
+        }
+
+        return null;
     }
 }

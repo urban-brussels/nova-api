@@ -16,8 +16,10 @@ enum Attribute
     case LANGUAGE;
     case MUNICIPALITY_FR;
     case MUNICIPALITY_NL;
-    case OBJECT_FR;
-    case OBJECT_NL;
+    case OBJECT_REAL_FR;
+    case OBJECT_REAL_NL;
+    case OBJECT_STANDARD_FR;
+    case OBJECT_STANDARD_NL;
     case REFERENCE_FILE;
     case REFERENCE_MIXED_PERMIT;
     case REFERENCE_MUNICIPALITY;
@@ -45,8 +47,10 @@ enum Attribute
             self::LANGUAGE => 'languedemande',
             self::MUNICIPALITY_FR => 'municipalityfr',
             self::MUNICIPALITY_NL => 'municipalitynl',
-            self::OBJECT_FR => 'realobjectfr',
-            self::OBJECT_NL => 'realobjectnl',
+            self::OBJECT_REAL_FR => 'realobjectfr',
+            self::OBJECT_REAL_NL => 'realobjectnl',
+            self::OBJECT_STANDARD_FR => 'objectfr',
+            self::OBJECT_STANDARD_NL => 'objectnl',
             self::REFERENCE_FILE => 's_iddossier',
             self::REFERENCE_MIXED_PERMIT => 'refmixedpermit',
             self::REFERENCE_MUNICIPALITY => 'referencespecifique',
@@ -76,8 +80,10 @@ enum Attribute
             self::LANGUAGE => 'langue_demande',
             self::MUNICIPALITY_FR => 'municipality_fr',
             self::MUNICIPALITY_NL => 'municipality_nl',
-            self::OBJECT_FR => 'object_fr',
-            self::OBJECT_NL => 'object_nl',
+            self::OBJECT_REAL_FR => '',
+            self::OBJECT_REAL_NL => '',
+            self::OBJECT_STANDARD_FR => 'object_fr',
+            self::OBJECT_STANDARD_NL => 'object_nl',
             self::REFERENCE_FILE => 'nova_seq',
             self::REFERENCE_MIXED_PERMIT => 'ref_mixed_permit',
             self::REFERENCE_MUNICIPALITY => 'ref_com',

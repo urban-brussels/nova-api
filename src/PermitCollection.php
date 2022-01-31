@@ -79,6 +79,7 @@ class PermitCollection implements \Iterator
             $permit = new Permit($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_NOVA)]);
             $permit->setLanguage($result[$this->permit_query->contextAttribute(Attribute::LANGUAGE)]);
             $permit->setType($this->permit_query->type);
+            $permit->setSubtype($result[$this->permit_query->contextAttribute(Attribute::SUBTYPE)]);
             $permit->setDateSubmission($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_SUBMISSION)]));
             $permit->setDateArc($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ARC)]));
             $permit->setDateAri($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ARI)]));
@@ -97,6 +98,8 @@ class PermitCollection implements \Iterator
             $permit->setReferenceMunicipality($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MUNICIPALITY)]);
             $permit->setReferenceMixedPermit($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MIXED_PERMIT)]);
             $permit->setCharges($result['deliveredpermittotalcharge'] ?? null);
+            $permit->setObject($this->defineObjectFromAttributes($result));
+            $permit->setStatus($this->defineStatusFromAttributes($result));
 
             $this->addPermit($permit);
         }
@@ -229,4 +232,47 @@ class PermitCollection implements \Iterator
         return $suspensions;
     }
 
+    private function defineObjectFromAttributes(array $attributes): array
+    {
+        $object['fr']['standard'] = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_STANDARD_FR)] ?? null;
+        $object['nl']['standard'] = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_STANDARD_NL)] ?? null;
+
+        $object['fr']['real'] = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_REAL_FR)] ?? null;
+        $object['nl']['real'] = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_REAL_NL)] ?? null;
+
+        return $object;
+    }
+
+
+    private function defineStatusFromAttributes(array $attributes): ?string
+    {
+        $status_fr = $attributes['statutpermisfr'] ?? null;
+        $final_state = $attributes['statut_dossier'] ?? $attributes['etatfinal'] ?? null;
+
+        if ($status_fr === "Annulé") {
+            return 'canceled';
+        }
+
+        if ($final_state === "R") {
+            return 'appeal';
+        }
+
+        if ($final_state === "S") {
+            return 'suspended';
+        }
+
+        if ($final_state === "I") {
+            return 'instruction';
+        }
+
+        if ($final_state === "V") {
+            return 'delivered';
+        }
+
+        if ($final_state === "NV") {
+            return 'refused';
+        }
+
+        return null;
+    }
 }
