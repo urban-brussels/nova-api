@@ -91,7 +91,7 @@ class PermitCollection implements \Iterator
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
             $permit->setSuspensions($this->defineSuspensions($result['suspensions'] ?? null));
 
-            $this->permits->addPermit($permit);
+            $this->addPermit($permit);
         }
 
         return $this;

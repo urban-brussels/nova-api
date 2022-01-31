@@ -20,7 +20,6 @@ class PermitQuery
     public string $type;
     public int $limit = 1000;
     private array $order;
-    public PermitCollection $permits;
 
     public function __construct(string $type)
     {
@@ -32,8 +31,6 @@ class PermitQuery
             $this->path = self::PU_PATH;
             $this->layer = self::PU_LAYER_NAME;
         }
-
-        $this->permits = new PermitCollection();
     }
 
     public function filterById(int $id): self
