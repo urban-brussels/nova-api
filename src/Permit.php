@@ -10,6 +10,10 @@ class Permit
     public string $type;
     public array $subtype;
     public ?string $language;
+    public string $uuid;
+    public int $reference_file;
+    public string $reference_municipality;
+    public string $reference_mixed_permit;
 
     public ?DateTime $date_submission;
     public ?DateTime $date_arc;
@@ -101,6 +105,71 @@ class Permit
     public function setObject(array $object): void
     {
         $this->object = $object;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @param string $uuid
+     */
+    public function setUuid(string $uuid): void
+    {
+        $this->uuid = $uuid;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReferenceFile(): int
+    {
+        return $this->reference_file;
+    }
+
+    /**
+     * @param int $reference_file
+     */
+    public function setReferenceFile(int $reference_file): void
+    {
+        $this->reference_file = $reference_file;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferenceMunicipality(): string
+    {
+        return $this->reference_municipality;
+    }
+
+    /**
+     * @param string $reference_municipality
+     */
+    public function setReferenceMunicipality(string $reference_municipality): void
+    {
+        $this->reference_municipality = $reference_municipality;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferenceMixedPermit(): string
+    {
+        return $this->reference_mixed_permit;
+    }
+
+    /**
+     * @param string $reference_mixed_permit
+     */
+    public function setReferenceMixedPermit(string $reference_mixed_permit): void
+    {
+        $this->reference_mixed_permit = $reference_mixed_permit;
     }
 
     /**

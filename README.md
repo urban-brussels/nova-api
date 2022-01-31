@@ -10,14 +10,29 @@ division permits and environmental licences. Permit applications can be viewed o
 composer require urban-brussels/nova-api
 ```
 
-## Usages
+## Usage
 
-### Class Permit
 ```php 
-use UrbanBrussels\NovaApi\Permit;
+use UrbanBrussels\NovaApi\PermitQuery;
+use UrbanBrussels\NovaApi\PermitCollection;
 
-// Create instance of Nova Permit, with a regional reference (planning or environment)
-$permit = new Permit('01/PFD/123456');
+$query = new PermitQuery('PU'); // Create a query for planning (PU) or environmental (PE) licences
+$query
+    ->filterByReferences(['04/PFD/1796029', '04/PFD/1795271'], Attribute::REFERENCE_NOVA) // Filter by Nova References
+    ->setOrder(Attribute::DATE_SUBMISSION, Order::DESC) // Order by descending submission date
+    ->setLimit(2); // Limit to 2 results
+
+$list = new PermitCollection($query);
+
+// You now have an array of Permit objects, that can be used in a loop
+foreach ($list->permits as $permit) {
+    echo $permit->getRefnova();
+    echo $permit->getAddress();
+    echo $permit->getDateInquiryEnd();
+    echo $permit->hasActiveInquiry();
+}
+
+// Other available getters
 
 // Get all References in an array (municipal reference, regional reference, uuid, etc)
 $permit->getReferences();
@@ -50,26 +65,17 @@ $permit->getAreaTypology();
 
 ```
 
-### Class PermitList
+### Other queries examples
 
 ```php 
-use UrbanBrussels\NovaApi\PermitList;
+use UrbanBrussels\NovaApi\PermitQuery;
+use UrbanBrussels\NovaApi\PermitCollection;
 
-$list = new PermitList('PU');
+$query = new PermitQuery('PU');
 
 // Retrieve all requests in public inquiry for the date 2022-01-01 (PU for planning requests, PE for environmental requests)
-$permits = $list->filterByInquiryDate('2022-01-01')->getResults()->all();
+$query->filterByInquiryDate('2022-01-01');
 
 // If you use a raw cql_filter, you can query what you want (e.g. every permit request for a given Street + Zipcode)    
-$permits = $list->filterByRawCQL("streetnamefr = 'Rue de Dublin' AND zipcode='1050'" )->getResults()->all();
-
-// Filter by Nova References, order by descending submission date
-$permits = $list->filterByReferences(['04/PFD/1796029', '04/PFD/1795271'], Attribute::REFERENCE_NOVA)->setOrder(Attribute::DATE_SUBMISSION, Order::DESC)->getResults()->all();
-
-// You now have an array of Permit objects, that can be used in a loop
-foreach ($permits as $permit) {
-    echo $permit->getRefnova();
-    echo $permit->getAddress();
-    echo $permit->getDateInquiryEnd();
-}
+$query->filterByRawCQL("streetnamefr = 'Rue de Dublin' AND zipcode='1050'" )->getResults()->all();
 ```
