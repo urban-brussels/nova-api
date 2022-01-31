@@ -12,8 +12,8 @@ class Permit
     public ?string $language;
     public string $uuid;
     public int $reference_file;
-    public string $reference_municipality;
-    public string $reference_mixed_permit;
+    public ?string $reference_municipality;
+    public ?string $reference_mixed_permit;
 
     public ?DateTime $date_submission;
     public ?DateTime $date_arc;
@@ -137,17 +137,17 @@ class Permit
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getReferenceMunicipality(): string
+    public function getReferenceMunicipality(): ?string
     {
         return $this->reference_municipality;
     }
 
     /**
-     * @param string $reference_municipality
+     * @param string|null $reference_municipality
      */
-    public function setReferenceMunicipality(string $reference_municipality): void
+    public function setReferenceMunicipality(?string $reference_municipality): void
     {
         $this->reference_municipality = $reference_municipality;
     }
