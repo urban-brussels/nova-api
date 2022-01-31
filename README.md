@@ -13,6 +13,8 @@ composer require urban-brussels/nova-api
 ## Usage
 
 ```php 
+use UrbanBrussels\NovaApi\Attribute;
+use UrbanBrussels\NovaApi\Order;
 use UrbanBrussels\NovaApi\PermitQuery;
 use UrbanBrussels\NovaApi\PermitCollection;
 

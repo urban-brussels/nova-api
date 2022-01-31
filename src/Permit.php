@@ -8,7 +8,7 @@ class Permit
 {
     public string $reference_nova;
     public string $type;
-    public array $subtype;
+    public string $subtype;
     public ?string $language;
     public string $uuid;
     public int $reference_file;
@@ -72,17 +72,17 @@ class Permit
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getSubtype(): array
+    public function getSubtype(): string
     {
         return $this->subtype;
     }
 
     /**
-     * @param array $subtype
+     * @param string $subtype
      */
-    public function setSubtype(array $subtype): void
+    public function setSubtype(string $subtype): void
     {
         $this->subtype = $subtype;
     }
