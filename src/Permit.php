@@ -153,17 +153,17 @@ class Permit
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getReferenceMixedPermit(): string
+    public function getReferenceMixedPermit(): ?string
     {
         return $this->reference_mixed_permit;
     }
 
     /**
-     * @param string $reference_mixed_permit
+     * @param string|null $reference_mixed_permit
      */
-    public function setReferenceMixedPermit(string $reference_mixed_permit): void
+    public function setReferenceMixedPermit(?string $reference_mixed_permit): void
     {
         $this->reference_mixed_permit = $reference_mixed_permit;
     }
