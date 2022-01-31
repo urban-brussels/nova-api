@@ -20,7 +20,6 @@ class Permit
     public ?DateTime $date_cc;
     public ?DateTime $date_notification;
     public array $object;
-    public bool $active_inquiry;
     public array $advices;
     public array $references;
     public array $source;
@@ -393,22 +392,6 @@ class Permit
     }
 
     /**
-     * @return bool
-     */
-    public function isActiveInquiry(): bool
-    {
-        return $this->active_inquiry;
-    }
-
-    /**
-     * @param bool $active_inquiry
-     */
-    public function setActiveInquiry(bool $active_inquiry): void
-    {
-        $this->active_inquiry = $active_inquiry;
-    }
-
-    /**
      * @return array
      */
     public function getErrors(): array
@@ -495,5 +478,12 @@ class Permit
         }
 
         return $errors;
+    }
+
+    public function hasActiveInquiry():bool
+    {
+        $now = new DateTime();
+
+        return $this->getDateInquiryEnd() > $now && $this->getDateInquiryBegin() < $now;
     }
 }

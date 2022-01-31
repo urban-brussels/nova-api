@@ -91,7 +91,6 @@ class PermitCollection implements \Iterator
             $permit->setAddress($this->defineAddressFromAttributes($result));
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
             $permit->setSuspensions($this->defineSuspensions($result['suspensions'] ?? null));
-            $permit->setActiveInquiry($this->defineActiveInquiry($permit->getDateInquiryBegin(), $permit->getDateInquiryEnd()));
 
             $this->addPermit($permit);
         }
@@ -224,10 +223,4 @@ class PermitCollection implements \Iterator
         return $suspensions;
     }
 
-    private function defineActiveInquiry(?DateTime $date_inquiry_begin, ?Datetime $date_inquiry_end):bool
-    {
-        $now = new DateTime();
-
-        return $date_inquiry_end > $now && $date_inquiry_begin < $now;
-    }
 }
