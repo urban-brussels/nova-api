@@ -85,6 +85,7 @@ class PermitCollection implements \Iterator
             $permit->setDateAdditionalElements($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS)]));
             $permit->setDateCc($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_CC)]));
             $permit->setDateInquiryBegin($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_INQUIRY_BEGIN)]));
+            $permit->setDateInquiryEnd($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_INQUIRY_END)]));
             $permit->setDateNotification($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_NOTIFICATION)]));
             $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
             $permit->setAdvices($this->defineAdvicesFromAttributes($result));
