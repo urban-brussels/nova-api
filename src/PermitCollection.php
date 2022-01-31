@@ -16,6 +16,7 @@ class PermitCollection implements \Iterator
     {
         $this->permit_query = $permit_query;
         $this->permits = [];
+        $this->getResults();
     }
 
     public function addPermit(Permit $permit): void
