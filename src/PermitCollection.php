@@ -93,8 +93,10 @@ class PermitCollection implements \Iterator
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
             $permit->setSuspensions($this->defineSuspensions($result['suspensions'] ?? null));
             $permit->setUuid($result['uuid']);
-            $permit->setReferenceFile($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_DOSSIER)]);
+            $permit->setReferenceFile($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_FILE)]);
             $permit->setReferenceMunicipality($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MUNICIPALITY)]);
+            $permit->setReferenceMixedPermit($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MIXED_PERMIT)]);
+            $permit->setCharges($result['deliveredpermittotalcharge'] ?? null);
 
             $this->addPermit($permit);
         }

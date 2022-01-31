@@ -137,7 +137,7 @@ class OldPermit
     private function setReferences(): array
     {
         $references['uuid'] = $this->fromArray('uuid');
-        $references['reference_dossier'] = $this->fromArray($this->contextAttribute(Attribute::REFERENCE_DOSSIER));
+        $references['reference_dossier'] = $this->fromArray($this->contextAttribute(Attribute::REFERENCE_FILE));
         $references['reference_municipality'] = $this->fromArray($this->contextAttribute(Attribute::REFERENCE_MUNICIPALITY));
         $references['reference_mixed_permit'] = $this->fromArray('ref_mixed_permit') ?? $this->fromArray('refmixedpermit');
 

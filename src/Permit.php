@@ -25,12 +25,10 @@ class Permit
     public ?DateTime $date_notification;
     public array $object;
     public array $advices;
-    public array $references;
     public array $source;
     public bool $validation;
     public array $address;
     public array $area_typology;
-    public array $links;
     public ?string $status;
     public ?string $authority;
     public array $errors;
@@ -62,7 +60,7 @@ class Permit
     /**
      * @return string
      */
-    public function getType(): string
+    protected function getType(): string
     {
         return $this->type;
     }
@@ -253,22 +251,6 @@ class Permit
     }
 
     /**
-     * @return array
-     */
-    public function getReferences(): array
-    {
-        return $this->references;
-    }
-
-    /**
-     * @param array $references
-     */
-    public function setReferences(array $references): void
-    {
-        $this->references = $references;
-    }
-
-    /**
      * @return string|null
      */
     public function getLanguage(): ?string
@@ -413,22 +395,6 @@ class Permit
     }
 
     /**
-     * @return array
-     */
-    public function getLinks(): array
-    {
-        return $this->links;
-    }
-
-    /**
-     * @param array $links
-     */
-    public function setLinks(array $links): void
-    {
-        $this->links = $links;
-    }
-
-    /**
      * @return string|null
      */
     public function getStatus(): ?string
@@ -554,5 +520,24 @@ class Permit
         $now = new DateTime();
 
         return $this->getDateInquiryEnd() > $now && $this->getDateInquiryBegin() < $now;
+    }
+
+    public function getLinks(): array
+    {
+        $links['openpermits']['fr'] = 'https://openpermits.brussels/fr/_'.$this->getReferenceNova();
+        $links['openpermits']['nl'] = 'https://openpermits.brussels/nl/_'.$this->getReferenceNova();
+        $links['nova'] = 'https://nova.brussels/nova-ui/page/open/request/AcmDisplayCase.xhtml?ids=&id='.$this->getReferenceFile().'&uniqueCase=true';
+
+        return $links;
+    }
+
+    public function getReferences(): array
+    {
+        $references['uuid'] = $this->getUuid();
+        $references['file'] = $this->getReferenceFile();
+        $references['municipality'] = $this->getReferenceMunicipality();
+        $references['mixed_permit'] = $this->getReferenceMixedPermit();
+
+        return $references;
     }
 }

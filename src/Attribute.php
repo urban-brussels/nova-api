@@ -18,7 +18,8 @@ enum Attribute
     case MUNICIPALITY_NL;
     case OBJECT_FR;
     case OBJECT_NL;
-    case REFERENCE_DOSSIER;
+    case REFERENCE_FILE;
+    case REFERENCE_MIXED_PERMIT;
     case REFERENCE_MUNICIPALITY;
     case REFERENCE_NOVA;
     case STREET_NAME_FR;
@@ -46,7 +47,8 @@ enum Attribute
             self::MUNICIPALITY_NL => 'municipalitynl',
             self::OBJECT_FR => 'realobjectfr',
             self::OBJECT_NL => 'realobjectnl',
-            self::REFERENCE_DOSSIER => 's_iddossier',
+            self::REFERENCE_FILE => 's_iddossier',
+            self::REFERENCE_MIXED_PERMIT => 'refmixedpermit',
             self::REFERENCE_MUNICIPALITY => 'referencespecifique',
             self::REFERENCE_NOVA => 'refnova',
             self::SUBTYPE => 'typedossier',
@@ -76,7 +78,8 @@ enum Attribute
             self::MUNICIPALITY_NL => 'municipality_nl',
             self::OBJECT_FR => 'object_fr',
             self::OBJECT_NL => 'object_nl',
-            self::REFERENCE_DOSSIER => 'nova_seq',
+            self::REFERENCE_FILE => 'nova_seq',
+            self::REFERENCE_MIXED_PERMIT => 'ref_mixed_permit',
             self::REFERENCE_MUNICIPALITY => 'ref_com',
             self::REFERENCE_NOVA => 'ref_nova',
             self::SUBTYPE => 'case_subtype',
