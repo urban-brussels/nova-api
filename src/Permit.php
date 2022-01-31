@@ -20,7 +20,7 @@ class Permit
     public ?DateTime $date_cc;
     public ?DateTime $date_notification;
     public array $object;
-    public bool $inquiry_active;
+    public bool $active_inquiry;
     public array $advices;
     public array $references;
     public array $source;
@@ -166,22 +166,6 @@ class Permit
     public function setDateInquiryEnd(?DateTime $date_inquiry_end): void
     {
         $this->date_inquiry_end = $date_inquiry_end;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isInquiryActive(): bool
-    {
-        return $this->inquiry_active;
-    }
-
-    /**
-     * @param bool $inquiry_active
-     */
-    public function setInquiryActive(bool $inquiry_active): void
-    {
-        $this->inquiry_active = $inquiry_active;
     }
 
     /**
@@ -406,6 +390,22 @@ class Permit
     public function setAuthority(?string $authority): void
     {
         $this->authority = $authority;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActiveInquiry(): bool
+    {
+        return $this->active_inquiry;
+    }
+
+    /**
+     * @param bool $active_inquiry
+     */
+    public function setActiveInquiry(bool $active_inquiry): void
+    {
+        $this->active_inquiry = $active_inquiry;
     }
 
     /**
