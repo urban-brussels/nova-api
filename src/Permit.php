@@ -540,4 +540,20 @@ class Permit
 
         return null;
     }
+
+    public static function guessPermitType(string $reference_nova): string
+    {
+        if (str_contains($reference_nova, 'IPE')
+            || str_contains($reference_nova, 'CL')
+            || str_contains($reference_nova, 'IRCE')
+            || str_contains($reference_nova, 'ICE')
+            || str_contains($reference_nova, 'C_')
+            || str_contains($reference_nova, 'PLP')
+            || str_contains($reference_nova, 'IRPE'))
+        {
+            return "PE";
+        }
+
+        return "PU";
+    }
 }
