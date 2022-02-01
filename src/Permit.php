@@ -568,4 +568,9 @@ class Permit
     {
         return strtoupper(trim($reference));
     }
+
+    public function isMixed(): bool
+    {
+        return !is_null($this->getReferenceMixedPermit());
+    }
 }
