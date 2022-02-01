@@ -498,6 +498,11 @@ class Permit
         $this->query_url = $query_url;
     }
 
+    #[Pure] public function hasInquiry():bool
+    {
+        return !is_null($this->getDateInquiryEnd());
+    }
+
     public function hasActiveInquiry():bool
     {
         $now = new DateTime();
