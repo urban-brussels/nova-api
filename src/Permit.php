@@ -36,8 +36,7 @@ class Permit
 
     public function __construct(string $reference_nova)
     {
-        $this->setReferenceNova($reference_nova);
-
+        $this->setReferenceNova(self::sanitizeReference($reference_nova));
     }
 
     /**
@@ -53,7 +52,7 @@ class Permit
      */
     public function setReferenceNova(string $reference_nova): void
     {
-        $this->reference_nova = strtoupper(trim($reference_nova));
+        $this->reference_nova = $reference_nova;
     }
 
     /**
@@ -555,5 +554,10 @@ class Permit
         }
 
         return "PU";
+    }
+
+    public static function sanitizeReference(string $reference): string
+    {
+        return strtoupper(trim($reference));
     }
 }
