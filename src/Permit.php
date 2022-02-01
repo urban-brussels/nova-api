@@ -32,6 +32,7 @@ class Permit
     public ?string $status;
     public ?int $charges;
     public array $suspensions;
+    public string $query_url;
 
     public function __construct(string $reference_nova)
     {
@@ -481,6 +482,22 @@ class Permit
         return $errors;
     }
 
+    /**
+     * @return string
+     */
+    public function getQueryUrl(): string
+    {
+        return $this->query_url;
+    }
+
+    /**
+     * @param string $query_url
+     */
+    public function setQueryUrl(string $query_url): void
+    {
+        $this->query_url = $query_url;
+    }
+
     public function hasActiveInquiry():bool
     {
         $now = new DateTime();
@@ -507,7 +524,7 @@ class Permit
         return $references;
     }
 
-    private function getAuthority(): ?string
+    public function getAuthority(): ?string
     {
         $subtype = $this->getSubtype();
         if (in_array(

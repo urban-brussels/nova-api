@@ -11,6 +11,7 @@ class PermitCollection implements \Iterator
     private PermitQuery $permit_query;
     public array $permits;
     protected int $position = 0;
+    public string $query_url;
 
     public function __construct(PermitQuery $permit_query)
     {
@@ -72,7 +73,7 @@ class PermitCollection implements \Iterator
         if(!empty($this->order)) {
             $wfs->setSortBy($this->order[0], $this->order[1]);
         }
-
+        $this->query_url = $wfs->getQueryUrl();
         $results = $wfs->getPropertiesArray(false);
 
         foreach ($results as $result) {
@@ -100,6 +101,7 @@ class PermitCollection implements \Iterator
             $permit->setCharges($result['deliveredpermittotalcharge'] ?? null);
             $permit->setObject($this->defineObjectFromAttributes($result));
             $permit->setStatus($this->defineStatusFromAttributes($result));
+            $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
 
             $this->addPermit($permit);
         }
@@ -274,5 +276,14 @@ class PermitCollection implements \Iterator
         }
 
         return null;
+    }
+
+    private function definePermitQueryUrl(string $reference_nova): string
+    {
+        $wfs = new WfsLayer($this->permit_query->path, $this->permit_query->layer);
+        $wfs->setCqlFilter($this->permit_query->contextAttribute(Attribute::REFERENCE_NOVA)."='".$reference_nova."'")
+            ->setCount(1);
+
+        return $wfs->getQueryUrl();
     }
 }
