@@ -3,6 +3,7 @@
 namespace UrbanBrussels\NovaApi;
 
 use DateTime;
+use JetBrains\PhpStorm\Pure;
 
 class Permit
 {
@@ -540,8 +541,10 @@ class Permit
         return null;
     }
 
-    public static function guessPermitType(string $reference_nova): string
+    #[Pure] public static function guessPermitType(string $reference_nova): string
     {
+        $reference_nova = self::sanitizeReference($reference_nova);
+
         if (str_contains($reference_nova, 'IPE')
             || str_contains($reference_nova, 'CL')
             || str_contains($reference_nova, 'IRCE')
