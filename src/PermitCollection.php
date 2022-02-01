@@ -123,7 +123,7 @@ class PermitCollection implements \Iterator
                         'projected'
                     ))) {
                 $type = str_replace(['autorized', 'existing', 'projected'], '', $k);
-                $subtype = str_replace($type, '', $k);
+                $subtype = str_replace($type, '', $k);if($subtype === "autorized") { $subtype = "authorized"; }
                 $typology[$type][$subtype] = $v;
             }
         }
