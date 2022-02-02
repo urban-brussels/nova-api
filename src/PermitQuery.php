@@ -19,7 +19,7 @@ class PermitQuery
     private array $results;
     public string $type;
     public int $limit = 1000;
-    private array $order;
+    public array $order;
 
     public function __construct(string $type)
     {

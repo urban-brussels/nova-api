@@ -70,8 +70,8 @@ class PermitCollection implements \Iterator
         $wfs->setCqlFilter($this->permit_query->cql_filter)
             ->setCount($this->permit_query->limit);
 
-        if(!empty($this->order)) {
-            $wfs->setSortBy($this->order[0], $this->order[1]);
+        if(!empty($this->permit_query->order)) {
+            $wfs->setSortBy($this->permit_query->order[0], $this->permit_query->order[1]);
         }
         $this->query_url = $wfs->getQueryUrl();
         $results = $wfs->getPropertiesArray(false);
