@@ -13,6 +13,7 @@ enum Attribute
     case DATE_INQUIRY_END;
     case DATE_NOTIFICATION;
     case DATE_SUBMISSION;
+    case IS_MIXED;
     case LANGUAGE;
     case MUNICIPALITY_FR;
     case MUNICIPALITY_NL;
@@ -44,6 +45,7 @@ enum Attribute
             self::DATE_INQUIRY_END => 'datefinmpp',
             self::DATE_NOTIFICATION => 'datenotifdecision',
             self::DATE_SUBMISSION => 'datedepot',
+            self::IS_MIXED => 'mixedpermit',
             self::LANGUAGE => 'languedemande',
             self::MUNICIPALITY_FR => 'municipalityfr',
             self::MUNICIPALITY_NL => 'municipalitynl',
@@ -77,6 +79,7 @@ enum Attribute
             self::DATE_INQUIRY_END => 'date_fin_mpp',
             self::DATE_NOTIFICATION => 'date_notif_decision',
             self::DATE_SUBMISSION => 'date_depot',
+            self::IS_MIXED => 'is_mixed_permit',
             self::LANGUAGE => 'langue_demande',
             self::MUNICIPALITY_FR => 'municipality_fr',
             self::MUNICIPALITY_NL => 'municipality_nl',

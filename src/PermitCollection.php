@@ -97,7 +97,7 @@ class PermitCollection implements \Iterator
             $permit->setUuid($result['uuid']);
             $permit->setReferenceFile($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_FILE)]);
             $permit->setReferenceMunicipality($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MUNICIPALITY)]);
-            $permit->setReferenceMixedPermit($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MIXED_PERMIT)]);
+            $permit->setReferenceMixedPermit($this->defineReferenceMixedPermit($result[$this->permit_query->contextAttribute(Attribute::IS_MIXED)], $result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MIXED_PERMIT)]));
             $permit->setCharges($result['deliveredpermittotalcharge'] ?? null);
             $permit->setObject($this->defineObjectFromAttributes($result));
             $permit->setStatus($this->defineStatusFromAttributes($result));
@@ -286,5 +286,13 @@ class PermitCollection implements \Iterator
             ->setCount(1);
 
         return $wfs->getQueryUrl();
+    }
+
+    private function defineReferenceMixedPermit(bool $is_mixed, ?string $mixed_reference): ?string
+    {
+        if($is_mixed === false) {
+            return null;
+        }
+            return $mixed_reference ?? ''; // Return empty reference to make the distinction with non mixed permits
     }
 }
