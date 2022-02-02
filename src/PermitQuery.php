@@ -102,9 +102,9 @@ class PermitQuery
         return $this;
     }
 
-    public function setOrder(Attribute $attribute, Order $order = Order::DESC): self
+    public function setOrder(Attribute $attribute, string $order = 'DESC'): self
     {
-        $this->order = [$this->contextAttribute($attribute), $order->wfs()];
+        $this->order = [$this->contextAttribute($attribute), $order];
         return $this;
     }
 
