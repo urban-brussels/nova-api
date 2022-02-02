@@ -29,6 +29,7 @@ enum Attribute
     case STREET_NAME_NL;
     case STREET_NUMBER_FROM;
     case STREET_NUMBER_TO;
+    case SUBMISSION_TYPE;
     case SUBTYPE;
     case ZIPCODE;
 
@@ -57,11 +58,12 @@ enum Attribute
             self::REFERENCE_MIXED_PERMIT => 'refmixedpermit',
             self::REFERENCE_MUNICIPALITY => 'referencespecifique',
             self::REFERENCE_NOVA => 'refnova',
-            self::SUBTYPE => 'typedossier',
             self::STREET_NAME_FR => 'streetnamefr',
             self::STREET_NAME_NL => 'streetnamenl',
             self::STREET_NUMBER_FROM => 'numberpartfrom',
             self::STREET_NUMBER_TO => 'numberpartto',
+            self::SUBMISSION_TYPE => 'typedepot_fr',
+            self::SUBTYPE => 'typedossier',
             self::ZIPCODE => 'zipcode',
         };
     }
@@ -91,11 +93,12 @@ enum Attribute
             self::REFERENCE_MIXED_PERMIT => 'ref_mixed_permit',
             self::REFERENCE_MUNICIPALITY => 'ref_com',
             self::REFERENCE_NOVA => 'ref_nova',
-            self::SUBTYPE => 'case_subtype',
             self::STREET_NAME_FR => 'streetname_fr',
             self::STREET_NAME_NL => 'streetname_nl',
             self::STREET_NUMBER_FROM => 'number_from',
             self::STREET_NUMBER_TO => 'number_to',
+            self::SUBMISSION_TYPE => 'typedepot_fr',
+            self::SUBTYPE => 'case_subtype',
             self::ZIPCODE => 'zipcode',
         };
     }

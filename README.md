@@ -81,3 +81,14 @@ $query->filterByInquiryDate('2022-01-01');
 // If you use a raw cql_filter, you can query what you want (e.g. every permit request for a given Street + Zipcode)    
 $query->filterByRawCQL("streetnamefr = 'Rue de Dublin' AND zipcode='1050'" )->getResults()->all();
 ```
+### Advantages    
+This library fixes the following inconsistencies in the Nova WFS webservices
+- Different attributes names for PE and PU
+- Attributes names mixing french and english
+- Different DateTime patterns (with or without microseconds)
+- Boolean values returned as string (e.g.: incidences, mpp)
+- Too deep json for suspensions
+- Integer values returned as string (e.g. novaseq, zipcode)
+- Status must be guessed mixing different attributes
+- Redundancy
+- Incorrect values (e.g. submissions in the year 1111)

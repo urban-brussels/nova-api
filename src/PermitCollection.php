@@ -102,6 +102,7 @@ class PermitCollection implements \Iterator
             $permit->setObject($this->defineObjectFromAttributes($result));
             $permit->setStatus($this->defineStatusFromAttributes($result));
             $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
+            $permit->setSubmissionType($result[$this->permit_query->contextAttribute(Attribute::SUBMISSION_TYPE)]);
 
             $this->addPermit($permit);
         }

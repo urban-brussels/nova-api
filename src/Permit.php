@@ -34,6 +34,7 @@ class Permit
     public ?int $charges;
     public array $suspensions;
     public string $query_url;
+    public string $submission_type;
 
     public function __construct(string $reference_nova)
     {
@@ -496,6 +497,23 @@ class Permit
     public function setQueryUrl(string $query_url): void
     {
         $this->query_url = $query_url;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getSubmissionType(): string
+    {
+        return $this->submission_type;
+    }
+
+    /**
+     * @param string $submission_type
+     */
+    public function setSubmissionType(string $submission_type): void
+    {
+        $this->submission_type = $submission_type;
     }
 
     #[Pure] public function hasInquiry():bool
