@@ -446,13 +446,13 @@ class Permit
     {
         $errors = [];
         $now = new DateTime();
-        $older_date = new DateTime('1800-01-01');
+        $oldest_date = new DateTime('1800-01-01');
 
         if ($this->getDateSubmission() > $now) {
             $errors[] = 'Submission date should not be in the future';
         }
 
-        if ($this->getDateSubmission() < $older_date) {
+        if ($this->getDateSubmission() < $oldest_date) {
             $errors[] = 'Submission date is too old';
         }
 
@@ -501,17 +501,17 @@ class Permit
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSubmissionType(): string
+    public function getSubmissionType(): ?string
     {
         return $this->submission_type;
     }
 
     /**
-     * @param string $submission_type
+     * @param string|null $submission_type
      */
-    public function setSubmissionType(string $submission_type): void
+    public function setSubmissionType(?string $submission_type): void
     {
         $this->submission_type = $submission_type;
     }

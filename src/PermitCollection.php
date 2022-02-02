@@ -81,7 +81,7 @@ class PermitCollection implements \Iterator
             $permit->setLanguage($result[$this->permit_query->contextAttribute(Attribute::LANGUAGE)]);
             $permit->setType($this->permit_query->type);
             $permit->setSubtype($result[$this->permit_query->contextAttribute(Attribute::SUBTYPE)]);
-            $permit->setDateSubmission($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_SUBMISSION)]));
+            $permit->setDateSubmission($this->defineSubmissionDate($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_SUBMISSION)])));
             $permit->setDateArc($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ARC)]));
             $permit->setDateAri($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ARI)]));
             $permit->setDateAdditionalElements($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS)]));
@@ -295,5 +295,15 @@ class PermitCollection implements \Iterator
             return null;
         }
             return $mixed_reference ?? ''; // Return empty reference to make the distinction with non mixed permits
+    }
+
+    private function defineSubmissionDate(?DateTime $date): ?DateTime
+    {
+        $oldest_date = new DateTime('1800-01-01');
+
+        if ($date < $oldest_date) {
+            return null;
+        }
+        return $date;
     }
 }
