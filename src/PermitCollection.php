@@ -161,10 +161,10 @@ class PermitCollection implements \Iterator
         $fd = $attributes['avis_fd'] ?? $attributes['avisfd'] ?? null;
         $crms = $attributes['avis_crms'] ?? $attributes['aviscrms'] ?? null;
 
-        if($college === true) { $instances['fr']['college'] = true; $instances['nl']['college'] = true; }
-        if($cc === true) { $instances['fr']['cc'] = true; $instances['nl']['cc'] = true; }
-        if($fd === true) { $instances['fr']['fd'] = true; $instances['nl']['fd'] = true; }
-        if($crms === true) { $instances['fr']['crms'] = true; $instances['nl']['crms'] = true; }
+        if($college === true) { $instances['fr'][] = 'college'; $instances['nl'][] = 'college'; }
+        if($cc === true) { $instances['fr'][] = 'cc'; $instances['nl'][] = 'cc'; }
+        if($fd === true) { $instances['fr'][] = 'fd'; $instances['nl'][] = 'fd'; }
+        if($crms === true) { $instances['fr'][] = 'crms'; $instances['nl'][] = 'crms'; }
 
         return $instances;
     }
