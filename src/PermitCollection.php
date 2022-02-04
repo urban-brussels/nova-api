@@ -84,7 +84,7 @@ class PermitCollection implements \Iterator
             $permit->setDateSubmission($this->defineSubmissionDate($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_SUBMISSION)])));
             $permit->setDateArc($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ARC)]));
             $permit->setDateAri($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ARI)]));
-            $permit->setDateAdditionalElements($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS)]));
+            $permit->setDateAdditionalElements($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS)] ?? null));
             $permit->setDateCc($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_CC)]));
             $permit->setDateInquiryBegin($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_INQUIRY_BEGIN)]));
             $permit->setDateInquiryEnd($this->permit_query::toDatetime($result[$this->permit_query->contextAttribute(Attribute::DATE_INQUIRY_END)]));
@@ -140,9 +140,9 @@ class PermitCollection implements \Iterator
     {
         $advices = [];
 
-        $advices['college'] = $attributes['avis_cbe'] ?? $attributes['aviscbe'];
-        $advices['cc'] = $attributes['avis_cc'] ?? $attributes['aviscc'];
-        $advices['fd'] = $attributes['avis_fd'] ?? $attributes['avisfd'];
+        $advices['college'] = $attributes['avis_cbe'] ?? $attributes['aviscbe'] ?? null;
+        $advices['cc'] = $attributes['avis_cc'] ?? $attributes['aviscc'] ?? null;
+        $advices['fd'] = $attributes['avis_fd'] ?? $attributes['avisfd'] ?? null;
 
 
         $json_advices = $attributes['avis_instances'] ?? null;
