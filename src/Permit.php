@@ -35,6 +35,7 @@ class Permit
     public array $suspensions;
     public string $query_url;
     public string $submission_type;
+    public ?int $zipcode;
 
     public function __construct(string $reference_nova)
     {
@@ -424,6 +425,22 @@ class Permit
     public function setCharges(?int $charges): void
     {
         $this->charges = $charges;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getZipcode(): ?int
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param int|null $zipcode
+     */
+    public function setZipcode(?int $zipcode): void
+    {
+        $this->zipcode = $zipcode;
     }
 
     /**
