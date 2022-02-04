@@ -141,17 +141,7 @@ class PermitCollection implements \Iterator
      */
     private function defineAdvicesFromAttributes(array $attributes): array
     {
-        $advices = [];
-
-        $advices['college'] = $attributes['avis_cbe'] ?? $attributes['aviscbe'] ?? null;
-        $advices['cc'] = $attributes['avis_cc'] ?? $attributes['aviscc'] ?? null;
-        $advices['fd'] = $attributes['avis_fd'] ?? $attributes['avisfd'] ?? null;
-
-
         $json_advices = $attributes['avis_instances'] ?? null;
-        if (is_null($json_advices)) {
-            return $advices;
-        }
         $json_advices = json_decode($json_advices, true, 512, JSON_THROW_ON_ERROR);
 
         $instances['fr'] = [];
@@ -162,7 +152,17 @@ class PermitCollection implements \Iterator
             $instances['nl'][] = $instance['translations'][1]['label'];
         }
 
-        return $advices['instances'] = $instances;
+        $college = $attributes['avis_cbe'] ?? $attributes['aviscbe'] ?? null;
+        $cc = $attributes['avis_cc'] ?? $attributes['aviscc'] ?? null;
+        $fd = $attributes['avis_fd'] ?? $attributes['avisfd'] ?? null;
+        $crms = $attributes['avis_crms'] ?? $attributes['aviscrms'] ?? null;
+
+        if($college === true) { $instances['fr']['college'] = true; $instances['nl']['college'] = true; }
+        if($cc === true) { $instances['fr']['cc'] = true; $instances['nl']['cc'] = true; }
+        if($fd === true) { $instances['fr']['fd'] = true; $instances['nl']['fd'] = true; }
+        if($crms === true) { $instances['fr']['crms'] = true; $instances['nl']['crms'] = true; }
+
+        return $instances;
     }
 
     public function defineAddressFromAttributes(array $attributes): array
