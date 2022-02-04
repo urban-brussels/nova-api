@@ -532,6 +532,10 @@ class Permit
             $errors[] = 'Streetname should not be empty in french or dutch';
         }
 
+        if($this->getStatus() === "delivered" && !empty($this->getSuspensions()) && $this->getSuspensions()[array_key_last($this->getSuspensions())]['to'] === false) {
+            $errors[] = 'Permit is delivered without end of suspension';
+        }
+
         return $errors;
     }
 
