@@ -147,7 +147,9 @@ class PermitCollection implements \Iterator
         $instances['fr'] = [];
         $instances['nl'] = [];
 
-        foreach ($json_advices['data']['Case_Advice_Instance_List']['elements'] as $instance) {
+        $advice_instances = $json_advices['data']['Case_Advice_Instance_List']['elements'] ?? [];
+
+        foreach ($advice_instances as $instance) {
             $instances['fr'][] = $instance['translations'][0]['label'];
             $instances['nl'][] = $instance['translations'][1]['label'];
         }
