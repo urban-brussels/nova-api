@@ -91,3 +91,4 @@ This library fixes the following inconsistencies in the Nova WFS webservices
 - Status must be guessed mixing different attributes
 - Redundancy
 - Incorrect values (e.g. submissions in the year 1111)
+- Number "to" same as number "from" in addresses

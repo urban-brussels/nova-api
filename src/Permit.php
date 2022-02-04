@@ -36,7 +36,9 @@ class Permit
     public string $query_url;
     public string $submission_type;
     public ?int $zipcode;
-    public ?string $streetname;
+    public ?string $sorting_streetname;
+    public ?int $sorting_number;
+
 
     public function __construct(string $reference_nova)
     {
@@ -447,17 +449,33 @@ class Permit
     /**
      * @return string|null
      */
-    public function getStreetname(): ?string
+    public function getSortingStreetname(): ?string
     {
-        return $this->streetname;
+        return $this->sorting_streetname;
     }
 
     /**
-     * @param string|null $streetname
+     * @param string|null $sorting_streetname
      */
-    public function setStreetname(?string $streetname): void
+    public function setSortingStreetname(?string $sorting_streetname): void
     {
-        $this->streetname = $streetname;
+        $this->sorting_streetname = $sorting_streetname;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSortingNumber(): ?int
+    {
+        return $this->sorting_number;
+    }
+
+    /**
+     * @param int|null $sorting_number
+     */
+    public function setSortingNumber(?int $sorting_number): void
+    {
+        $this->sorting_number = $sorting_number;
     }
 
     /**
