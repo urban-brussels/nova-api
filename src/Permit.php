@@ -36,6 +36,7 @@ class Permit
     public string $query_url;
     public string $submission_type;
     public ?int $zipcode;
+    public ?string $streetname;
 
     public function __construct(string $reference_nova)
     {
@@ -441,6 +442,22 @@ class Permit
     public function setZipcode(?int $zipcode): void
     {
         $this->zipcode = $zipcode;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStreetname(): ?string
+    {
+        return $this->streetname;
+    }
+
+    /**
+     * @param string|null $streetname
+     */
+    public function setStreetname(?string $streetname): void
+    {
+        $this->streetname = $streetname;
     }
 
     /**
