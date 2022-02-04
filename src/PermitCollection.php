@@ -166,7 +166,7 @@ class PermitCollection implements \Iterator
 
     public function defineAddressFromAttributes(array $attributes): array
     {
-        $address['streetname']['fr'] = $attributes[$this->permit_query->contextAttribute(Attribute::STREET_NAME_FR)] ?? null;
+        $address['streetname']['fr'] = ucfirst($attributes[$this->permit_query->contextAttribute(Attribute::STREET_NAME_FR)] ?? null);
         $address['streetname']['nl'] = $attributes[$this->permit_query->contextAttribute(Attribute::STREET_NAME_NL)] ?? null;
         if (empty($address['streetname']['fr'])) {
             $address['streetname']['fr'] = null;
@@ -185,9 +185,13 @@ class PermitCollection implements \Iterator
             $address['number']['to'] = null;
         }
 
-        $address['number']['full'] = (!is_null($address['number']['from']) && !is_null(
-                $address['number']['to']
-            )) ? $address['number']['from'].'-'.$address['number']['to'] : $address['number']['from'];
+        $address['number']['full'] = (
+            !is_null($address['number']['from'])
+            && !is_null($address['number']['to'])
+            && ($address['number']['from'] !== $address['number']['to'])
+        )
+            ? $address['number']['from'].'-'.$address['number']['to']
+            : $address['number']['from'];
 
         $address['municipality']['fr'] = $attributes[$this->permit_query->contextAttribute(Attribute::MUNICIPALITY_FR)];
         $address['municipality']['nl'] = $attributes[$this->permit_query->contextAttribute(Attribute::MUNICIPALITY_NL)];
