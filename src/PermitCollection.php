@@ -142,7 +142,9 @@ class PermitCollection implements \Iterator
     private function defineAdvicesFromAttributes(array $attributes): array
     {
         $json_advices = $attributes['avis_instances'] ?? null;
-        $json_advices = json_decode($json_advices, true, 512, JSON_THROW_ON_ERROR);
+        if(!is_null($json_advices)) {
+            $json_advices = json_decode($json_advices, true, 512, JSON_THROW_ON_ERROR);
+        }
 
         $instances['fr'] = [];
         $instances['nl'] = [];
