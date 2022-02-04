@@ -238,10 +238,11 @@ class PermitCollection implements \Iterator
         $array_suspensions = json_decode($json_suspensions, true);
 
         foreach($array_suspensions as $suspension) {
-            $suspensions['fr'] = $suspension[0]['suspension']['motif-fr'];
-            $suspensions['nl'] = $suspension[0]['suspension']['motif-nl'];
-            $suspensions['from'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-from'], new DateTimeZone('Europe/Brussels'));
-            $suspensions['to'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-to'], new DateTimeZone('Europe/Brussels'));
+            $new['fr'] = $suspension[0]['suspension']['motif-fr'];
+            $new['nl'] = $suspension[0]['suspension']['motif-nl'];
+            $new['from'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-from'], new DateTimeZone('Europe/Brussels'));
+            $new['to'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-to'], new DateTimeZone('Europe/Brussels'));
+            $suspensions[] = $new;
         }
 
         return $suspensions;
