@@ -5,7 +5,7 @@ namespace UrbanBrussels\NovaApi;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
-class PermitDocuments
+class RestrictedData
 {
     private NovaConnection $nova_connection;
 
