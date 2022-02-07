@@ -74,7 +74,7 @@ class PermitCollection implements \Iterator
             $wfs->setSortBy($this->permit_query->order[0], $this->permit_query->order[1]);
         }
         $this->query_url = $wfs->getQueryUrl();
-        $results = $wfs->getPropertiesArray(false);
+        $results = $wfs->getPropertiesArray(true);
 
         foreach ($results as $result) {
             $permit = new Permit($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_NOVA)]);
