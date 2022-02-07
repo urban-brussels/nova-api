@@ -40,7 +40,7 @@ class Permit
     public ?int $sorting_number;
     public array $charges;
     public array $documents;
-
+    public ?string $geometry;
 
     public function __construct(string $reference_nova)
     {
@@ -681,5 +681,21 @@ class Permit
     public function setCharges(array $charges): void
     {
         $this->charges = $charges;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGeometry(): ?string
+    {
+        return $this->geometry;
+    }
+
+    /**
+     * @param string|null $geometry
+     */
+    public function setGeometry(?string $geometry): void
+    {
+        $this->geometry = $geometry;
     }
 }
