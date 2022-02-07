@@ -31,7 +31,7 @@ class Permit
     public array $address;
     public array $area_typology;
     public ?string $status;
-    public ?int $charges_total;
+    public ?float $charges_total;
     public array $suspensions;
     public string $query_url;
     public string $submission_type;
@@ -425,17 +425,17 @@ class Permit
     }
 
     /**
-     * @param int|null $charges_total
+     * @param float|null $charges_total
      */
-    public function setChargesTotal(?int $charges_total): void
+    public function setChargesTotal(?float $charges_total): void
     {
         $this->charges_total = $charges_total;
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getZipcode(): ?int
+    public function getZipcode(): ?float
     {
         return $this->zipcode;
     }
