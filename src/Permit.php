@@ -419,7 +419,7 @@ class Permit
     /**
      * @return int|null
      */
-    public function getChargesTotal(): ?int
+    public function getChargesTotal(): ?float
     {
         return $this->charges_total;
     }
