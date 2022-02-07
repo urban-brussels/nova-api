@@ -417,17 +417,17 @@ class Permit
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getChargesTotal(): ?int
+    public function getChargesTotal(): ?float
     {
         return $this->charges_total;
     }
 
     /**
-     * @param int|null $charges_total
+     * @param float|null $charges_total
      */
-    public function setChargesTotal(?int $charges_total): void
+    public function setChargesTotal(?float $charges_total): void
     {
         $this->charges_total = $charges_total;
     }
