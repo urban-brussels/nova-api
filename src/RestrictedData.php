@@ -78,7 +78,7 @@ class RestrictedData
             var_dump($e->getMessage());
         }
 
-        return $content['data'] ?? [];
+        return $content['data']['Case_Details'] ?? [];
     }
 
     /**
