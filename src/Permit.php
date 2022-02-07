@@ -31,13 +31,15 @@ class Permit
     public array $address;
     public array $area_typology;
     public ?string $status;
-    public ?int $charges;
+    public ?int $charges_total;
     public array $suspensions;
     public string $query_url;
     public string $submission_type;
     public ?int $zipcode;
     public ?string $sorting_streetname;
     public ?int $sorting_number;
+    public array $charges;
+    public array $documents;
 
 
     public function __construct(string $reference_nova)
@@ -417,17 +419,17 @@ class Permit
     /**
      * @return int|null
      */
-    public function getCharges(): ?int
+    public function getChargesTotal(): ?int
     {
-        return $this->charges;
+        return $this->charges_total;
     }
 
     /**
-     * @param int|null $charges
+     * @param int|null $charges_total
      */
-    public function setCharges(?int $charges): void
+    public function setChargesTotal(?int $charges_total): void
     {
-        $this->charges = $charges;
+        $this->charges_total = $charges_total;
     }
 
     /**
@@ -646,5 +648,38 @@ class Permit
     public function isMixed(): bool
     {
         return !is_null($this->getReferenceMixedPermit());
+    }
+
+    /**
+     * @return array
+     */
+    public function getDocuments(): array
+    {
+        return $this->documents;
+    }
+
+    /**
+     * @param array $documents
+     */
+    public function setDocuments(array $documents): void
+    {
+        $this->documents = $documents;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getCharges(): array
+    {
+        return $this->charges;
+    }
+
+    /**
+     * @param array $charges
+     */
+    public function setCharges(array $charges): void
+    {
+        $this->charges = $charges;
     }
 }

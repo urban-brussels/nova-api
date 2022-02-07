@@ -101,7 +101,7 @@ class PermitCollection implements \Iterator
             $permit->setReferenceFile($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_FILE)]);
             $permit->setReferenceMunicipality($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MUNICIPALITY)]);
             $permit->setReferenceMixedPermit($this->defineReferenceMixedPermit($result[$this->permit_query->contextAttribute(Attribute::IS_MIXED)], $result[$this->permit_query->contextAttribute(Attribute::REFERENCE_MIXED_PERMIT)]));
-            $permit->setCharges($result['deliveredpermittotalcharge'] ?? null);
+            $permit->setChargesTotal($result['deliveredpermittotalcharge'] ?? null);
             $permit->setObject($this->defineObjectFromAttributes($result));
             $permit->setStatus($this->defineStatusFromAttributes($result));
             $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
