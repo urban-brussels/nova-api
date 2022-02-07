@@ -300,12 +300,12 @@ class PermitCollection implements \Iterator
         return $wfs->getQueryUrl();
     }
 
-    private function defineReferenceMixedPermit(bool $is_mixed, ?string $mixed_reference): ?string
+    private function defineReferenceMixedPermit(?bool $is_mixed, ?string $mixed_reference): ?string
     {
-        if($is_mixed === false) {
+        if($is_mixed !== true) {
             return null;
         }
-            return $mixed_reference ?? ''; // Return empty reference to make the distinction with non mixed permits
+        return $mixed_reference ?? ''; // Return empty reference to make the distinction with non mixed permits
     }
 
     private function defineSubmissionDate(?DateTime $date): ?DateTime
