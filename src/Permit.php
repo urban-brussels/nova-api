@@ -538,6 +538,10 @@ class Permit
             $errors[] = 'Permit is delivered without end of suspension';
         }
 
+        if($this->getStatus() === "delivered" && is_null($this->getDateNotification()) ) {
+            $errors[] = 'Permit is delivered without notification date';
+        }
+
         return $errors;
     }
 
