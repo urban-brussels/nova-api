@@ -107,7 +107,6 @@ class PermitCollection implements \Iterator
             $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
             $permit->setSubmissionType($result[$this->permit_query->contextAttribute(Attribute::SUBMISSION_TYPE)]);
             $permit->setGeometry($this->defineGeometry($result[$this->permit_query->contextAttribute(Attribute::GEOMETRY)]));
-
             $this->addPermit($permit);
         }
 
@@ -322,10 +321,10 @@ class PermitCollection implements \Iterator
         return $date;
     }
 
-    private function defineGeometry(?string $geometry): ?string
+    private function defineGeometry(?\stdClass $geometry): ?string
     {
         if (!is_null($geometry)) {
-            $geom_json = \geoPHP::load($geometry, 'json');
+            $geom_json = \geoPHP::load(json_encode($geometry), 'json');
             return $geom_json->out('wkt');
         }
         return null;
