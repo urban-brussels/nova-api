@@ -530,7 +530,7 @@ class Permit
             $errors[] = 'Zipcode should not be empty';
         }
 
-        if ($this->getAddress()['streetname']['fr'] === "" || $this->getAddress()['streetname']['nl'] === "") {
+        if ($this->getAddress()['streetname']['fr'] === "" || $this->getAddress()['streetname']['nl'] === "" || is_null($this->getAddress()['streetname']['fr']) || is_null($this->getAddress()['streetname']['nl'])) {
             $errors[] = 'Streetname should not be empty in french or dutch';
         }
 
