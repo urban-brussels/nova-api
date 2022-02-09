@@ -534,6 +534,10 @@ class Permit
             $errors[] = 'Streetname should not be empty in french or dutch';
         }
 
+        if ($this->getAddress()['municipality']['fr'] === "" || $this->getAddress()['municipality']['nl'] === "" || is_null($this->getAddress()['municipality']['fr']) || is_null($this->getAddress()['municipality']['nl'])) {
+            $errors[] = 'Municipality name should not be empty in french or dutch';
+        }
+
         if($this->getStatus() === "delivered" && !empty($this->getSuspensions()) && $this->getSuspensions()[array_key_last($this->getSuspensions())]['to'] === false) {
             $errors[] = 'Permit is delivered without end of suspension';
         }
