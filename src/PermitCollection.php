@@ -267,6 +267,10 @@ class PermitCollection implements \Iterator
         $status_fr = $attributes['statutpermisfr'] ?? null;
         $final_state = $attributes['statut_dossier'] ?? $attributes['etatfinal'] ?? null;
 
+        if ($status_fr === "Octroyé") {
+            return 'delivered';
+        }
+
         if ($status_fr === "Annulé") {
             return 'canceled';
         }
