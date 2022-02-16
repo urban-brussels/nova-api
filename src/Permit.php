@@ -546,7 +546,7 @@ class Permit
             $errors[] = 'error.decision.without.date';
         }
 
-        if ($this->getDateNotification() < $this->getDateInquiryEnd()) {
+        if (!is_null($this->getDateNotification()) && $this->getDateNotification() < $this->getDateInquiryEnd()) {
             $errors[] = 'error.notification.before.inquiry';
         }
 
