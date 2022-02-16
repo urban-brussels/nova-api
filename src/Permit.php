@@ -503,47 +503,51 @@ class Permit
         $oldest_date = new DateTime('1800-01-01');
 
         if ($this->getDateSubmission() > $now) {
-            $errors[] = 'Submission date should not be in the future';
+            $errors[] = 'error.submission.future';
         }
 
         if ($this->getDateSubmission() < $oldest_date) {
-            $errors[] = 'Submission date is too old';
+            $errors[] = 'error.submission.old';
         }
 
         if (is_null($this->getDateSubmission())) {
-            $errors[] = 'Submission date should not be null';
+            $errors[] = 'error.submission.missing';
         }
 
         if (!is_null($this->getDateNotification()) && $this->getDateSubmission() > $this->getDateNotification()) {
-            $errors[] = 'Notification date should not be anterior to Submission date';
+            $errors[] = 'error.decision.before.submission';
         }
 
         if (!is_null($this->getDateCc()) && $this->getDateCc() < $this->getDateSubmission()) {
-            $errors[] = 'Concertation date should not be anterior to Submission date';
+            $errors[] = 'error.concertation.before.submission';
         }
 
         if ($this->getDateInquiryBegin() > $this->getDateInquiryEnd()) {
-            $errors[] = 'End of inquiry date should not be anterior to Begin of inquiry date';
+            $errors[] = 'error.inquiry.end.before.begin';
         }
 
         if ($this->getAddress()['zipcode'] === "") {
-            $errors[] = 'Zipcode should not be empty';
+            $errors[] = 'error.zipcode.missing';
         }
 
         if ($this->getAddress()['streetname']['fr'] === "" || $this->getAddress()['streetname']['nl'] === "" || is_null($this->getAddress()['streetname']['fr']) || is_null($this->getAddress()['streetname']['nl'])) {
-            $errors[] = 'Streetname should not be empty in french or dutch';
+            $errors[] = 'error.streetname.missing';
         }
 
         if ($this->getAddress()['municipality']['fr'] === "" || $this->getAddress()['municipality']['nl'] === "" || is_null($this->getAddress()['municipality']['fr']) || is_null($this->getAddress()['municipality']['nl'])) {
-            $errors[] = 'Municipality name should not be empty in french or dutch';
+            $errors[] = 'error.municipality.missing';
         }
 
         if($this->getStatus() === "delivered" && !empty($this->getSuspensions()) && $this->getSuspensions()[array_key_last($this->getSuspensions())]['to'] === false) {
-            $errors[] = 'Permit is delivered without end of suspension';
+            $errors[] = 'error.suspension.end.missing';
         }
 
         if($this->getStatus() === "delivered" && is_null($this->getDateNotification()) ) {
-            $errors[] = 'Permit is delivered without notification date';
+            $errors[] = 'error.decision.without.date';
+        }
+
+        if ($this->getDateNotification() < $this->getDateInquiryEnd()) {
+            $errors[] = 'error.notification.before.inquiry';
         }
 
         return $errors;
