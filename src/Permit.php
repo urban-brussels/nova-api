@@ -522,6 +522,10 @@ class Permit
             $errors[] = 'error.concertation.before.submission';
         }
 
+        if (!is_null($this->getDateCc()) && !is_null($this->getDateNotification()) && $this->getDateCc() > $this->getDateNotification()) {
+            $errors[] = 'error.decision.before.concertation';
+        }
+
         if ($this->getDateInquiryBegin() > $this->getDateInquiryEnd()) {
             $errors[] = 'error.inquiry.end.before.begin';
         }
