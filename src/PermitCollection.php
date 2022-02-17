@@ -94,7 +94,7 @@ class PermitCollection implements \Iterator
             $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
             $permit->setAdvices($this->defineAdvicesFromAttributes($result));
             $permit->setAddress($this->defineAddressFromAttributes($result));
-            $permit->setZipcode(trim($result[$this->permit_query->contextAttribute(Attribute::ZIPCODE)]));
+            $permit->setZipcode($this->sanitizeZipcode($result[$this->permit_query->contextAttribute(Attribute::ZIPCODE)], FILTER_SANITIZE_NUMBER_INT));
             $permit->setSortingStreetname($result[$this->permit_query->contextAttribute(Attribute::STREET_NAME_FR)]);
             $permit->setSortingNumber((int)$result[$this->permit_query->contextAttribute(Attribute::STREET_NUMBER_FROM)]);
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
@@ -334,5 +334,13 @@ class PermitCollection implements \Iterator
             return $geom_json->out('wkt');
         }
         return null;
+    }
+
+    private function sanitizeZipcode(?string $zipcode): ?int
+    {
+        if(is_null($zipcode)) {
+            return null;
+        }
+        return (int)filter_var($zipcode, FILTER_SANITIZE_NUMBER_INT);
     }
 }
