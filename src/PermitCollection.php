@@ -206,11 +206,8 @@ class PermitCollection implements \Iterator
         $address['municipality']['fr'] = $attributes[$this->permit_query->contextAttribute(Attribute::MUNICIPALITY_FR)];
         $address['municipality']['nl'] = $attributes[$this->permit_query->contextAttribute(Attribute::MUNICIPALITY_NL)];
 
-        $address['zipcode'] = (int)$attributes['zipcode'];
-
         return $address;
     }
-
 
     public function defineSource($reference_nova): array
     {
