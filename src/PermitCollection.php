@@ -94,7 +94,7 @@ class PermitCollection implements \Iterator
             $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
             $permit->setAdvices($this->defineAdvicesFromAttributes($result));
             $permit->setAddress($this->defineAddressFromAttributes($result));
-            $permit->setZipcode((int)$result[$this->permit_query->contextAttribute(Attribute::ZIPCODE)]);
+            $permit->setZipcode(trim($result[$this->permit_query->contextAttribute(Attribute::ZIPCODE)]));
             $permit->setSortingStreetname($result[$this->permit_query->contextAttribute(Attribute::STREET_NAME_FR)]);
             $permit->setSortingNumber((int)$result[$this->permit_query->contextAttribute(Attribute::STREET_NUMBER_FROM)]);
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
