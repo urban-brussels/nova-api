@@ -530,7 +530,7 @@ class Permit
             $errors[] = 'error.inquiry.end.before.begin';
         }
 
-        if ($this->getAddress()['zipcode'] === "") {
+        if (is_null($this->getZipcode())) {
             $errors[] = 'error.zipcode.missing';
         }
 
