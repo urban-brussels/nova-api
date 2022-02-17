@@ -77,6 +77,8 @@ class PermitCollection implements \Iterator
         $results = $wfs->getPropertiesArray(true);
 
         foreach ($results as $result) {
+            // Check if Refnova is null... sigh
+            if(is_null($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_NOVA)])) { break; }
             $permit = new Permit($result[$this->permit_query->contextAttribute(Attribute::REFERENCE_NOVA)]);
             $permit->setLanguage($result[$this->permit_query->contextAttribute(Attribute::LANGUAGE)]);
             $permit->setType($this->permit_query->type);
