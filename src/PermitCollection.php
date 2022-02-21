@@ -242,8 +242,8 @@ class PermitCollection implements \Iterator
         foreach($array_suspensions as $suspension) {
             $new['fr'] = $suspension[0]['suspension']['motif-fr'];
             $new['nl'] = $suspension[0]['suspension']['motif-nl'];
-            $new['from'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-from'], new DateTimeZone('Europe/Brussels'));
-            $new['to'] = DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-to'], new DateTimeZone('Europe/Brussels'));
+            $new['from'] = !is_null($suspension[0]['suspension']['date-from']) ? DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-from'], new DateTimeZone('Europe/Brussels')) : false;
+            $new['to'] = !is_null($suspension[0]['suspension']['date-to']) ? DateTime::createFromFormat('Y-m-d', $suspension[0]['suspension']['date-to'], new DateTimeZone('Europe/Brussels')) : false;
             $suspensions[] = $new;
         }
 
