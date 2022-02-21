@@ -255,8 +255,8 @@ class PermitCollection implements \Iterator
         $object['fr']['standard'] = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_STANDARD_FR)] ?? null;
         $object['nl']['standard'] = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_STANDARD_NL)] ?? null;
 
-        $fr_real = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_REAL_FR)];
-        $nl_real = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_REAL_NL)];
+        $fr_real = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_REAL_FR)] ?? null;
+        $nl_real = $attributes[$this->permit_query->contextAttribute(Attribute::OBJECT_REAL_NL)] ?? null;
 
         $object['fr']['real'] = !is_null($fr_real) ? ucfirst($fr_real) : null;
         $object['nl']['real'] = !is_null($nl_real) ? ucfirst($nl_real) : null;
