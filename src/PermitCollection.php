@@ -176,8 +176,11 @@ class PermitCollection implements \Iterator
 
     public function defineAddressFromAttributes(array $attributes): array
     {
-        $address['streetname']['fr'] = ucfirst($attributes[$this->permit_query->contextAttribute(Attribute::STREET_NAME_FR)] ?? null);
-        $address['streetname']['nl'] = $attributes[$this->permit_query->contextAttribute(Attribute::STREET_NAME_NL)] ?? null;
+        $streetname_fr = $attributes[$this->permit_query->contextAttribute(Attribute::STREET_NAME_FR)] ?? null;
+        $streetname_nl = $attributes[$this->permit_query->contextAttribute(Attribute::STREET_NAME_NL)] ?? null;
+
+        $address['streetname']['fr'] = !is_null($streetname_fr) ? ucfirst($streetname_fr) : $streetname_fr;
+        $address['streetname']['nl'] = $streetname_nl;
         if (empty($address['streetname']['fr'])) {
             $address['streetname']['fr'] = null;
         }
