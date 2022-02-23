@@ -81,7 +81,7 @@ enum Attribute
             self::DATE_CC => 'date_cc',
             self::DATE_INQUIRY_BEGIN => 'date_debut_mpp',
             self::DATE_INQUIRY_END => 'date_fin_mpp',
-            self::DATE_NOTIFICATION => 'date_notif_decision',
+            self::DATE_NOTIFICATION => 'date_decision',
             self::DATE_SUBMISSION => 'date_depot',
             self::GEOMETRY => 'geometry',
             self::IS_MIXED => 'is_mixed_permit',
