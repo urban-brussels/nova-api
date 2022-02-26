@@ -53,7 +53,7 @@ class PermitCollection implements \Iterator
 
     public function valid(): bool
     {
-        return isset($this->medias[$this->position]);
+        return isset($this->permits[$this->position]);
     }
 
     public function rewind(): void
