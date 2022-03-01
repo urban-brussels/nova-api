@@ -424,7 +424,7 @@ class PermitQuery
         }
 
         if($nb > 1) {
-            return "(".implode(") AND (", $this->cql_filter);
+            return "(".implode(") AND (", $this->cql_filter).")";
         }
 
         return $this->cql_filter[0];
