@@ -19,7 +19,7 @@ use UrbanBrussels\NovaApi\PermitCollection;
 
 $query = new PermitQuery('PU'); // Create a query for planning (PU) or environmental (PE) licences
 $permits = $query
-    ->filterByReferences(['04/PFD/1796029', '04/PFD/1795271'], Attribute::REFERENCE_NOVA) // Filter by Nova References
+    ->filterByAttributeArray(Attribute::REFERENCE_NOVA, ['04/PFD/1796029', '04/PFD/1795271']) // Filter by Nova References
     ->setOrder(Attribute::DATE_SUBMISSION, 'DESC') // Order by descending submission date
     ->setLimit(2) // Limit to 2 results
     ->getResults();
