@@ -26,7 +26,7 @@ $permits = $query
 // You now have a PermitCollection object, that can be used in a loop
 foreach ($permits->getPermits() as $permit) 
 {
-    echo $permit->getRefnova();
+    echo $permit->getReferenceNova();
     echo $permit->getAddress();
     echo $permit->getDateInquiryEnd();
     echo $permit->hasActiveInquiry();
@@ -34,10 +34,7 @@ foreach ($permits->getPermits() as $permit)
 
 // Other available getters
 
-// Get all References in an array (municipal reference, regional reference, uuid, etc)
-$permit->getReferences();
-
-// Get Address in an array (street name FR/NL, street number, municipality FR/NL, zipcode)
+// Get Address in an array (street name FR/NL, street number, municipality FR/NL)
 $permit->getAddress();
 
 // Get Type and Subtype
