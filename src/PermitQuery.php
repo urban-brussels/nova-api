@@ -15,7 +15,7 @@ class PermitQuery
 
     public string $path;
     public string $layer;
-    public string $cql_filter;
+    public array $cql_filter;
     public string $type;
     public int $limit = 1000;
     public array $order;
@@ -34,12 +34,13 @@ class PermitQuery
             $this->path = self::PU_PATH;
             $this->layer = self::PU_LAYER_NAME;
         }
+        $this->cql_filter = [];
     }
 
     public function filterById(int $id): self
     {
         $id_dossier = ($this->type === "PE") ? 'nova_seq' : 's_iddossier';
-        $this->cql_filter = $id_dossier.'='.$id;
+        $this->cql_filter[] = $id_dossier.'='.$id;
 
         return $this;
     }
@@ -58,7 +59,7 @@ class PermitQuery
             }
         }
 
-        $this->cql_filter = $filter;
+        $this->cql_filter[] = $filter;
 
         return $this;
     }
@@ -66,14 +67,14 @@ class PermitQuery
     public function filterByInquiryDate(string $date = null): self
     {
         if ($this->type === "PE") {
-            $this->cql_filter = "date_debut_mpp <= '".date("Y-m-d")."T23:59:59Z' AND date_fin_mpp >= '".date(
+            $filter = "date_debut_mpp <= '".date("Y-m-d")."T23:59:59Z' AND date_fin_mpp >= '".date(
                     "Y-m-d"
                 )."T00:00:00Z' AND date_debut_mpp >= '".date(
                     "Y-m-d",
                     strtotime("-40 days")
                 )."T10:00:00Z' AND date_fin_mpp <= '".date("Y-m-d", strtotime("40 days"))."T10:00:00Z'";
         } else {
-            $this->cql_filter = "datedebutmpp <= '".date("Y-m-d")."T23:59:59Z' AND datefinmpp >= '".date(
+            $filter = "datedebutmpp <= '".date("Y-m-d")."T23:59:59Z' AND datefinmpp >= '".date(
                     "Y-m-d"
                 )."T00:00:00Z' AND datedebutmpp >= '".date(
                     "Y-m-d",
@@ -81,19 +82,21 @@ class PermitQuery
                 )."T10:00:00Z' AND datefinmpp <= '".date("Y-m-d", strtotime("40 days"))."T10:00:00Z'";
         }
 
+        $this->cql_filter[] = $filter;
+
         return $this;
     }
 
-    public function filterByRawCQL(string $cql_filter): self
+    public function filterByRawCQL(string $filter): self
     {
-        $this->cql_filter = $cql_filter;
+        $this->cql_filter[] = $filter;
 
         return $this;
     }
 
     public function filterByReferences(array $references, Attribute $attribute): self
     {
-        $this->cql_filter = $this->contextAttribute($attribute) . " IN ('" . implode("','", $references)."')";
+        $this->cql_filter[] = $this->contextAttribute($attribute) . " IN ('" . implode("','", $references)."')";
 
         return $this;
     }
@@ -135,7 +138,7 @@ class PermitQuery
     public function getResults(): PermitCollection
     {
         $wfs = new WfsLayer($this->path, $this->layer);
-        $wfs->setCqlFilter($this->cql_filter)
+        $wfs->setCqlFilter($this->cqlFilterToString())
             ->setCount($this->limit);
 
         if(!empty($this->order)) {
@@ -411,5 +414,19 @@ class PermitQuery
             return null;
         }
         return (int)filter_var($zipcode, FILTER_SANITIZE_NUMBER_INT);
+    }
+
+    public function cqlFilterToString(): ?string {
+        $nb = count($this->cql_filter);
+
+        if ($nb === 0) {
+            return null;
+        }
+
+        if($nb > 1) {
+            return "(".implode(") AND (", $this->cql_filter);
+        }
+
+        return $this->cql_filter[0];
     }
 }
