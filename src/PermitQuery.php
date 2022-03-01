@@ -94,6 +94,13 @@ class PermitQuery
         return $this;
     }
 
+    public function filterByAttribute(Attribute $attribute, $value): self
+    {
+        $this->cql_filter[] = $this->contextAttribute($attribute) . " = '". $value."'";
+
+        return $this;
+    }
+
     public function filterByReferences(array $references, Attribute $attribute): self
     {
         $this->cql_filter[] = $this->contextAttribute($attribute) . " IN ('" . implode("','", $references)."')";

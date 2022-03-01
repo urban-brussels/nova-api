@@ -21,7 +21,8 @@ $query = new PermitQuery('PU'); // Create a query for planning (PU) or environme
 $permits = $query
     ->filterByReferences(['04/PFD/1796029', '04/PFD/1795271'], Attribute::REFERENCE_NOVA) // Filter by Nova References
     ->setOrder(Attribute::DATE_SUBMISSION, 'DESC') // Order by descending submission date
-    ->setLimit(2); // Limit to 2 results
+    ->setLimit(2) // Limit to 2 results
+    ->getResults();
 
 // You now have a PermitCollection object, that can be used in a loop
 foreach ($permits->getPermits() as $permit) 
@@ -60,6 +61,9 @@ $permit->getDateNotification();
 // Get a multidimensional array with the Area Typology (existing, projected, authorized areas for each type)
 $permit->getAreaTypology();
 
+// Submission language (FR or NL)
+$permit->getLanguage();
+
 ```
 
 ### Other queries examples
@@ -71,10 +75,17 @@ use UrbanBrussels\NovaApi\PermitCollection;
 $query = new PermitQuery('PU');
 
 // Retrieve all requests in public inquiry for the date 2022-01-01 (PU for planning requests, PE for environmental requests)
-$permits = $query->filterByInquiryDate('2022-01-01');
+$permits = $query->filterByInquiryDate('2022-01-01')
+                 ->getResults();
+
+// Filters can be combined
+$permits = $query->filterByAttribute(Attribute::STREETNAME_FR, 'Rue de Dublin') // First filter to limit by street
+                 ->filterByAttribute(Attribute::LANGUAGE, 'NL'); // Second filter to limit to applications in Dutch
+                 ->getResults();
 
 // If you use a raw cql_filter, you can query what you want (e.g. every permit request for a given Street + Zipcode)    
-$permits = $query->filterByRawCQL("streetnamefr = 'Rue de Dublin' AND zipcode='1050'" )->getResults()->all();
+$permits = $query->filterByRawCQL("streetnamefr = 'Rue de Dublin' AND zipcode='1050'" )
+                 ->getResults();
 ```
 ### Advantages    
 This library fixes the following inconsistencies in the Nova WFS webservices
