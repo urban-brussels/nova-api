@@ -56,7 +56,7 @@ enum Attribute
             self::OBJECT_REAL_NL => 'realobjectnl',
             self::OBJECT_STANDARD_FR => 'objectfr',
             self::OBJECT_STANDARD_NL => 'objectnl',
-            self::REFERENCE_FILE => 's_iddossier',
+            self::REFERENCE_FILE => 'novaseq',
             self::REFERENCE_MIXED_PERMIT => 'refmixedpermit',
             self::REFERENCE_MUNICIPALITY => 'referencespecifique',
             self::REFERENCE_NOVA => 'refnova',
