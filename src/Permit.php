@@ -542,9 +542,9 @@ class Permit
             $errors[] = 'error.municipality.missing';
         }
 
-        if($this->getStatus() === "delivered" && !empty($this->getSuspensions()) && $this->getSuspensions()[array_key_last($this->getSuspensions())]['to'] === false) {
-            $errors[] = 'error.suspension.end.missing';
-        }
+//        if($this->getStatus() === "delivered" && !empty($this->getSuspensions()) && $this->getSuspensions()[array_key_last($this->getSuspensions())]['to'] === false) {
+//            $errors[] = 'error.suspension.end.missing';
+//        }
 
         if($this->getStatus() === "delivered" && is_null($this->getDateNotification()) ) {
             $errors[] = 'error.decision.without.date';
