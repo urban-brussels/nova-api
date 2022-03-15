@@ -4,6 +4,7 @@ namespace UrbanBrussels\NovaApi;
 
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class RestrictedData
 {
@@ -101,9 +102,24 @@ class RestrictedData
     }
 
 
-    public function downloadDocument(string $identifier)
+    public function downloadDocument(string $identifier): string
     {
-        $content = [
+        return $this->getResponse($identifier)->getContent();
+    }
+
+    public function documentStatus(string $identifier): int
+    {
+        return $this->getResponse($identifier)->getStatusCode();
+    }
+
+    /**
+     * @param string $identifier
+     * @return ResponseInterface
+     * @throws TransportExceptionInterface
+     */
+    public function getResponse(string $identifier): ResponseInterface
+    {
+        $options = [
             'auth_bearer' => $this->nova_connection->token,
             'headers' => [
                 'Content-Type' => 'application/octet-stream',
@@ -111,15 +127,13 @@ class RestrictedData
         ];
 
         if (isset($this->nova_connection->jwt_key)) {
-            $content['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
+            $options['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
         }
 
-        $httpClient = HttpClient::create();
-        $response = $httpClient->request('GET', $this->nova_connection->endpoint . 'api/nova-api/document/1.0.0/download/identifier/UUID/' . $identifier, $content);
-
-        $statusCode = $response->getStatusCode();
-        $content = $response->getContent();
-
-        return $content ?? null;
+        return HttpClient::create()->request(
+            'GET',
+            $this->nova_connection->endpoint.'api/nova-api/document/1.0.0/download/identifier/UUID/'.$identifier,
+            $options
+        );
     }
 }
