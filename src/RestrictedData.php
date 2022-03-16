@@ -17,21 +17,7 @@ class RestrictedData
 
     public function listDocumentsFromReferences(array $references, string $type = "ID"): array
     {
-        $content = [
-            'auth_bearer' => $this->nova_connection->token,
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
-            ],
-
-            'body' => $this->getReferencesJson($references, $type),
-        ];
-
-        if (isset($this->nova_connection->jwt_key)) {
-            $content['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
-        }
-        $httpClient = HttpClient::create();
-        $response = $httpClient->request('POST', $this->nova_connection->endpoint . 'api/nova-api/document/1.0.0/list/', $content);
+        [$content, $response] = $this->queryDocumentsFromReferences($references, $type);
 
         try {
             $statusCode = $response->getStatusCode();
@@ -46,6 +32,13 @@ class RestrictedData
         }
 
         return $content['publications'] ?? [];
+    }
+
+    public function statusDocumentsFromReferences(array $references, string $type = "ID"): int
+    {
+        [$content, $response] = $this->queryDocumentsFromReferences($references, $type);
+
+        return $response->getStatusCode();
     }
 
     public function getCharges(string $uuid, string $type = "UUID"): array
@@ -135,5 +128,37 @@ class RestrictedData
             $this->nova_connection->endpoint.'api/nova-api/document/1.0.0/download/identifier/UUID/'.$identifier,
             $options
         );
+    }
+
+    /**
+     * @param array $references
+     * @param string $type
+     * @return array
+     * @throws TransportExceptionInterface
+     * @throws \JsonException
+     */
+    public function queryDocumentsFromReferences(array $references, string $type): array
+    {
+        $content = [
+            'auth_bearer' => $this->nova_connection->token,
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+
+            'body' => $this->getReferencesJson($references, $type),
+        ];
+
+        if (isset($this->nova_connection->jwt_key)) {
+            $content['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
+        }
+        $httpClient = HttpClient::create();
+        $response = $httpClient->request(
+            'POST',
+            $this->nova_connection->endpoint.'api/nova-api/document/1.0.0/list/',
+            $content
+        );
+
+        return array($content, $response);
     }
 }
