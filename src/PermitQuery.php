@@ -108,6 +108,30 @@ class PermitQuery
         return $this;
     }
 
+    public function filterByDataError(): self
+    {
+        if ($this->type === "PE") {
+            $filter = "date_depot>'" . date("Y-m-d") . "T23:59:59Z' OR date_arc>'" . date("Y-m-d") . "T23:59:59Z' OR date_decision>'" . date("Y-m-d") . "T23:59:59Z'";
+            $filter .= " OR date_depot<'1800-01-01'";
+            $filter .= " OR date_depot>date_decision";
+            $filter .= " OR date_cc < date_depot";
+            $filter .= " OR streetname_fr == '' OR streetname_nl == ''";
+            $filter .= " OR zipcode is null";
+        }
+        else {
+            $filter = "(datedepot>'" . date("Y-m-d") . "T23:59:59Z' OR dateardosscomplet>'" . date("Y-m-d") . "T23:59:59Z' OR datenotifdecision>'" . date("Y-m-d") . "T23:59:59Z'";
+            $filter .= " OR datedepot<'1800-01-01'";
+            $filter .= " OR datedepot>datenotifdecision";
+            $filter .= " OR datecc < datedepot";
+            $filter .= " OR streetnamefr == '' OR streetnamenl == ''";
+            $filter .= " OR zipcode == '') ";
+        }
+
+        $this->cql_filter[] = $filter;
+
+        return $this;
+    }
+
     public function setLimit(int $limit): self
     {
         $this->limit = $limit;
