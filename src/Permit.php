@@ -559,7 +559,7 @@ class Permit
         }
 
 
-        if ($this->getGeometry() === null) {
+        if ($this->getGeometry() === null && $this->getDateSubmission() > '2019-01-01') {
             $errors[] = 'error.geometry.missing';
         }
 
