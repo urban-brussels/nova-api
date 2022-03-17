@@ -113,6 +113,7 @@ class PermitQuery
         if ($this->type === "PE") {
             $filter = "date_depot>'" . date("Y-m-d") . "T23:59:59Z' OR date_arc>'" . date("Y-m-d") . "T23:59:59Z' OR date_decision>'" . date("Y-m-d") . "T23:59:59Z'";
             $filter .= " OR date_depot<'1800-01-01'";
+            $filter .= " OR date_depot is null";
             $filter .= " OR date_depot>date_decision";
             $filter .= " OR date_cc < date_depot";
             $filter .= " OR streetname_fr == '' OR streetname_nl == ''";
@@ -122,6 +123,7 @@ class PermitQuery
         else {
             $filter = "(datedepot>'" . date("Y-m-d") . "T23:59:59Z' OR dateardosscomplet>'" . date("Y-m-d") . "T23:59:59Z' OR datenotifdecision>'" . date("Y-m-d") . "T23:59:59Z'";
             $filter .= " OR datedepot<'1800-01-01'";
+            $filter .= " OR datedepot is null";
             $filter .= " OR datedepot>datenotifdecision";
             $filter .= " OR datecc < datedepot";
             $filter .= " OR streetnamefr == '' OR streetnamenl == ''";
