@@ -501,6 +501,7 @@ class Permit
         $errors = [];
         $now = new DateTime();
         $oldest_date = new DateTime('1800-01-01');
+        $geometry_date = new DateTime('2019-01-01');
 
         if ($this->getDateSubmission() > $now) {
             $errors[] = 'error.submission.future';
@@ -559,7 +560,7 @@ class Permit
         }
 
 
-        if ($this->getGeometry() === null && $this->getDateSubmission() > '2019-01-01') {
+        if ($this->getGeometry() === null && $this->getDateSubmission() > $geometry_date) {
             $errors[] = 'error.geometry.missing';
         }
 
