@@ -116,6 +116,7 @@ class PermitQuery
             $filter .= " OR date_depot>date_decision";
             $filter .= " OR date_cc < date_depot";
             $filter .= " OR streetname_fr == '' OR streetname_nl == ''";
+            $filter .= " OR geometry is null";
             $filter .= " OR zipcode is null";
         }
         else {
@@ -124,6 +125,7 @@ class PermitQuery
             $filter .= " OR datedepot>datenotifdecision";
             $filter .= " OR datecc < datedepot";
             $filter .= " OR streetnamefr == '' OR streetnamenl == ''";
+            $filter .= " OR geometry is null";
             $filter .= " OR zipcode == '') ";
         }
 

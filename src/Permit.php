@@ -558,6 +558,11 @@ class Permit
             $errors[] = 'error.delivered.before.inquiry';
         }
 
+
+        if ($this->getGeometry() === null) {
+            $errors[] = 'error.geometry.missing';
+        }
+
         return $errors;
     }
 
