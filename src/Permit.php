@@ -636,16 +636,12 @@ class Permit
         $subtype = $this->getSubtype();
         if (in_array(
             $this->getSubtype(),
-            ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD"]
+            ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD", "IPE"]
         )) {
             return "region";
         }
 
-        if (!is_null($subtype)) {
             return "municipality";
-        }
-
-        return null;
     }
 
     #[Pure] public static function guessPermitType(string $reference_nova): string
