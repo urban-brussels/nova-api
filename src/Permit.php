@@ -631,7 +631,7 @@ class Permit
         return $references;
     }
 
-    public function getAuthority(): ?string
+    public function getAuthority(): string
     {
         $subtype = $this->getSubtype();
         if (in_array(
