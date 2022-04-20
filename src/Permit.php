@@ -638,7 +638,7 @@ class Permit
             $this->getSubtype(),
             ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD", "ICE", "IRPE"]
         )
-        || str_contains("IPE", $this->getSubtype())) {
+        || str_contains($this->getSubtype(), "IPE")) {
             return "region";
         }
 
