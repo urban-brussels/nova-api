@@ -12,7 +12,7 @@ class Permit
     public string $subtype;
     public ?string $language;
     public string $uuid;
-    public int $reference_file;
+    public $reference_file;
     public ?string $reference_municipality;
     public ?string $reference_mixed_permit;
 
@@ -139,7 +139,7 @@ class Permit
     /**
      * @param int $reference_file
      */
-    public function setReferenceFile(int $reference_file): void
+    public function setReferenceFile($reference_file): void
     {
         $this->reference_file = $reference_file;
     }
