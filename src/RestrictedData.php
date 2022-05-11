@@ -117,25 +117,18 @@ class RestrictedData
         return $content['data']['Case_LinkedCase_List'] ?? [];
     }
 
-    /**
-     * @throws \JsonException
-     */
-    public function getReferencesJson(array $references, string $type = "ID")
+    public function getReferencesJson(array $references, string $type = "ID"): string
     {
-        $identifiers["identifiers"] = array();
-        $nb = is_countable($references) ? count($references) : 0;
+        $lines = '';
+        $json = '{"identifiers":[{';
 
-        for ($i = 0; $i < $nb; $i++)
-        {
-            $identifiers["identifiers"][$i]['identifier']['key'] = $references[$i];
-            $identifiers["identifiers"][$i]['identifier']['type'] = $type;
-            // CONTEXT
-            $identifiers["identifiers"][$i]['identifier']['context'] = 'CASE';
-        }
+        foreach ($references as $reference) {
+            $lines .= '"identifier":{"key":"'.$reference.'","type":"UUID","context":"CASE"},';
+        };
+        $json .= substr($lines, 0, -1).' }]}';
 
-        return json_encode($identifiers, JSON_THROW_ON_ERROR);
+        return substr(stripslashes(json_encode($json, JSON_THROW_ON_ERROR)), 1,-1);
     }
-
 
     public function downloadDocument(string $identifier): string
     {
