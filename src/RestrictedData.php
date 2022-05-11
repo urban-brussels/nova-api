@@ -75,6 +75,48 @@ class RestrictedData
         return $content['data']['Case_Details']['urbanCharge'] ?? [];
     }
 
+
+    public function getLinkedCases(string $uuid, string $type = "UUID"): array
+    {
+        $httpClient = HttpClient::create();
+        $response = $httpClient->request('POST', $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql', [
+            'auth_bearer' => $this->nova_connection->token,
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+
+            'body' => '{"query": "query ($arg:IdentifiersInput!) { Case_LinkedCase_List (identifiers:$arg) {uuid, type, value}}",
+    "variables": {
+        "arg": {
+            "identifiersGroupInputs": [
+                {
+                    "identifiersInputs": [
+                        {
+                            "identifier": {
+                                "key": "'.$uuid.'",
+                                "type": "UUID"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }}',
+        ]);
+
+        try {
+            $statusCode = $response->getStatusCode();
+            $content = $response->getContent(false);
+            if($statusCode === 200) {
+                $content = $response->toArray();
+            }
+        } catch (TransportExceptionInterface $e) {
+            var_dump($e->getMessage());
+        }
+
+        return $content['data']['Case_LinkedCase_List'] ?? [];
+    }
+
     /**
      * @throws \JsonException
      */

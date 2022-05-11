@@ -23,11 +23,13 @@ class DocsListing
 
         if($externals === true) {
             $nova_connection_docs->setJwtKey($_ENV['NOVA_API_JWT_EXTERNALS']);
+            $permit_uuids = $this->getCaseVersions($collection->getPermits()[0]->getUuid());
+        }
+        else {
+            $permit_uuids = [$collection->getPermits()[0]->getUuid()];
         }
 
-        $permit = $collection->getPermits()[0];
-
-        return (new RestrictedData($nova_connection_docs))->listDocumentsFromReferences([$permit->getUuid()], 'UUID');
+        return (new RestrictedData($nova_connection_docs))->listDocumentsFromReferences($permit_uuids, 'UUID');
     }
 
     #[ArrayShape(['files' => "int", 'size' => "int"])]
@@ -51,5 +53,24 @@ class DocsListing
             $total_size += $real_size;
         }
         return ['files' => count($docs), 'size' => $total_size];
+    }
+
+    public function getCaseVersions(string $uuid): array
+    {
+        $nova_connection_graph = new NovaConnection(
+            $_ENV['NOVA_API_ENDPOINT'],
+            $_ENV['NOVA_API_CONSUMER_KEY'],
+            $_ENV['NOVA_API_CONSUMER_SECRET'],
+            'NOVA_API_GRAPH');
+
+        $linked_cases = (new RestrictedData($nova_connection_graph))->getLinkedCases($uuid);
+
+        $versions = [$uuid];
+
+        foreach ($linked_cases as $case) {
+            if ($case['type'] === 'VERSIONING') { $versions[] = $case['uuid']; }
+        }
+
+        return $versions;
     }
 }
