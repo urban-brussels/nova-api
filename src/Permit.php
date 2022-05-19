@@ -197,7 +197,7 @@ class Permit
      */
     public function getVersion(): ?int
     {
-        return $this->version;
+        return $this->version ?? null;
     }
 
     /**
