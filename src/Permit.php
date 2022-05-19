@@ -41,6 +41,7 @@ class Permit
     public array $charges;
     public array $documents;
     public ?string $geometry;
+    public ?int $version;
 
     public function __construct(string $reference_nova)
     {
@@ -190,6 +191,21 @@ class Permit
     public function setSource(array $source): void
     {
         $this->source = $source;
+    }
+    /**
+     * @return null|int
+     */
+    public function getVersion(): ?int
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param null|int $version
+     */
+    public function setVersion(?int $version): void
+    {
+        $this->version = $version;
     }
 
     /**

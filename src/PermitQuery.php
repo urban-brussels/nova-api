@@ -187,6 +187,7 @@ class PermitQuery
             if(is_null($result[$this->contextAttribute(Attribute::REFERENCE_NOVA)])) { break; }
             $permit = new Permit($result[$this->contextAttribute(Attribute::REFERENCE_NOVA)]);
             $permit->setLanguage($result[$this->contextAttribute(Attribute::LANGUAGE)]);
+            $permit->setVersion($result[$this->contextAttribute(Attribute::VERSION)] ?? null);
             $permit->setType($this->type);
             $permit->setSubtype($result[$this->contextAttribute(Attribute::SUBTYPE)]);
             $permit->setDateSubmission($this->defineSubmissionDate(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_SUBMISSION)])));

@@ -32,6 +32,7 @@ enum Attribute
     case STREET_NUMBER_TO;
     case SUBMISSION_TYPE;
     case SUBTYPE;
+    case VERSION;
     case ZIPCODE;
 
     public function pu(): string
@@ -66,6 +67,7 @@ enum Attribute
             self::STREET_NUMBER_TO => 'numberpartto',
             self::SUBMISSION_TYPE => 'typedepot_fr',
             self::SUBTYPE => 'typedossier',
+            self::VERSION => 'version',
             self::ZIPCODE => 'zipcode',
         };
     }
@@ -102,6 +104,7 @@ enum Attribute
             self::STREET_NUMBER_TO => 'number_to',
             self::SUBMISSION_TYPE => 'typedepot_fr',
             self::SUBTYPE => 'case_subtype',
+            self::VERSION => '',
             self::ZIPCODE => 'zipcode',
         };
     }
