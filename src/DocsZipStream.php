@@ -29,6 +29,18 @@ class DocsZipStream
                 $versions = [];
 
                 foreach ($docs as $doc) {
+                    // Limit to Urban Docs
+                    if(
+                        !str_contains($doc['source']['translations'][0]['label'], 'BUP')
+                        && !str_contains($doc['source']['translations'][0]['label'], 'BSE')
+                        && !str_contains($doc['source']['translations'][0]['label'], 'MyPermit (Urbanisme)')
+                        && !str_contains($doc['source']['translations'][0]['label'], 'MyPermit (Stedenbouw)')
+                    )
+                    {
+                        continue;
+                    }
+                    // End Limit to Urban Docs
+
                     // Folder "version"
                     $version = array_search($doc['dossier-identifier']['key'], $versions, true);
                     if($version === false) {

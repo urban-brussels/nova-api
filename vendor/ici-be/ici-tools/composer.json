@@ -1,0 +1,15 @@
+{
+    "name": "ici/ici_tools",
+    "description": "Spatial PHP tools. The WfsLayer class helps create requests on a WFS layer using a PHP object. Web Feature Service (WFS) is a standard of the Open Geospatial Consortium.",
+    "keywords": ["WFS","geospatial","Geoserver","ArcGIS","projection"],
+    "require": {
+        "php": "^7.0 || ^8.0",
+        "symfony/http-client": "5.* || 6.*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ici\\ici_tools\\": "src/"
+        }
+    }
+}
