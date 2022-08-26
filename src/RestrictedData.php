@@ -190,7 +190,7 @@ class RestrictedData
         $httpClient = HttpClient::create();
         $response = $httpClient->request(
             'POST',
-            $this->nova_connection->endpoint.'api/nova-api/document/1.0.0/list/',
+            $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql',
             $content
         );
 
