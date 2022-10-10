@@ -534,7 +534,6 @@ class Permit
         if (
             !is_null($this->getDateNotification())
             && $this->getDateSubmission() > $this->getDateNotification()
-            && !str_contains($this->getReferenceNova(), 'GOU')
         ) {
             $errors[] = 'error.decision.before.submission';
         }
@@ -567,7 +566,11 @@ class Permit
 //            $errors[] = 'error.suspension.end.missing';
 //        }
 
-        if($this->getStatus() === "delivered" && is_null($this->getDateNotification()) ) {
+        if(
+            $this->getStatus() === "delivered"
+            && is_null($this->getDateNotification())
+            && !str_contains($this->getReferenceNova(), 'GOU')
+        ) {
             $errors[] = 'error.decision.without.date';
         }
 
