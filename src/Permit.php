@@ -531,7 +531,11 @@ class Permit
             $errors[] = 'error.submission.missing';
         }
 
-        if (!is_null($this->getDateNotification()) && $this->getDateSubmission() > $this->getDateNotification()) {
+        if (
+            !is_null($this->getDateNotification())
+            && $this->getDateSubmission() > $this->getDateNotification()
+            && !str_contains($this->getReferenceNova(), 'GOU')
+        ) {
             $errors[] = 'error.decision.before.submission';
         }
 
