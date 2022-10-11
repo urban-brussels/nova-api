@@ -55,6 +55,7 @@ class DocsListing
         return ['files' => count($docs), 'size' => $total_size];
     }
 
+    // To be decommissioned, use getCaseLinked instead
     public function getCaseVersions(string $uuid): array
     {
         $nova_connection_graph = new NovaConnection(
@@ -69,6 +70,25 @@ class DocsListing
 
         foreach ($linked_cases as $case) {
             if ($case['type'] === 'VERSIONING') { $versions[] = $case['uuid']; }
+        }
+
+        return $versions;
+    }
+
+    public function getCaseLinked(string $uuid, $type = 'VERSIONING'): array
+    {
+        $nova_connection_graph = new NovaConnection(
+            $_ENV['NOVA_API_ENDPOINT'],
+            $_ENV['NOVA_API_CONSUMER_KEY'],
+            $_ENV['NOVA_API_CONSUMER_SECRET'],
+            'NOVA_API_GRAPH');
+
+        $linked_cases = (new RestrictedData($nova_connection_graph))->getLinkedCases($uuid);
+
+        $versions = [$uuid];
+
+        foreach ($linked_cases as $case) {
+            if ($case['type'] === $type) { $versions[] = $case['uuid']; }
         }
 
         return $versions;
