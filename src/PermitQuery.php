@@ -378,6 +378,10 @@ class PermitQuery
         $status_fr = $attributes['statutpermisfr'] ?? null;
         $final_state = $attributes['statut_dossier'] ?? $attributes['etatfinal'] ?? null;
 
+        if ($status_fr === "Saisi par FD") {
+            return 'referral';
+        }
+
         if ($status_fr === "Octroyé") {
             return 'delivered';
         }
