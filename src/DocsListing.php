@@ -85,7 +85,7 @@ class DocsListing
 
         $linked_cases = (new RestrictedData($nova_connection_graph))->getLinkedCases($uuid);
 
-        if($type = 'VERSIONING') {
+        if($type === 'VERSIONING') {
             $versions = [$uuid];
         }
         else {
