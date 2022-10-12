@@ -32,6 +32,7 @@ enum Attribute
     case STREET_NUMBER_TO;
     case SUBMISSION_TYPE;
     case SUBTYPE;
+    case UUID;
     case VERSION;
     case ZIPCODE;
 
@@ -67,6 +68,7 @@ enum Attribute
             self::STREET_NUMBER_TO => 'numberpartto',
             self::SUBMISSION_TYPE => 'typedepot_fr',
             self::SUBTYPE => 'typedossier',
+            self::UUID => 'uuid',
             self::VERSION => 'version',
             self::ZIPCODE => 'zipcode',
         };
@@ -104,6 +106,7 @@ enum Attribute
             self::STREET_NUMBER_TO => 'number_to',
             self::SUBMISSION_TYPE => 'typedepot_fr',
             self::SUBTYPE => 'case_subtype',
+            self::UUID => 'uuid',
             self::VERSION => '',
             self::ZIPCODE => 'zipcode',
         };
