@@ -657,6 +657,11 @@ class Permit
     public function getAuthority(): string
     {
         $subtype = $this->getSubtype();
+
+        if (str_contains($this->getSubtype(),"GOU")) {
+            return "government";
+        }
+
         if (in_array(
             $this->getSubtype(),
             ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD", "ICE", "IRPE"]
