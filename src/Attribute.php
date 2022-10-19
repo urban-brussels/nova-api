@@ -13,6 +13,7 @@ enum Attribute
     case DATE_INQUIRY_END;
     case DATE_NOTIFICATION;
     case DATE_SUBMISSION;
+    case DATE_VALIDITY;
     case GEOMETRY;
     case IS_MIXED;
     case LANGUAGE;
@@ -49,6 +50,7 @@ enum Attribute
             self::DATE_INQUIRY_END => 'datefinmpp',
             self::DATE_NOTIFICATION => 'datenotifdecision',
             self::DATE_SUBMISSION => 'datedepot',
+            self::DATE_VALIDITY => 'date_validite_permis',
             self::GEOMETRY => 'geometry',
             self::IS_MIXED => 'mixedpermit',
             self::LANGUAGE => 'languedemande',
@@ -87,6 +89,7 @@ enum Attribute
             self::DATE_INQUIRY_END => 'date_fin_mpp',
             self::DATE_NOTIFICATION => 'date_decision',
             self::DATE_SUBMISSION => 'date_depot',
+            self::DATE_VALIDITY => 'date_echeance_permis',
             self::GEOMETRY => 'geometry',
             self::IS_MIXED => 'is_mixed_permit',
             self::LANGUAGE => 'langue_demande',

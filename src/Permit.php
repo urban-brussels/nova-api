@@ -24,6 +24,7 @@ class Permit
     public ?DateTime $date_inquiry_end;
     public ?DateTime $date_cc;
     public ?DateTime $date_notification;
+    public ?DateTime $date_validity;
     public array $object;
     public array $advices;
     public array $source;
@@ -254,6 +255,22 @@ class Permit
     public function setDateInquiryEnd(?DateTime $date_inquiry_end): void
     {
         $this->date_inquiry_end = $date_inquiry_end;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateValidity(): ?DateTime
+    {
+        return $this->date_validity;
+    }
+
+    /**
+     * @param DateTime|null $date_validity
+     */
+    public function setDateValidity(?DateTime $date_validity): void
+    {
+        $this->date_validity = $date_validity;
     }
 
     /**
