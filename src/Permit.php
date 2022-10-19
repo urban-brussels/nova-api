@@ -664,7 +664,7 @@ class Permit
 
         if (in_array(
             $this->getSubtype(),
-            ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "GOU_PU", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD", "ICE", "IRPE"]
+            ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD", "ICE", "IRPE"]
         )
         || str_contains($this->getSubtype(), "IPE")) {
             return "region";

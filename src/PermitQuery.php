@@ -378,6 +378,10 @@ class PermitQuery
         $status_fr = $attributes['statutpermisfr'] ?? null;
         $final_state = $attributes['statut_dossier'] ?? $attributes['etatfinal'] ?? null;
 
+        if ($final_state === "R") {
+            return 'appeal';
+        }
+
         if ($status_fr === "Saisi par FD") {
             return 'referral';
         }
@@ -388,10 +392,6 @@ class PermitQuery
 
         if ($status_fr === "Annulé") {
             return 'canceled';
-        }
-
-        if ($final_state === "R") {
-            return 'appeal';
         }
 
         if ($final_state === "S") {
