@@ -24,7 +24,7 @@ class Permit
     public ?DateTime $date_inquiry_end;
     public ?DateTime $date_cc;
     public ?DateTime $date_notification;
-    public ?DateTime $date_validity;
+    public ?DateTime $date_validity = null;
     public array $object;
     public array $advices;
     public array $source;
