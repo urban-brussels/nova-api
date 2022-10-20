@@ -14,6 +14,8 @@ enum Attribute
     case DATE_NOTIFICATION;
     case DATE_SUBMISSION;
     case DATE_VALIDITY;
+    case DATE_WORK_BEGIN;
+    case DATE_WORK_END;
     case GEOMETRY;
     case IS_MIXED;
     case LANGUAGE;
@@ -35,6 +37,7 @@ enum Attribute
     case SUBTYPE;
     case UUID;
     case VERSION;
+    case WORK_MONTHS;
     case ZIPCODE;
 
     public function pu(): string
@@ -51,6 +54,8 @@ enum Attribute
             self::DATE_NOTIFICATION => 'datenotifdecision',
             self::DATE_SUBMISSION => 'datedepot',
             self::DATE_VALIDITY => 'date_validite_permis',
+            self::DATE_WORK_BEGIN => 'date_debut_travaux',
+            self::DATE_WORK_END => 'date_fin_travaux',
             self::GEOMETRY => 'geometry',
             self::IS_MIXED => 'mixedpermit',
             self::LANGUAGE => 'languedemande',
@@ -72,6 +77,7 @@ enum Attribute
             self::SUBTYPE => 'typedossier',
             self::UUID => 'uuid',
             self::VERSION => 'version',
+            self::WORK_MONTHS => 'mois_duree_travaux',
             self::ZIPCODE => 'zipcode',
         };
     }
@@ -90,6 +96,8 @@ enum Attribute
             self::DATE_NOTIFICATION => 'date_decision',
             self::DATE_SUBMISSION => 'date_depot',
             self::DATE_VALIDITY => 'date_echeance_permis',
+            self::DATE_WORK_BEGIN => '',
+            self::DATE_WORK_END => '',
             self::GEOMETRY => 'geometry',
             self::IS_MIXED => 'is_mixed_permit',
             self::LANGUAGE => 'langue_demande',
@@ -111,6 +119,7 @@ enum Attribute
             self::SUBTYPE => 'case_subtype',
             self::UUID => 'uuid',
             self::VERSION => '',
+            self::WORK_MONTHS => '',
             self::ZIPCODE => 'zipcode',
         };
     }

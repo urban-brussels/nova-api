@@ -25,6 +25,9 @@ class Permit
     public ?DateTime $date_cc;
     public ?DateTime $date_notification;
     public ?DateTime $date_validity = null;
+    public ?DateTime $date_work_begin = null;
+    public ?DateTime $date_work_end = null;
+    public ?int $work_months = null;
     public array $object;
     public array $advices;
     public array $source;
@@ -274,6 +277,54 @@ class Permit
     }
 
     /**
+     * @return DateTime|null
+     */
+    public function getDateWorkBegin(): ?DateTime
+    {
+        return $this->date_work_begin;
+    }
+
+    /**
+     * @param DateTime|null $date_work_begin
+     */
+    public function setDateWorkBegin(?DateTime $date_work_begin): void
+    {
+        $this->date_work_begin = $date_work_begin;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateWorkEnd(): ?DateTime
+    {
+        return $this->date_work_end;
+    }
+
+    /**
+     * @param DateTime|null $date_work_end
+     */
+    public function setDateWorkEnd(?DateTime $date_work_end): void
+    {
+        $this->date_work_end = $date_work_end;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getWorkMonths(): ?int
+    {
+        return $this->work_months;
+    }
+
+    /**
+     * @param int|null $work_months
+     */
+    public function setWorkMonths(?int $work_months): void
+    {
+        $this->work_months = $work_months;
+    }
+
+    /**
      * @return array
      */
     public function getAdvices(): array
@@ -466,9 +517,9 @@ class Permit
     }
 
     /**
-     * @return float|null
+     * @return int|null
      */
-    public function getZipcode(): ?float
+    public function getZipcode(): ?int
     {
         return $this->zipcode;
     }

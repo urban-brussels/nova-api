@@ -199,6 +199,9 @@ class PermitQuery
             $permit->setDateInquiryEnd(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_INQUIRY_END)]));
             $permit->setDateNotification(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_NOTIFICATION)]));
             $permit->setDateValidity(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_VALIDITY)]));
+            $permit->setDateWorkBegin(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_WORK_BEGIN)]));
+            $permit->setDateWorkEnd(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_WORK_END)]));
+            $permit->setWorkMonths($result[$this->contextAttribute(Attribute::WORK_MONTHS)]);
             $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
             $permit->setAdvices($this->defineAdvicesFromAttributes($result));
             $permit->setAddress($this->defineAddressFromAttributes($result));
