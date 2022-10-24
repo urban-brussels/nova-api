@@ -118,17 +118,17 @@ class PermitQuery
             $filter .= " OR date_cc < date_depot";
             $filter .= " OR streetname_fr == '' OR streetname_nl == ''";
             $filter .= " OR (geometry is null AND date_depot>'2019-01-01T00:00:00Z')";
-            $filter .= " OR zipcode is null";
+            $filter .= " OR zipcode == '' OR zipcode is null";
         }
         else {
-            $filter = "(datedepot>'" . date("Y-m-d") . "T23:59:59Z' OR dateardosscomplet>'" . date("Y-m-d") . "T23:59:59Z' OR datenotifdecision>'" . date("Y-m-d") . "T23:59:59Z'";
+            $filter = "datedepot>'" . date("Y-m-d") . "T23:59:59Z' OR dateardosscomplet>'" . date("Y-m-d") . "T23:59:59Z' OR datenotifdecision>'" . date("Y-m-d") . "T23:59:59Z'";
             $filter .= " OR datedepot<'1800-01-01'";
             $filter .= " OR datedepot is null";
             $filter .= " OR datedepot>datenotifdecision";
             $filter .= " OR datecc < datedepot";
             $filter .= " OR streetnamefr == '' OR streetnamenl == ''";
             $filter .= " OR (geometry is null AND datedepot>'2019-01-01T00:00:00Z')";
-            $filter .= " OR zipcode == '') ";
+            $filter .= " OR zipcode == '' OR zipcode is null";
         }
 
         $this->cql_filter[] = $filter;
