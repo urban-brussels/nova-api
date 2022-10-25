@@ -226,6 +226,13 @@ class PermitQuery
         return $this->permit_collection;
     }
 
+    public function getHits(): ?int
+    {
+        $wfs = new WfsLayer($this->path, $this->layer);
+        $wfs->setCqlFilter($this->cqlFilterToString());
+
+        return $wfs->getHits();
+    }
 
     private function defineAreaTypologyFromAttributes(array $attributes): array
     {
