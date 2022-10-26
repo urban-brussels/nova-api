@@ -10,6 +10,7 @@ class NovaConnection
     public string $consumer_secret;
     public string $token;
     public string $jwt_key;
+    public string $user_key;
 
     public function __construct(string $endpoint, string $consumer_key, string $consumer_secret, string $scope)
     {
@@ -32,4 +33,8 @@ class NovaConnection
         $this->jwt_key = $jwt_key;
     }
 
+    public function setUserKey(string $user_key): void
+    {
+        $this->user_key = $user_key;
+    }
 }

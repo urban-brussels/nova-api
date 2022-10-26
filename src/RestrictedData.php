@@ -31,7 +31,7 @@ class RestrictedData
             var_dump($e->getMessage());
         }
 
-        return $content['publications'] ?? [];
+        return $content['data']['Document_List'] ?? [];
     }
 
     public function statusDocumentsFromReferences(array $references, string $type = "ID"): int
@@ -75,7 +75,6 @@ class RestrictedData
         return $content['data']['Case_Details']['urbanCharge'] ?? [];
     }
 
-
     public function getLinkedCases(string $uuid, string $type = "UUID"): array
     {
         $httpClient = HttpClient::create();
@@ -117,19 +116,6 @@ class RestrictedData
         return $content['data']['Case_LinkedCase_List'] ?? [];
     }
 
-    public function getReferencesJson(array $references, string $type = "ID"): string
-    {
-        $lines = '';
-        $json = '{"identifiers":[{';
-
-        foreach ($references as $reference) {
-            $lines .= '"identifier":{"key":"'.$reference.'","type":"UUID","context":"CASE"},';
-        };
-        $json .= substr($lines, 0, -1).' }]}';
-
-        return substr(stripslashes(json_encode($json, JSON_THROW_ON_ERROR)), 1,-1);
-    }
-
     public function downloadDocument(string $identifier): string
     {
         return $this->getResponse($identifier)->getContent();
@@ -158,6 +144,10 @@ class RestrictedData
             $options['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
         }
 
+        if (isset($this->nova_connection->user_key)) {
+            $content['headers']['x-user-key'] = $this->nova_connection->user_key;
+        }
+
         return HttpClient::create()->request(
             'GET',
             $this->nova_connection->endpoint.'api/nova-api/document/1.0.0/download/identifier/UUID/'.$identifier,
@@ -174,23 +164,47 @@ class RestrictedData
      */
     public function queryDocumentsFromReferences(array $references, string $type): array
     {
+        $identifiers = [];
+
+        foreach ($references as $reference) {
+            $new = [];
+            $new['identifier']['key'] = $reference;
+            $new['identifier']['type'] = "UUID";
+            $new['identifier']['context'] = "CASE";
+            $identifiers[] = $new;
+        }
+
         $content = [
             'auth_bearer' => $this->nova_connection->token,
             'headers' => [
-                'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
             ],
 
-            'body' => $this->getReferencesJson($references, $type),
+            'body' => '{
+   "query":"query ($arg:SearchDocumentCriteriaInput!){Document_List(searchCriteria:$arg){identifier{key type} publicationType  name{label  translations{label language}} url creationDate category{key type} origin{label translations{label language}} source {label  translations{label language}}  description size interInstanceVisibility  root{identifier{key type}}  documentLabels{ name{label  translations{label language}} } validity{from to}  } } ",
+   "variables":{
+      "arg":{
+         "identifiers":{
+            "identifiersGroupInputs":[
+               {
+                  "identifiersInputs":'.json_encode($identifiers).'            
+               }
+            ]
+         } } } }'
         ];
 
         if (isset($this->nova_connection->jwt_key)) {
             $content['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
         }
+        if (isset($this->nova_connection->user_key)) {
+            $content['headers']['x-user-key'] = $this->nova_connection->user_key;
+        }
+
         $httpClient = HttpClient::create();
         $response = $httpClient->request(
             'POST',
-            $this->nova_connection->endpoint.'api/nova-api/document/1.0.0/list',
+            $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql',
             $content
         );
 
