@@ -14,12 +14,12 @@ class DocsListing
             ->setLimit(1)
             ->getResults();
 
-        // Get Inquiry Documents (from a restricted API)
+        // Get Documents (from a restricted API)
         $nova_connection_docs = new NovaConnection(
             $_ENV['NOVA_API_ENDPOINT'],
             $_ENV['NOVA_API_CONSUMER_KEY'],
             $_ENV['NOVA_API_CONSUMER_SECRET'],
-            'NOVA_API_DOCUMENT');
+            'NOVA_API_GRAPH');
 
         if($externals === true) {
             $nova_connection_docs->setJwtKey($_ENV['NOVA_API_JWT_EXTERNALS']);
