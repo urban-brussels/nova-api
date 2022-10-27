@@ -6,7 +6,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class DocsListing
 {
-    public function listingFromRefnova(string $refnova, bool $externals = true): array
+    public function listingFromRefnova(string $refnova, bool $externals = true, string $linked_cases = 'VERSIONING'): array
     {
         $query = new PermitQuery(Permit::guessPermitType($refnova));
         $collection = $query
@@ -23,7 +23,7 @@ class DocsListing
 
         if($externals === true) {
             $nova_connection_docs->setJwtKey($_ENV['NOVA_API_JWT_EXTERNALS']);
-            $permit_uuids = $this->getCaseVersions($collection->getPermits()[0]->getUuid());
+            $permit_uuids = $this->getLinkedCases($collection->getPermits()[0]->getUuid(), $linked_cases);
         }
         else {
             $permit_uuids = [$collection->getPermits()[0]->getUuid()];
@@ -53,26 +53,6 @@ class DocsListing
             $total_size += $real_size;
         }
         return ['files' => count($docs), 'size' => $total_size];
-    }
-
-    // To be decommissioned, use getLinkedCases instead
-    public function getCaseVersions(string $uuid): array
-    {
-        $nova_connection_graph = new NovaConnection(
-            $_ENV['NOVA_API_ENDPOINT'],
-            $_ENV['NOVA_API_CONSUMER_KEY'],
-            $_ENV['NOVA_API_CONSUMER_SECRET'],
-            'NOVA_API_GRAPH');
-
-        $linked_cases = (new RestrictedData($nova_connection_graph))->getLinkedCases($uuid);
-
-        $versions = [$uuid];
-
-        foreach ($linked_cases as $case) {
-            if ($case['type'] === 'VERSIONING') { $versions[] = $case['uuid']; }
-        }
-
-        return $versions;
     }
 
     public function getLinkedCases(string $uuid, $type = 'VERSIONING'): array
