@@ -55,7 +55,7 @@ class DocsZipStream
                     $fp = tmpfile();
                     fwrite($fp, $download_from_nova->getDocumentStream($doc['identifier']['key']));
                     rewind($fp);
-                    $zip->addFileFromStream($folder.'/'.$doc['name']['label'], $fp); // 'V.'.$version++. '/'.
+                    $zip->addFileFromStream($folder.'/'.$doc['name']['label'], $fp);
                     fclose($fp);
                 }
 
@@ -67,5 +67,5 @@ class DocsZipStream
                 'Content-Type' => 'application/octet-stream',
             ]
         );
-}
+    }
 }
