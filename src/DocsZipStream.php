@@ -17,7 +17,7 @@ class DocsZipStream
         $docs = $listing->listingFromRefnova($refnova);
 
         $dictionary = $categories_from_nova->getCategories();
-        $fallback_category = ($_locale === 'fr') ? 'Autres' : 'Anderen';
+        $fallback_category = ($_locale === 'fr') ? 'Autre' : 'Anderen';
 
         return new StreamedResponse(
             function () use ($_locale, $dictionary, $fallback_category, $download_from_nova, $docs) {
