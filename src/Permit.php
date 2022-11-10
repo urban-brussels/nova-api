@@ -3,6 +3,7 @@
 namespace UrbanBrussels\NovaApi;
 
 use DateTime;
+use ici\ici_tools\GeomSvg;
 use JetBrains\PhpStorm\Pure;
 
 class Permit
@@ -785,7 +786,6 @@ class Permit
         $this->documents = $documents;
     }
 
-
     /**
      * @return array
      */
@@ -816,5 +816,16 @@ class Permit
     public function setGeometry(?string $geometry): void
     {
         $this->geometry = $geometry;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSvg($size = 100): ?string
+    {
+        if(is_null($this->geometry)) {
+            return null;
+        }
+        return GeomSvg::toSvg($this->geometry, $size);
     }
 }

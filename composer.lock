@@ -4,23 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6241ae2e3f4d747f18f13887f6dacf54",
+    "content-hash": "dbb690f77e5fc23fa69332a44c75dde0",
     "packages": [
         {
             "name": "ici-be/ici-tools",
-            "version": "0.3.0",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ici-be/ici-tools.git",
-                "reference": "48b8dcb52b80bf79a90a7434cd9d1e1ecea3c12e"
+                "reference": "5f421f4114a86b385bd12491cc3de75b607ce6dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ici-be/ici-tools/zipball/48b8dcb52b80bf79a90a7434cd9d1e1ecea3c12e",
-                "reference": "48b8dcb52b80bf79a90a7434cd9d1e1ecea3c12e",
+                "url": "https://api.github.com/repos/ici-be/ici-tools/zipball/5f421f4114a86b385bd12491cc3de75b607ce6dc",
+                "reference": "5f421f4114a86b385bd12491cc3de75b607ce6dc",
                 "shasum": ""
             },
             "require": {
+                "phayes/geophp": "^1.2",
                 "php": "^7.0 || ^8.0",
                 "symfony/http-client": "5.* || 6.*"
             },
@@ -44,9 +45,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ici-be/ici-tools/issues",
-                "source": "https://github.com/ici-be/ici-tools/tree/0.3.0"
+                "source": "https://github.com/ici-be/ici-tools/tree/0.3.1"
             },
-            "time": "2022-01-10T13:48:20+00:00"
+            "time": "2022-11-10T12:56:41+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
