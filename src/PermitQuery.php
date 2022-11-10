@@ -3,6 +3,7 @@
 namespace UrbanBrussels\NovaApi;
 
 use DateTime;
+use geoPHP;
 use DateTimeZone;
 use ici\ici_tools\WfsLayer;
 
@@ -220,6 +221,7 @@ class PermitQuery
             $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
             $permit->setSubmissionType($result[$this->contextAttribute(Attribute::SUBMISSION_TYPE)]);
             $permit->setGeometry($this->defineGeometry($result[$this->contextAttribute(Attribute::GEOMETRY)]));
+            $permit->setArea($this->defineArea($permit->getGeometry()));
             $this->permit_collection->addPermit($permit);
         }
 
@@ -479,5 +481,14 @@ class PermitQuery
         }
 
         return $this->cql_filter[0];
+    }
+
+    public function defineArea(?string $wkt): ?float {
+        if(is_null($wkt)) {
+            return null;
+        }
+
+        $polygon = geoPHP::load($wkt,'wkt');
+        return round($polygon->getArea(),2);
     }
 }

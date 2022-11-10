@@ -3,7 +3,6 @@
 namespace UrbanBrussels\NovaApi;
 
 use DateTime;
-use geoPHP;
 use ici\ici_tools\GeomSvg;
 use JetBrains\PhpStorm\Pure;
 
@@ -48,6 +47,7 @@ class Permit
     public array $documents;
     public ?string $geometry;
     public ?int $version;
+    public ?float $area;
 
     public function __construct(string $reference_nova)
     {
@@ -830,12 +830,13 @@ class Permit
         return GeomSvg::toSvg($this->geometry, $size);
     }
 
-    public function getArea(): ?float {
-        if(is_null($this->geometry)) {
-            return null;
-        }
+    public function getArea(): ?float
+    {
+        return $this->area;
+    }
 
-        $polygon = geoPHP::load($this->geometry,'wkt');
-        return round($polygon->getArea(),2);
+    public function setArea(?float $area): void
+    {
+        $this->area = $area;
     }
 }
