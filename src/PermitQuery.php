@@ -222,7 +222,7 @@ class PermitQuery
             $permit->setSubmissionType($result[$this->contextAttribute(Attribute::SUBMISSION_TYPE)]);
             $permit->setGeometry($this->defineGeometry($result[$this->contextAttribute(Attribute::GEOMETRY)]));
             $permit->setArea($this->defineArea($permit->getGeometry()));
-            $permit->setRating($this->defineRating($permit->getArea(), count($permit->getAdvices())));
+            $permit->setRating($this->defineRating($permit->getArea(), count($permit->getAdvices()['fr'])));
             $this->permit_collection->addPermit($permit);
         }
 
