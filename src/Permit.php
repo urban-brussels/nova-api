@@ -48,6 +48,7 @@ class Permit
     public ?string $geometry;
     public ?int $version;
     public ?float $area;
+    public int $rating;
 
     public function __construct(string $reference_nova)
     {
@@ -822,7 +823,7 @@ class Permit
     /**
      * @return string|null
      */
-    public function getSvg($size = 100): ?string
+    public function getSvg($size = 70): ?string
     {
         if(is_null($this->geometry)) {
             return null;
@@ -838,5 +839,16 @@ class Permit
     public function setArea(?float $area): void
     {
         $this->area = $area;
+    }
+
+
+    public function getRating(): int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(int $rating): void
+    {
+        $this->rating = $rating;
     }
 }

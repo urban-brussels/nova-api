@@ -222,6 +222,7 @@ class PermitQuery
             $permit->setSubmissionType($result[$this->contextAttribute(Attribute::SUBMISSION_TYPE)]);
             $permit->setGeometry($this->defineGeometry($result[$this->contextAttribute(Attribute::GEOMETRY)]));
             $permit->setArea($this->defineArea($permit->getGeometry()));
+            $permit->setRating($this->defineRating($permit->getArea(), count($permit->getAdvices())));
             $this->permit_collection->addPermit($permit);
         }
 
@@ -490,5 +491,11 @@ class PermitQuery
 
         $polygon = geoPHP::load($wkt,'wkt');
         return round($polygon->getArea(),2);
+    }
+
+    public function defineRating(?int $area, int $count_advices): int {
+        $area = $area ?? 50;
+
+        return floor($area) * sqrt($count_advices);
     }
 }
