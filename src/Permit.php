@@ -74,7 +74,7 @@ class Permit
     /**
      * @return string
      */
-    protected function getType(): string
+    public function getType(): string
     {
         return $this->type;
     }

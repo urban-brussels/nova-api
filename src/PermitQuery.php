@@ -119,7 +119,7 @@ class PermitQuery
             $filter .= " OR date_cc < date_depot";
             $filter .= " OR streetname_fr == '' OR streetname_nl == ''";
             $filter .= " OR (geometry is null AND date_depot>'2019-01-01T00:00:00Z')";
-            $filter .= " OR zipcode == '' OR zipcode is null";
+            $filter .= " OR zipcode is null";
         }
         else {
             $filter = "datedepot>'" . date("Y-m-d") . "T23:59:59Z' OR dateardosscomplet>'" . date("Y-m-d") . "T23:59:59Z' OR datenotifdecision>'" . date("Y-m-d") . "T23:59:59Z'";
