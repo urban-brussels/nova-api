@@ -11,6 +11,7 @@ class NovaConnection
     public string $token;
     public string $jwt_key;
     public string $user_key;
+    public string $user_briam_key;
 
     public function __construct(string $endpoint, string $consumer_key, string $consumer_secret, string $scope)
     {
@@ -36,5 +37,10 @@ class NovaConnection
     public function setUserKey(string $user_key): void
     {
         $this->user_key = $user_key;
+    }
+
+    public function setUserBriamKey(string $user_briam_key): void
+    {
+        $this->user_briam_key = $user_briam_key;
     }
 }

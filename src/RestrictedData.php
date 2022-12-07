@@ -140,13 +140,7 @@ class RestrictedData
             ]
         ];
 
-        if (isset($this->nova_connection->jwt_key)) {
-            $options['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
-        }
-
-        if (isset($this->nova_connection->user_key)) {
-            $content['headers']['x-user-key'] = $this->nova_connection->user_key;
-        }
+        $options = $this->defineHeaders($options);
 
         return HttpClient::create()->request(
             'GET',
@@ -194,12 +188,7 @@ class RestrictedData
          } } } }'
         ];
 
-        if (isset($this->nova_connection->jwt_key)) {
-            $content['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
-        }
-        if (isset($this->nova_connection->user_key)) {
-            $content['headers']['x-user-key'] = $this->nova_connection->user_key;
-        }
+        $content = $this->defineHeaders($content);
 
         $httpClient = HttpClient::create();
         $response = $httpClient->request(
@@ -209,5 +198,25 @@ class RestrictedData
         );
 
         return array($content, $response);
+    }
+
+    /**
+     * @param array $content
+     * @return array
+     */
+    public function defineHeaders(array $content): array
+    {
+        if (isset($this->nova_connection->jwt_key)) {
+            $content['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
+        }
+
+        if (isset($this->nova_connection->user_key)) {
+            $content['headers']['x-user-key'] = $this->nova_connection->user_key;
+        }
+
+        if (isset($this->nova_connection->user_briam_key)) {
+            $content['headers']['x-briam-id'] = $this->nova_connection->user_briam_key;
+        }
+        return $content;
     }
 }
