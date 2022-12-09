@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa4232314cb7c6f3edeacc1b0adbea06",
+    "content-hash": "60e1127f00959ac5b65e2cedc9a39240",
     "packages": [
         {
             "name": "ici-be/ici-tools",
-            "version": "dev-main",
+            "version": "0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ici-be/ici-tools.git",
@@ -25,7 +25,6 @@
                 "php": "^7.0 || ^8.0",
                 "symfony/http-client": "5.* || 6.*"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -46,7 +45,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ici-be/ici-tools/issues",
-                "source": "https://github.com/ici-be/ici-tools/tree/main"
+                "source": "https://github.com/ici-be/ici-tools/tree/0.3.2"
             },
             "time": "2022-12-09T14:19:13+00:00"
         },
@@ -1416,7 +1415,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ici-be/ici-tools": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
