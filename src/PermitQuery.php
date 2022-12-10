@@ -102,9 +102,9 @@ class PermitQuery
         return $this;
     }
 
-    public function filterByAttributeArray(Attribute $attribute, array $values): self
+    public function filterByAttributeArray(Attribute $attribute, array $values, bool $in_array = true): self
     {
-        $this->cql_filter[] = $this->contextAttribute($attribute) . " IN ('" . implode("','", $values)."')";
+        $this->cql_filter[] = $this->contextAttribute($attribute) . " ".($in_array === false ? "NOT " : "")."IN ('" . implode("','", $values)."')";
 
         return $this;
     }
