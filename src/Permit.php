@@ -594,12 +594,11 @@ class Permit
             $errors[] = 'error.submission.future';
         }
 
-        if ($this->getDateSubmission() < $oldest_date) {
-            $errors[] = 'error.submission.old';
-        }
-
         if (is_null($this->getDateSubmission())) {
             $errors[] = 'error.submission.missing';
+        }
+        elseif ($this->getDateSubmission() < $oldest_date) {
+            $errors[] = 'error.submission.old';
         }
 
         if (
