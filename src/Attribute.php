@@ -5,6 +5,7 @@ namespace UrbanBrussels\NovaApi;
 enum Attribute
 {
     case CHARGES;
+    case CUT_TREES;
     case DATE_ADDITIONAL_ELEMENTS;
     case DATE_ARC;
     case DATE_ARI;
@@ -45,6 +46,7 @@ enum Attribute
         return match($this)
         {
             self::CHARGES => 'deliveredpermittotalcharge',
+            self::CUT_TREES => 'nb_arbres_abattus',
             self::DATE_ADDITIONAL_ELEMENTS => 'dateelemcomplast',
             self::DATE_ARC => 'datearclast',
             self::DATE_ARI => 'datearifirst',

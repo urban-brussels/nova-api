@@ -218,6 +218,7 @@ class PermitQuery
             $permit->setChargesTotal($result['deliveredpermittotalcharge'] ?? null);
             $permit->setObject($this->defineObjectFromAttributes($result));
             $permit->setStatus($this->defineStatusFromAttributes($result));
+            $permit->setCutTrees($this->defineCutTrees($result[$this->contextAttribute(Attribute::CUT_TREES)] ?? 0));
             $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
             $permit->setSubmissionType($result[$this->contextAttribute(Attribute::SUBMISSION_TYPE)]);
             $permit->setGeometry($this->defineGeometry($result[$this->contextAttribute(Attribute::GEOMETRY)]));
@@ -442,6 +443,14 @@ class PermitQuery
             return null;
         }
         return $mixed_reference ?? ''; // Return empty reference to make the distinction with non mixed permits
+    }
+
+    private function defineCutTrees(int|string|null $cut_trees): int
+    {
+        if(is_null($cut_trees)) {
+            return 0;
+        }
+        return (int)$cut_trees;
     }
 
     private function defineSubmissionDate(?DateTime $date): ?DateTime

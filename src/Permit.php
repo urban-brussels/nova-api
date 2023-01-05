@@ -45,6 +45,7 @@ class Permit
     public ?int $sorting_number;
     public array $charges;
     public array $documents;
+    public int $cut_trees;
     public ?string $geometry;
     public ?int $version;
     public ?float $area;
@@ -785,6 +786,22 @@ class Permit
     public function setDocuments(array $documents): void
     {
         $this->documents = $documents;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCutTrees(): int
+    {
+        return $this->cut_trees;
+    }
+
+    /**
+     * @param int|null $cut_trees
+     */
+    public function setCutTrees(int $cut_trees): void
+    {
+        $this->cut_trees = $cut_trees;
     }
 
     /**
