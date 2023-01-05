@@ -45,7 +45,7 @@ class Permit
     public ?int $sorting_number;
     public array $charges;
     public array $documents;
-    public int $cut_trees;
+    public int $cut_trees = 0;
     public ?string $geometry;
     public ?int $version;
     public ?float $area;

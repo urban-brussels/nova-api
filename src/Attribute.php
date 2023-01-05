@@ -89,6 +89,7 @@ enum Attribute
         return match($this)
         {
             self::CHARGES => '',
+            self::CUT_TREES => '',
             self::DATE_ADDITIONAL_ELEMENTS => '',
             self::DATE_ARC => 'date_arc',
             self::DATE_ARI => 'date_ari',
