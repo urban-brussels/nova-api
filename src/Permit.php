@@ -653,9 +653,14 @@ class Permit
             $errors[] = 'error.delivered.before.inquiry';
         }
 
-
         if ($this->getGeometry() === null && $this->getDateSubmission() > $geometry_date) {
             $errors[] = 'error.geometry.missing';
+        }
+
+        if ($this->getCutTrees() === 0 && $this->getType() === 'PU') {
+            if(str_contains($this->getObject()['fr']['standard'], 'haute tige')) {
+                $errors[] = 'error.cut_trees.missing';
+            }
         }
 
         return $errors;
