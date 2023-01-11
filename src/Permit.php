@@ -47,6 +47,7 @@ class Permit
     public array $documents;
     public int $cut_trees = 0;
     public ?string $geometry;
+    public ?int $processing_time = null;
     public ?int $version;
     public ?float $area;
     public int $rating;
@@ -871,5 +872,15 @@ class Permit
     public function setRating(int $rating): void
     {
         $this->rating = $rating;
+    }
+
+    public function getProcessingTime(): ?int
+    {
+        return $this->processing_time;
+    }
+
+    public function setProcessingTime(?int $processing_time): void
+    {
+        $this->processing_time = $processing_time;
     }
 }

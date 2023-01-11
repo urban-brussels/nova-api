@@ -210,6 +210,7 @@ class PermitQuery
             $permit->setSortingStreetname($result[$this->contextAttribute(Attribute::STREET_NAME_FR)]);
             $permit->setSortingNumber((int)$result[$this->contextAttribute(Attribute::STREET_NUMBER_FROM)]);
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
+            $permit->setProcessingTime($result[$this->contextAttribute(Attribute::PROCESSING_TIME)]);
             $permit->setSuspensions($this->defineSuspensions($result['suspensions'] ?? null));
             $permit->setUuid($result['uuid']);
             $permit->setReferenceFile($result[$this->contextAttribute(Attribute::REFERENCE_FILE)]);

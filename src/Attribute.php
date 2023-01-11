@@ -26,6 +26,7 @@ enum Attribute
     case OBJECT_REAL_NL;
     case OBJECT_STANDARD_FR;
     case OBJECT_STANDARD_NL;
+    case PROCESSING_TIME;
     case REFERENCE_FILE;
     case REFERENCE_MIXED_PERMIT;
     case REFERENCE_MUNICIPALITY;
@@ -67,6 +68,7 @@ enum Attribute
             self::OBJECT_REAL_NL => 'realobjectnl',
             self::OBJECT_STANDARD_FR => 'objectfr',
             self::OBJECT_STANDARD_NL => 'objectnl',
+            self::PROCESSING_TIME => 'delaiglobal',
             self::REFERENCE_FILE => 's_iddossier',
             self::REFERENCE_MIXED_PERMIT => 'refmixedpermit',
             self::REFERENCE_MUNICIPALITY => 'referencespecifique',
@@ -110,6 +112,7 @@ enum Attribute
             self::OBJECT_REAL_NL => '',
             self::OBJECT_STANDARD_FR => 'object_fr',
             self::OBJECT_STANDARD_NL => 'object_nl',
+            self::PROCESSING_TIME => 'delai_global',
             self::REFERENCE_FILE => 'nova_seq',
             self::REFERENCE_MIXED_PERMIT => 'ref_mixed_permit',
             self::REFERENCE_MUNICIPALITY => 'ref_com',
