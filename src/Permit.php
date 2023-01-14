@@ -659,7 +659,10 @@ class Permit
         }
 
         if ($this->getCutTrees() === 0 && $this->getType() === 'PU') {
-            if(str_contains($this->getObject()['fr']['standard'], 'haute tige')) {
+            if(
+                str_contains($this->getObject()['fr']['standard'], 'haute tige')
+            || ( str_contains($this->getObject()['fr']['real'], 'abattre') && str_contains($this->getObject()['fr']['real'], 'haute tige') )
+            ) {
                 $errors[] = 'error.cut_trees.missing';
             }
         }
