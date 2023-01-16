@@ -503,7 +503,7 @@ class PermitQuery
         return round($polygon->getArea(),2);
     }
 
-    public function defineRating(?int $area, int $count_advices): int {
+    public function defineRating(?float $area, int $count_advices): int {
         $area = $area ?? 50;
 
         return floor($area) * sqrt($count_advices);
