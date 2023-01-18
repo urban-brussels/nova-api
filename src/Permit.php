@@ -638,6 +638,13 @@ class Permit
 //            $errors[] = 'error.suspension.end.missing';
 //        }
 
+        if (
+            !is_null($this->getDateNotification())
+            && $this->getStatus() === "instruction"
+        ) {
+            $errors[] = 'error.decision.while.instruction';
+        }
+
         if(
             $this->getStatus() === "delivered"
             && is_null($this->getDateNotification())
