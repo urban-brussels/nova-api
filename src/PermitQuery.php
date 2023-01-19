@@ -165,6 +165,9 @@ class PermitQuery
         if(!$date_time) {
             $date_time = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $date, new DateTimeZone('Europe/Brussels'));
         }
+        if(!$date_time) {
+            return null;
+        }
         return $date_time;
     }
 
