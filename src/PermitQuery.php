@@ -505,7 +505,7 @@ class PermitQuery
 
     public function defineRating(?float $area, int $count_advices): int {
         $area = $area ?? 50;
-
-        return floor($area) * sqrt($count_advices);
+        $rating = $area  * sqrt($count_advices);
+        return floor($rating);
     }
 }
