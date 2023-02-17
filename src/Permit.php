@@ -39,7 +39,7 @@ class Permit
     public ?float $charges_total;
     public array $suspensions;
     public string $query_url;
-    public string $submission_type;
+    public ?string $submission_type;
     public ?int $zipcode;
     public ?string $sorting_streetname;
     public ?int $sorting_number;
