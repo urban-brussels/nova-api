@@ -20,6 +20,9 @@ enum Attribute
     case GEOMETRY;
     case IS_MIXED;
     case LANGUAGE;
+    case MANAGING_AUTHORITY_FR;
+    case MANAGING_AUTHORITY_NL;
+    case MANAGING_AUTHORITY_ID;
     case MUNICIPALITY_FR;
     case MUNICIPALITY_NL;
     case OBJECT_REAL_FR;
@@ -37,6 +40,7 @@ enum Attribute
     case STREET_NUMBER_TO;
     case SUBMISSION_TYPE;
     case SUBTYPE;
+    case TIMEFRAME_GLOBAL_DAYS;
     case UUID;
     case VERSION;
     case WORK_MONTHS;
@@ -62,6 +66,9 @@ enum Attribute
             self::GEOMETRY => 'geometry',
             self::IS_MIXED => 'mixedpermit',
             self::LANGUAGE => 'languedemande',
+            self::MANAGING_AUTHORITY_FR => 'managing_authority_fr',
+            self::MANAGING_AUTHORITY_NL => 'managing_authority_nl',
+            self::MANAGING_AUTHORITY_ID => 'idmanagingauthority',
             self::MUNICIPALITY_FR => 'municipalityfr',
             self::MUNICIPALITY_NL => 'municipalitynl',
             self::OBJECT_REAL_FR => 'realobjectfr',
@@ -79,6 +86,7 @@ enum Attribute
             self::STREET_NUMBER_TO => 'numberpartto',
             self::SUBMISSION_TYPE => 'typedepot_fr',
             self::SUBTYPE => 'typedossier',
+            self::TIMEFRAME_GLOBAL_DAYS => 'delaiglobal',
             self::UUID => 'uuid',
             self::VERSION => 'version',
             self::WORK_MONTHS => 'mois_duree_travaux',
@@ -106,6 +114,9 @@ enum Attribute
             self::GEOMETRY => 'geometry',
             self::IS_MIXED => 'is_mixed_permit',
             self::LANGUAGE => 'langue_demande',
+            self::MANAGING_AUTHORITY_FR => '',
+            self::MANAGING_AUTHORITY_NL => '',
+            self::MANAGING_AUTHORITY_ID => 'id_managing_authority',
             self::MUNICIPALITY_FR => 'municipality_fr',
             self::MUNICIPALITY_NL => 'municipality_nl',
             self::OBJECT_REAL_FR => '',
@@ -123,6 +134,7 @@ enum Attribute
             self::STREET_NUMBER_TO => 'number_to',
             self::SUBMISSION_TYPE => 'typedepot_fr',
             self::SUBTYPE => 'case_subtype',
+            self::TIMEFRAME_GLOBAL_DAYS => 'delaiglobal',
             self::UUID => 'uuid',
             self::VERSION => '',
             self::WORK_MONTHS => '',

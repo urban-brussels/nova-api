@@ -209,6 +209,7 @@ class PermitQuery
             $permit->setAreaTypology($this->defineAreaTypologyFromAttributes($result));
             $permit->setAdvices($this->defineAdvicesFromAttributes($result));
             $permit->setAddress($this->defineAddressFromAttributes($result));
+            $permit->setManagingAuthority($this->defineManagingAuthorityFromAttributes($result));
             $permit->setZipcode($this->sanitizeZipcode($result[$this->contextAttribute(Attribute::ZIPCODE)], FILTER_SANITIZE_NUMBER_INT));
             $permit->setSortingStreetname($result[$this->contextAttribute(Attribute::STREET_NAME_FR)]);
             $permit->setSortingNumber((int)$result[$this->contextAttribute(Attribute::STREET_NUMBER_FROM)]);
@@ -225,6 +226,7 @@ class PermitQuery
             $permit->setCutTrees($this->defineCutTrees($result[$this->contextAttribute(Attribute::CUT_TREES)] ?? 0));
             $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
             $permit->setSubmissionType($result[$this->contextAttribute(Attribute::SUBMISSION_TYPE)]);
+            $permit->setTimeframeGlobalDays($result[$this->contextAttribute(Attribute::TIMEFRAME_GLOBAL_DAYS)] ?? null);
             $permit->setGeometry($this->defineGeometry($result[$this->contextAttribute(Attribute::GEOMETRY)]));
             $permit->setArea($this->defineArea($permit->getGeometry()));
             $permit->setRating($this->defineRating($permit->getArea(), count($permit->getAdvices()['fr'])));
@@ -298,6 +300,15 @@ class PermitQuery
         $instances['nl'] = array_unique($instances['nl']);
 
         return $instances;
+    }
+
+    public function defineManagingAuthorityFromAttributes(array $attributes): array
+    {
+        $authority_fr = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_FR)] ?? null;
+        $authority_nl = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_NL)] ?? null;
+        $authority_id = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_ID)] ?? null;
+
+        return ['id' => $authority_id, 'fr' => $authority_fr, 'nl' => $authority_nl];
     }
 
     public function defineAddressFromAttributes(array $attributes): array

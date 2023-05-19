@@ -34,6 +34,7 @@ class Permit
     public array $source;
     public bool $validation;
     public array $address;
+    public array $managing_authority;
     public array $area_typology;
     public ?string $status;
     public ?float $charges_total;
@@ -46,6 +47,7 @@ class Permit
     public array $charges;
     public array $documents;
     public int $cut_trees = 0;
+    public ?int $timeframe_global_days = null;
     public ?string $geometry;
     public ?int $processing_time = null;
     public ?int $version;
@@ -380,6 +382,22 @@ class Permit
     /**
      * @return array
      */
+    public function getManagingAuthority(): array
+    {
+        return $this->managing_authority;
+    }
+
+    /**
+     * @param array $managing_authority
+     */
+    public function setManagingAuthority(array $managing_authority): void
+    {
+        $this->managing_authority = $managing_authority;
+    }
+
+    /**
+     * @return array
+     */
     public function getAreaTypology(): array
     {
         return $this->area_typology;
@@ -668,7 +686,7 @@ class Permit
         if ($this->getCutTrees() === 0 && $this->getType() === 'PU') {
             if(
                 str_contains($this->getObject()['fr']['standard'], 'haute tige')
-            || ( str_contains($this->getObject()['fr']['real'], 'abattre') && str_contains($this->getObject()['fr']['real'], 'haute tige') )
+                || ( str_contains($this->getObject()['fr']['real'], 'abattre') && str_contains($this->getObject()['fr']['real'], 'haute tige') )
             ) {
                 $errors[] = 'error.cut_trees.missing';
             }
@@ -693,6 +711,21 @@ class Permit
         $this->query_url = $query_url;
     }
 
+    /**
+     * @return int|null
+     */
+    public function getTimeframeGlobalDays(): ?int
+    {
+        return $this->timeframe_global_days;
+    }
+
+    /**
+     * @param int|null $timeframe_global_days
+     */
+    public function setTimeframeGlobalDays(?int $timeframe_global_days): void
+    {
+        $this->timeframe_global_days = $timeframe_global_days;
+    }
 
     /**
      * @return string|null
@@ -750,14 +783,14 @@ class Permit
         }
 
         if (in_array(
-            $this->getSubtype(),
-            ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD", "ICE", "IRPE"]
-        )
-        || str_contains($this->getSubtype(), "IPE")) {
+                $this->getSubtype(),
+                ["PFD", "PFU", "SFD", "ECO", "SOC", "CPFD", "LPFD", "LPFU", "CPFU", "LCFU", "LSFD", "ICE", "IRPE"]
+            )
+            || str_contains($this->getSubtype(), "IPE")) {
             return "region";
         }
 
-            return "municipality";
+        return "municipality";
     }
 
     #[Pure] public static function guessPermitType(string $reference_nova): string
