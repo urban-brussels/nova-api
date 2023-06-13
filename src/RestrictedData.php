@@ -176,7 +176,7 @@ class RestrictedData
             ],
 
             'body' => '{
-   "query":"query ($arg:SearchDocumentCriteriaInput!){Document_List(searchCriteria:$arg){identifier{key type} publicationType  name{label  translations{label language}} url creationDate category{key type} origin{label translations{label language}} source {label  translations{label language}}  description size interInstanceVisibility  root{identifier{key type}}  documentLabels{ name{label  translations{label language}} } validity{from to}  } } ",
+   "query":"query ($arg:SearchDocumentCriteriaInput!){Document_List(searchCriteria:$arg){identifier{key type} publicationType  name{label  translations{label language}} url creationDate category{key type} origin{label translations{label language}} source {label  translations{label language}}  description size interInstanceVisibility  root{identifier{key type}}  documentLabels{ name{label  translations{label language}} } validity{from to} fileName } } ",
    "variables":{
       "arg":{
          "identifiers":{
