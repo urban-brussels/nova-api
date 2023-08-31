@@ -3,7 +3,7 @@
 namespace UrbanBrussels\NovaApi;
 
 use DateTime;
-use geoPHP;
+use geoPHP\geoPHP;
 use DateTimeZone;
 use ici\ici_tools\WfsLayer;
 
@@ -481,7 +481,7 @@ class PermitQuery
     private function defineGeometry(?\stdClass $geometry): ?string
     {
         if (!is_null($geometry)) {
-            return \geoPHP::load(json_encode($geometry), 'json')->out('wkt');
+            return geoPHP::load(json_encode($geometry), 'json')->out('wkt');
         }
         return null;
     }
