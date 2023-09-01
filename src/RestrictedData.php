@@ -206,9 +206,11 @@ class RestrictedData
      */
     public function defineHeaders(array $content): array
     {
-        if (isset($this->nova_connection->jwt_key)) {
-            $content['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
+        if (!isset($this->nova_connection->jwt_key)) {
+            var_dump("JWT key needed");
         }
+
+        $content['headers']['x-jwt-api-key'] = $this->nova_connection->jwt_key;
 
         if (isset($this->nova_connection->user_key)) {
             $content['headers']['x-user-key'] = $this->nova_connection->user_key;
