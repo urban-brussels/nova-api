@@ -19,6 +19,7 @@ class Permit
 
     public ?DateTime $date_submission;
     public ?DateTime $date_arc;
+    public ?DateTime $date_arc_modified_plans_last;
     public ?DateTime $date_ari;
     public ?DateTime $date_additional_elements;
     public ?DateTime $date_inquiry_begin;
@@ -425,6 +426,22 @@ class Permit
     public function setDateArc(?DateTime $date_arc): void
     {
         $this->date_arc = $date_arc;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateArcModifiedPlansLast(): ?DateTime
+    {
+        return $this->date_arc_modified_plans_last;
+    }
+
+    /**
+     * @param DateTime|null $date_arc_modified_plans_last
+     */
+    public function setDateArcModifiedPlansLast(?DateTime $date_arc_modified_plans_last): void
+    {
+        $this->date_arc_modified_plans_last = $date_arc_modified_plans_last;
     }
 
     /**

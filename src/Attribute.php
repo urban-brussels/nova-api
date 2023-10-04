@@ -8,6 +8,7 @@ enum Attribute
     case CUT_TREES;
     case DATE_ADDITIONAL_ELEMENTS;
     case DATE_ARC;
+    case DATE_ARC_MODIFIED_PLANS_LAST;
     case DATE_ARI;
     case DATE_CC;
     case DATE_INQUIRY_BEGIN;
@@ -54,6 +55,7 @@ enum Attribute
             self::CUT_TREES => 'nb_arbres_abattus',
             self::DATE_ADDITIONAL_ELEMENTS => 'dateelemcomplast',
             self::DATE_ARC => 'datearclast',
+            self::DATE_ARC_MODIFIED_PLANS_LAST => 'dateArcPmLast',
             self::DATE_ARI => 'datearifirst',
             self::DATE_CC => 'datecc',
             self::DATE_INQUIRY_BEGIN => 'datedebutmpp',
@@ -102,6 +104,7 @@ enum Attribute
             self::CUT_TREES => '',
             self::DATE_ADDITIONAL_ELEMENTS => '',
             self::DATE_ARC => 'date_arc',
+            self::DATE_ARC_MODIFIED_PLANS_LAST => '',
             self::DATE_ARI => 'date_ari',
             self::DATE_CC => 'date_cc',
             self::DATE_INQUIRY_BEGIN => 'date_debut_mpp',
