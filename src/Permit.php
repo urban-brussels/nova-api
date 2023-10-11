@@ -48,6 +48,7 @@ class Permit
     public array $charges;
     public array $documents;
     public int $cut_trees = 0;
+    public int $modified_trees = 0;
     public ?int $timeframe_global_days = null;
     public ?string $geometry;
     public ?int $processing_time = null;
@@ -854,20 +855,30 @@ class Permit
         $this->documents = $documents;
     }
 
-    /**
-     * @return int|null
-     */
     public function getCutTrees(): int
     {
         return $this->cut_trees;
     }
 
     /**
-     * @param int|null $cut_trees
+     * @param int $cut_trees
      */
     public function setCutTrees(int $cut_trees): void
     {
         $this->cut_trees = $cut_trees;
+    }
+
+    public function getModifiedTrees(): int
+    {
+        return $this->modified_trees;
+    }
+
+    /**
+     * @param int $modified_trees
+     */
+    public function setModifiedTrees(int $modified_trees): void
+    {
+        $this->cut_trees = $modified_trees;
     }
 
     /**

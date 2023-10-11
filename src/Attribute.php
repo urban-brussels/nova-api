@@ -24,6 +24,7 @@ enum Attribute
     case MANAGING_AUTHORITY_FR;
     case MANAGING_AUTHORITY_NL;
     case MANAGING_AUTHORITY_ID;
+    case MODIFIED_TREES;
     case MUNICIPALITY_FR;
     case MUNICIPALITY_NL;
     case OBJECT_REAL_FR;
@@ -71,6 +72,7 @@ enum Attribute
             self::MANAGING_AUTHORITY_FR => 'managing_authority_fr',
             self::MANAGING_AUTHORITY_NL => 'managing_authority_nl',
             self::MANAGING_AUTHORITY_ID => 'idmanagingauthority',
+            self::MODIFIED_TREES => 'nb_arbres_transformes',
             self::MUNICIPALITY_FR => 'municipalityfr',
             self::MUNICIPALITY_NL => 'municipalitynl',
             self::OBJECT_REAL_FR => 'realobjectfr',
@@ -120,6 +122,7 @@ enum Attribute
             self::MANAGING_AUTHORITY_FR => '',
             self::MANAGING_AUTHORITY_NL => '',
             self::MANAGING_AUTHORITY_ID => 'id_managing_authority',
+            self::MODIFIED_TREES => '',
             self::MUNICIPALITY_FR => 'municipality_fr',
             self::MUNICIPALITY_NL => 'municipality_nl',
             self::OBJECT_REAL_FR => '',
