@@ -878,7 +878,7 @@ class Permit
      */
     public function setModifiedTrees(int $modified_trees): void
     {
-        $this->cut_trees = $modified_trees;
+        $this->modified_trees = $modified_trees;
     }
 
     /**
