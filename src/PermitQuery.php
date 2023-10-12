@@ -196,7 +196,7 @@ class PermitQuery
             $permit->setSubtype($result[$this->contextAttribute(Attribute::SUBTYPE)]);
             $permit->setDateSubmission($this->defineSubmissionDate(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_SUBMISSION)])));
             $permit->setDateArc(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARC)]));
-            $permit->setDateArcModifiedPlansLast(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARC_MODIFIED_PLANS_LAST)]));
+            $permit->setDateArcModifiedPlansLast(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARC_MODIFIED_PLANS_LAST)] ?? null));
             $permit->setDateAri(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ARI)]));
             $permit->setDateAdditionalElements(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_ADDITIONAL_ELEMENTS)] ?? null));
             $permit->setDateCc(self::toDatetime($result[$this->contextAttribute(Attribute::DATE_CC)]));
