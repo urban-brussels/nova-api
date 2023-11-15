@@ -211,6 +211,7 @@ class PermitQuery
             $permit->setAdvices($this->defineAdvicesFromAttributes($result));
             $permit->setAddress($this->defineAddressFromAttributes($result));
             $permit->setManagingAuthority($this->defineManagingAuthorityFromAttributes($result));
+            $permit->setMunicipalityOwner($this->defineMunicipalityOwnerFromAttributes($result));
             $permit->setZipcode($this->sanitizeZipcode($result[$this->contextAttribute(Attribute::ZIPCODE)], FILTER_SANITIZE_NUMBER_INT));
             $permit->setSortingStreetname($result[$this->contextAttribute(Attribute::STREET_NAME_FR)]);
             $permit->setSortingNumber((int)$result[$this->contextAttribute(Attribute::STREET_NUMBER_FROM)]);
@@ -311,6 +312,14 @@ class PermitQuery
         $authority_id = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_ID)] ?? null;
 
         return ['id' => $authority_id, 'fr' => $authority_fr, 'nl' => $authority_nl];
+    }
+
+    public function defineMunicipalityOwnerFromAttributes(array $attributes): array
+    {
+        $municipality_owner_fr = $attributes[$this->contextAttribute(Attribute::MUNICIPALITY_OWNER_FR)] ?? null;
+        $municipality_owner_nl = $attributes[$this->contextAttribute(Attribute::MUNICIPALITY_OWNER_NL)] ?? null;
+
+        return ['fr' => $municipality_owner_fr, 'nl' => $municipality_owner_nl];
     }
 
     public function defineAddressFromAttributes(array $attributes): array

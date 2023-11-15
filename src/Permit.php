@@ -36,6 +36,7 @@ class Permit
     public bool $validation;
     public array $address;
     public array $managing_authority;
+    public array $municipality_owner;
     public array $area_typology;
     public ?string $status;
     public ?float $charges_total;
@@ -395,6 +396,22 @@ class Permit
     public function setManagingAuthority(array $managing_authority): void
     {
         $this->managing_authority = $managing_authority;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMunicipalityOwner(): array
+    {
+        return $this->municipality_owner;
+    }
+
+    /**
+     * @param array $municipality_owner
+     */
+    public function setMunicipalityOwner(array $municipality_owner): void
+    {
+        $this->municipality_owner = $municipality_owner;
     }
 
     /**

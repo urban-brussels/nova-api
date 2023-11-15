@@ -27,6 +27,8 @@ enum Attribute
     case MODIFIED_TREES;
     case MUNICIPALITY_FR;
     case MUNICIPALITY_NL;
+    case MUNICIPALITY_OWNER_FR;
+    case MUNICIPALITY_OWNER_NL;
     case OBJECT_REAL_FR;
     case OBJECT_REAL_NL;
     case OBJECT_STANDARD_FR;
@@ -75,6 +77,8 @@ enum Attribute
             self::MODIFIED_TREES => 'nb_arbres_transformes',
             self::MUNICIPALITY_FR => 'municipalityfr',
             self::MUNICIPALITY_NL => 'municipalitynl',
+            self::MUNICIPALITY_OWNER_FR => 'municipalityownerfr',
+            self::MUNICIPALITY_OWNER_NL => 'municipalityownernl',
             self::OBJECT_REAL_FR => 'realobjectfr',
             self::OBJECT_REAL_NL => 'realobjectnl',
             self::OBJECT_STANDARD_FR => 'objectfr',
@@ -136,6 +140,8 @@ enum Attribute
             self::REFERENCE_NOVA => 'ref_nova',
             self::STREET_NAME_FR => 'streetname_fr',
             self::STREET_NAME_NL => 'streetname_nl',
+            self::MUNICIPALITY_OWNER_FR => 'municipality_owner_fr',
+            self::MUNICIPALITY_OWNER_NL => 'municipality_owner_nl',
             self::STREET_NUMBER_FROM => 'number_from',
             self::STREET_NUMBER_TO => 'number_to',
             self::SUBMISSION_TYPE => 'typedepot_fr',
