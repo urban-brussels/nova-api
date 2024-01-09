@@ -31,11 +31,11 @@ class DocsZipStream
                 foreach ($docs as $doc) {
                     // Limit to Urban Docs
                     if(
-                        !str_contains($doc['source']['translations'][0]['label'], 'BUP')
+                        (!str_contains($doc['source']['translations'][0]['label'], 'BUP')
                         && !str_contains($doc['source']['translations'][0]['label'], 'BSE')
                         && !str_contains($doc['source']['translations'][0]['label'], 'MyPermit (Urbanisme)')
-                        && !str_contains($doc['source']['translations'][0]['label'], 'MyPermit (Stedenbouw)')
-                        && !in_array($doc['category']['key'], $exclude_categories)
+                        && !str_contains($doc['source']['translations'][0]['label'], 'MyPermit (Stedenbouw)'))
+                        || !in_array($doc['category']['key'], $exclude_categories)
                     )
                     {
                         continue;
