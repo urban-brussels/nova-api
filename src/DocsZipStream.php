@@ -7,7 +7,7 @@ use ZipStream\ZipStream;
 
 class DocsZipStream
 {
-    public function stream(string $refnova, string $_locale = 'fr'): StreamedResponse
+    public function stream(string $refnova, string $_locale = 'fr', array $exclude_categories = []): StreamedResponse
     {
         $listing = new DocsListing();
         $download_from_nova = new DocsDownload();
@@ -20,7 +20,7 @@ class DocsZipStream
         $fallback_category = ($_locale === 'fr') ? 'Autre' : 'Anderen';
 
         return new StreamedResponse(
-            function () use ($_locale, $dictionary, $fallback_category, $download_from_nova, $docs) {
+            function () use ($_locale, $dictionary, $fallback_category, $download_from_nova, $docs, $exclude_categories) {
                 $opt = new \ZipStream\Option\Archive();
                 $opt->setZeroHeader(true);
                 $opt->setEnableZip64(false);
@@ -35,6 +35,7 @@ class DocsZipStream
                         && !str_contains($doc['source']['translations'][0]['label'], 'BSE')
                         && !str_contains($doc['source']['translations'][0]['label'], 'MyPermit (Urbanisme)')
                         && !str_contains($doc['source']['translations'][0]['label'], 'MyPermit (Stedenbouw)')
+                        && !in_array($doc['category']['key'], $exclude_categories)
                     )
                     {
                         continue;
