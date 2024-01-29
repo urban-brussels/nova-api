@@ -128,7 +128,7 @@ class PermitQuery
             if($attribute === Attribute::DATE_NOTIFICATION) {
                 return 'dateDecision';
             }
-            else if($attribute === Attribute::dateValidityDeadline) {
+            else if($attribute === Attribute::DATE_VALIDITY) {
                 return 'datePermitValidity';
             }
         }
