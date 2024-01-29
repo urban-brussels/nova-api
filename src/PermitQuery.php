@@ -123,8 +123,14 @@ class PermitQuery
 
     public function contextAttribute(Attribute $attribute): string
     {
-        if($this->type === 'PE' && $attribute === Attribute::DATE_NOTIFICATION) {
-            return 'dateDecision';
+        // Temporary fix
+        if($this->type === 'PE') {
+            if($attribute === Attribute::DATE_NOTIFICATION) {
+                return 'dateDecision';
+            }
+            else if($attribute === Attribute::dateValidityDeadline) {
+                return 'datePermitValidity';
+            }
         }
         return $attribute->pu() ?? '';
     }
