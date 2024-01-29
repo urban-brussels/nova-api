@@ -98,7 +98,7 @@ enum Attribute
             self::UUID => 'uuid',
             self::VERSION => 'caseVersion',
             self::WORK_MONTHS => 'workDurationMonths',
-            self::ZIPCODE => 'zipcode',
+            self::ZIPCODE => 'zipCode',
         };
     }
 }
