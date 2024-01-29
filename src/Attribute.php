@@ -50,7 +50,7 @@ enum Attribute
     case WORK_MONTHS;
     case ZIPCODE;
 
-    public function column(): string
+    public function pu(): string
     {
         return match($this)
         {

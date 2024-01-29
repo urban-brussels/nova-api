@@ -123,7 +123,7 @@ class PermitQuery
 
     public function contextAttribute(Attribute $attribute): string
     {
-        return $attribute->column() ?? '';
+        return $attribute->pu() ?? '';
     }
 
     public static function toDatetime(?string $date): ?DateTime {
