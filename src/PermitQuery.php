@@ -239,8 +239,8 @@ class PermitQuery
                 && (str_contains($k, 'Authorized') || str_contains($k, 'Existing') || str_contains($k, 'Projected'))
             ) {
                 $type = str_replace(['Authorized', 'Existing', 'Projected', 'area'], '', $k);
-                $subtype = strtolower(str_replace($type, '', $k));
-                $typology[$type][$subtype] = $v;
+                $subtype = str_replace($type, '', $k);
+                $typology[strtolower($type)][strtolower($subtype)] = $v;
             }
         }
 
