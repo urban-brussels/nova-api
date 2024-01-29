@@ -42,13 +42,6 @@ class DocsZipStream
                     }
                     // End Limit to Urban Docs
 
-                    // Folder "version"
-//                    $version = array_search($doc['dossier-identifier']['key'], $versions, true);
-//                    if($version === false) {
-//                        $versions[] = $doc['dossier-identifier']['key'];
-//                        $version = array_key_last($versions);
-//                    }
-
                     $folder = $dictionary[$doc['category']['key']][$_locale] ?? $fallback_category;
                     \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($folder);
                     $folder = str_replace('/', '-', $folder);
