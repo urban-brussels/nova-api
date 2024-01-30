@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.1",
         "symfony/http-client": "6.*",
-        "ici-be/ici-tools": "0.3.3",
+        "ici-be/ici-tools": "0.3.4",
         "symfony/http-foundation": "^5.4|^6.0",
         "maennchen/zipstream-php": "^2.1",
         "ext-intl": "*",
