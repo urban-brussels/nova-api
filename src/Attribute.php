@@ -65,7 +65,7 @@ enum Attribute
             self::DATE_INQUIRY_END => 'dateInquiryEnd',
             self::DATE_NOTIFICATION => 'dateDecisionNotification',
             self::DATE_SUBMISSION => 'dateSubmission',
-            self::DATE_VALIDITY => 'dateValidityDeadline',
+            self::DATE_VALIDITY => 'datePermitValidity',
             self::DATE_WORK_BEGIN => 'dateImplementationStart',
             self::DATE_WORK_END => 'dateImplementationEnd',
             self::GEOMETRY => 'geometry',
