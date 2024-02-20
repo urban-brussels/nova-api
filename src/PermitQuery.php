@@ -232,7 +232,7 @@ class PermitQuery
         if ($this->type === "PE") {
             return [];
         }
-        $typology = [];
+        $typologies = [];
 
         foreach ($attributes as $k => $v) {
             if (!is_null($v)
@@ -240,11 +240,23 @@ class PermitQuery
             ) {
                 $type = str_replace(['Authorized', 'Existing', 'Projected', 'area'], '', $k);
                 $subtype = str_replace([$type, 'area'], '', $k);
-                $typology[strtolower($type)][strtolower($subtype)] = $v;
+                $typologies[strtolower($type)][strtolower($subtype)] = $v;
             }
         }
 
-        return $typology;
+        // Differences
+        foreach ($typologies as &$typology) {
+            if(isset($typology['authorized'])) {
+                $typology['difference'] = $typology['authorized'] - $typology['existing'];
+            }
+            elseif(isset($typology['projected'])) {
+                $typology['difference'] = $typology['projected'] - $typology['existing'];
+            }
+            else $typology['difference'] = null;
+        }
+        unset($typology);
+
+        return $typologies;
     }
 
     /**
