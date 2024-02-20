@@ -246,10 +246,10 @@ class PermitQuery
 
         // Differences
         foreach ($typologies as &$typology) {
-            if(isset($typology['authorized'])) {
+            if(isset($typology['authorized']) && isset($typology['existing'])) {
                 $typology['difference'] = $typology['authorized'] - $typology['existing'];
             }
-            elseif(isset($typology['projected'])) {
+            elseif(isset($typology['projected']) && isset($typology['existing'])) {
                 $typology['difference'] = $typology['projected'] - $typology['existing'];
             }
             else $typology['difference'] = null;
