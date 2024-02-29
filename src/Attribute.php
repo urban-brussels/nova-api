@@ -4,6 +4,7 @@ namespace UrbanBrussels\NovaApi;
 
 enum Attribute
 {
+    case CASE_TYPE;
     case CHARGES;
     case CUT_TREES;
     case DATE_ADDITIONAL_ELEMENTS;
@@ -54,6 +55,7 @@ enum Attribute
     {
         return match($this)
         {
+            self::CASE_TYPE => 'caseType',
             self::CHARGES => 'deliveredPermitTotalCharge',
             self::CUT_TREES => 'treesCutNumber',
             self::DATE_ADDITIONAL_ELEMENTS => 'dateAdditionalInformationLast',
