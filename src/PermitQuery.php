@@ -244,6 +244,20 @@ class PermitQuery
             }
         }
 
+        // Remove entries if none is above 0m²
+        foreach ($typologies as $key => $subArray) {
+            $allZeroOrLess = true;
+            foreach ($subArray as $value) {
+                if ($value > 0) {
+                    $allZeroOrLess = false;
+                    break;
+                }
+            }
+            if ($allZeroOrLess) {
+                unset($typologies[$key]);
+            }
+        }
+
         // Differences
         foreach ($typologies as &$typology) {
             if(isset($typology['authorized']) && isset($typology['existing'])) {
