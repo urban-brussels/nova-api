@@ -72,15 +72,15 @@ class PermitQuery
                     "Y-m-d"
                 )."T00:00:00Z' AND date_debut_mpp >= '".date(
                     "Y-m-d",
-                    strtotime("-40 days")
-                )."T10:00:00Z' AND date_fin_mpp <= '".date("Y-m-d", strtotime("40 days"))."T10:00:00Z'";
+                    strtotime("-70 days")
+                )."T10:00:00Z' AND date_fin_mpp <= '".date("Y-m-d", strtotime("70 days"))."T10:00:00Z'";
         } else {
             $filter = "datedebutmpp <= '".date("Y-m-d")."T23:59:59Z' AND datefinmpp >= '".date(
                     "Y-m-d"
                 )."T00:00:00Z' AND datedebutmpp >= '".date(
                     "Y-m-d",
-                    strtotime("-40 days")
-                )."T10:00:00Z' AND datefinmpp <= '".date("Y-m-d", strtotime("40 days"))."T10:00:00Z'";
+                    strtotime("-70 days")
+                )."T10:00:00Z' AND datefinmpp <= '".date("Y-m-d", strtotime("70 days"))."T10:00:00Z'";
         }
 
         $this->cql_filter[] = $filter;
