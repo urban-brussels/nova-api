@@ -63,8 +63,8 @@ class PermitQuery
                 "Y-m-d"
             )."T00:00:00Z' AND dateInquiryStart >= '".date(
                 "Y-m-d",
-                strtotime("-40 days")
-            )."T10:00:00Z' AND dateInquiryEnd <= '".date("Y-m-d", strtotime("40 days"))."T10:00:00Z'";
+                strtotime("-70 days")
+            )."T10:00:00Z' AND dateInquiryEnd <= '".date("Y-m-d", strtotime("70 days"))."T10:00:00Z'";
 
         $this->cql_filter[] = $filter;
 
