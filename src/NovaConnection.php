@@ -2,6 +2,8 @@
 
 namespace UrbanBrussels\NovaApi;
 
+use Symfony\Component\HttpClient\HttpClient;
+
 class NovaConnection
 {
     public string $scope;
@@ -24,9 +26,29 @@ class NovaConnection
 
     private function setToken(): void
     {
-        $output = shell_exec('curl -k -d "grant_type=client_credentials&scope=' . $this->scope . '" -H "Authorization: Basic ' . base64_encode($this->consumer_key . ":" . $this->consumer_secret) . '" ' . $this->endpoint . 'api/token');
-        $exp = explode('"', $output);
-        $this->token = $exp[3];
+        $client = HttpClient::create([
+            'timeout' => 7.0,
+            'verify_peer' => false,
+            'verify_host' => false,
+        ]);
+
+        $response = $client->request('POST', $this->endpoint . 'api/token', [
+            // Headers
+            'headers' => [
+                'Authorization' => 'Basic ' . base64_encode($this->consumer_key . ":" . $this->consumer_secret),
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            // Corps de la requête
+            'body' => [
+                'grant_type' => 'client_credentials',
+                'scope' => $this->scope,
+            ]
+        ]);
+
+        $content = $response->getContent();
+        $data = json_decode($content, true);
+
+        $this->token = $data['access_token'];
     }
 
     public function setJwtKey(string $jwt_key): void
