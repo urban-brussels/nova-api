@@ -43,7 +43,7 @@ class RestrictedData
 
     public function getCharges(string $uuid, string $type = "UUID"): array
     {
-        $httpClient = HttpClient::create();
+        $httpClient = HttpClient::create(['timeout' => 7.0]);
         $response = $httpClient->request('POST', $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql', [
             'auth_bearer' => $this->nova_connection->token,
             'headers' => [
@@ -77,7 +77,7 @@ class RestrictedData
 
     public function getLinkedCases(string $uuid, string $type = "UUID"): array
     {
-        $httpClient = HttpClient::create();
+        $httpClient = HttpClient::create(['timeout' => 7.0]);
         $response = $httpClient->request('POST', $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql', [
             'auth_bearer' => $this->nova_connection->token,
             'headers' => [
@@ -190,7 +190,7 @@ class RestrictedData
 
         $content = $this->defineHeaders($content);
 
-        $httpClient = HttpClient::create();
+        $httpClient = HttpClient::create(['timeout' => 7.0]);
         $response = $httpClient->request(
             'POST',
             $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql',
