@@ -11,6 +11,7 @@ class NovaConnection
     public string $consumer_key;
     public string $consumer_secret;
     public string $token;
+    public int $tokenExpiresAt;
     public string $jwt_key;
     public string $user_key;
     public string $user_briam_key;
@@ -26,6 +27,11 @@ class NovaConnection
 
     private function setToken(): void
     {
+        $currentTime = time();
+        if (!empty($this->token) && $this->tokenExpiresAt > $currentTime) {
+            return;
+        }
+
         $client = HttpClient::create([
             'timeout' => 7.0,
             'verify_peer' => false,
@@ -33,12 +39,10 @@ class NovaConnection
         ]);
 
         $response = $client->request('POST', $this->endpoint . 'api/token', [
-            // Headers
             'headers' => [
                 'Authorization' => 'Basic ' . base64_encode($this->consumer_key . ":" . $this->consumer_secret),
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
-            // Corps de la requête
             'body' => [
                 'grant_type' => 'client_credentials',
                 'scope' => $this->scope,
@@ -49,6 +53,7 @@ class NovaConnection
         $data = json_decode($content, true);
 
         $this->token = $data['access_token'];
+        $this->tokenExpiresAt = $currentTime + $data['expires_in'];
     }
 
     public function setJwtKey(string $jwt_key): void
