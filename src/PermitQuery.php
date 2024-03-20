@@ -209,7 +209,6 @@ class PermitQuery
             $permit->setModifiedTrees($this->defineCountTrees($result[$this->contextAttribute(Attribute::MODIFIED_TREES)] ?? 0));
             $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
             $permit->setSubmissionType($result[$this->contextAttribute(Attribute::SUBMISSION_TYPE)]);
-            $permit->setTimeframeGlobalDays($result[$this->contextAttribute(Attribute::TIMEFRAME_GLOBAL_DAYS)] ?? null);
             $permit->setGeometry($this->defineGeometry($result[$this->contextAttribute(Attribute::GEOMETRY)]));
             $permit->setArea($this->defineArea($permit->getGeometry()));
             $permit->setRating($this->defineRating($permit->getArea(), count($permit->getAdvices()['fr'])));

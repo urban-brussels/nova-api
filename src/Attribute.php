@@ -47,7 +47,6 @@ enum Attribute: string
     case STREET_NUMBER_TO = 'streetNumberTo';
     case SUBMISSION_TYPE = 'submissionTypeFrenchName';
     case SUBTYPE = 'caseSubType';
-    case TIMEFRAME_GLOBAL_DAYS = 'instructionGlobalDuration';
     case UUID = 'uuid';
     case VERSION = 'caseVersion';
     case WORK_MONTHS = 'workDurationInMonth';
