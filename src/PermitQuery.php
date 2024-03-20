@@ -124,14 +124,14 @@ class PermitQuery
     public function contextAttribute(Attribute $attribute): string
     {
         // Temporary fix
-//        if($this->type === 'PE') {
-//            if($attribute === Attribute::DATE_NOTIFICATION) {
-//                return 'dateDecision';
-//            }
-//            else if($attribute === Attribute::DATE_VALIDITY) {
-//                return 'datePermitValidity';
-//            }
-//        }
+        if($this->type === 'PE') {
+            if($attribute === Attribute::SUBTYPE) {
+                return 'caseSubtype';
+            }
+            else if($attribute === Attribute::SUBTYPE) {
+                return 'caseSubType';
+            }
+        }
         return $attribute->value ?? '';
     }
 
