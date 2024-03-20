@@ -47,9 +47,9 @@ class PermitQuery
 
     public function filterByIncidence(?int $year = null): self
     {
-        $filter = '(impactReport=true or impactStudy=true)';
+        $filter = '('.Attribute::HAS_IMPACT_REPORT->value.'=true or '.Attribute::HAS_IMPACT_REPORT->value.'=true)';
         if (!is_null($year)) {
-            $filter .= " and dateInquiryStart >= '".$year."-01-01' and dateInquiryStart <= '".$year."-12-31'";
+            $filter .= " and ".Attribute::DATE_INQUIRY_BEGIN->value." >= '".$year."-01-01' and ".Attribute::DATE_INQUIRY_BEGIN->value." <= '".$year."-12-31'";
         }
 
         $this->cql_filter[] = $filter;
@@ -59,12 +59,12 @@ class PermitQuery
 
     public function filterByInquiryDate(string $date = null): self
     {
-        $filter = "dateInquiryStart <= '".date("Y-m-d")."T23:59:59Z' AND dateInquiryEnd >= '".date(
+        $filter = Attribute::DATE_INQUIRY_BEGIN->value." <= '".date("Y-m-d")."T23:59:59Z' AND ".Attribute::DATE_INQUIRY_END->value." >= '".date(
                 "Y-m-d"
-            )."T00:00:00Z' AND dateInquiryStart >= '".date(
+            )."T00:00:00Z' AND ".Attribute::DATE_INQUIRY_BEGIN->value." >= '".date(
                 "Y-m-d",
                 strtotime("-70 days")
-            )."T10:00:00Z' AND dateInquiryEnd <= '".date("Y-m-d", strtotime("70 days"))."T10:00:00Z'";
+            )."T10:00:00Z' AND ".Attribute::DATE_INQUIRY_END->value." <= '".date("Y-m-d", strtotime("70 days"))."T10:00:00Z'";
 
         $this->cql_filter[] = $filter;
 
@@ -94,14 +94,14 @@ class PermitQuery
 
     public function filterByDataError(): self
     {
-        $filter = "dateSubmission>'" . date("Y-m-d") . "T23:59:59Z' OR dateArCompleteCase>'" . date("Y-m-d") . "T23:59:59Z' OR dateDecisionNotification>'" . date("Y-m-d") . "T23:59:59Z'";
-        $filter .= " OR dateSubmission<'1800-01-01'";
-        $filter .= " OR dateSubmission is null";
-        $filter .= " OR dateSubmission>dateDecisionNotification";
-        $filter .= " OR dateAdviceConsultationCommission < dateSubmission";
-        $filter .= " OR streetNameFr == '' OR streetNameNl == ''";
-        $filter .= " OR (geometry is null AND dateSubmission>'2019-01-01T00:00:00Z')";
-        $filter .= " OR zipCode == '' OR zipCode is null";
+        $filter = Attribute::DATE_SUBMISSION->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_ARC->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_NOTIFICATION->value.">'" . date("Y-m-d") . "T23:59:59Z'";
+        $filter .= " OR ".Attribute::DATE_SUBMISSION->value."<'1800-01-01'";
+        $filter .= " OR ".Attribute::DATE_SUBMISSION->value." is null";
+        $filter .= " OR ".Attribute::DATE_SUBMISSION->value.">".Attribute::DATE_NOTIFICATION->value;
+        $filter .= " OR ".Attribute::DATE_CC->value." < ".Attribute::DATE_SUBMISSION->value;
+        $filter .= " OR ".Attribute::STREET_NAME_FR->value." == '' OR ".Attribute::STREET_NAME_NL->value." == ''";
+        $filter .= " OR (".Attribute::GEOMETRY->value." is null AND ".Attribute::DATE_SUBMISSION->value.">'2019-01-01T00:00:00Z')";
+        $filter .= " OR ".Attribute::ZIPCODE->value." == '' OR ".Attribute::ZIPCODE->value." is null";
 
         $this->cql_filter[] = $filter;
 
@@ -124,15 +124,15 @@ class PermitQuery
     public function contextAttribute(Attribute $attribute): string
     {
         // Temporary fix
-        if($this->type === 'PE') {
-            if($attribute === Attribute::DATE_NOTIFICATION) {
-                return 'dateDecision';
-            }
+//        if($this->type === 'PE') {
+//            if($attribute === Attribute::DATE_NOTIFICATION) {
+//                return 'dateDecision';
+//            }
 //            else if($attribute === Attribute::DATE_VALIDITY) {
 //                return 'datePermitValidity';
 //            }
-        }
-        return $attribute->pu() ?? '';
+//        }
+        return $attribute->value ?? '';
     }
 
     public static function toDatetime(?string $date): ?DateTime {
@@ -236,10 +236,10 @@ class PermitQuery
 
         foreach ($attributes as $k => $v) {
             if (!is_null($v)
-                && (str_contains($k, 'Authorized') || str_contains($k, 'Existing') || str_contains($k, 'Projected'))
+                && (str_contains($k, 'authorized') || str_contains($k, 'existing') || str_contains($k, 'projected'))
             ) {
-                $type = str_replace(['Authorized', 'Existing', 'Projected', 'area'], '', $k);
-                $subtype = str_replace([$type, 'area'], '', $k);
+                $type = str_replace(['authorized', 'existing', 'projected', 'Area'], '', $k);
+                $subtype = str_replace([$type, 'Area'], '', $k);
                 $typologies[strtolower($type)][strtolower($subtype)] = $v;
             }
         }
@@ -378,7 +378,7 @@ class PermitQuery
             ];
         }
 
-        $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=referenceNova=\''.$reference_nova.'\'';
+        $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter='.Attribute::REFERENCE_NOVA->value.'=\''.$reference_nova.'\'';
 
         return $source;
     }
