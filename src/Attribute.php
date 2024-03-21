@@ -13,7 +13,7 @@ enum Attribute: string
     case DATE_ARI = 'uncompleteAcknowledgeFirstDate';
     case DATE_CC = 'consultationCommitteesDate';
     case DATE_INQUIRY_BEGIN = 'inquiryStartDate';
-    case DATE_INQUIRY_END = 'dateInquiryEnd'; /// To be modified ///
+    case DATE_INQUIRY_END = 'inquiryEndDate';
     case DATE_NOTIFICATION = 'decisionNotificationDate';
     case DATE_SUBMISSION = 'requestSendingDate';
     case DATE_VALIDITY = 'permitValidityDate';
@@ -46,7 +46,7 @@ enum Attribute: string
     case STREET_NUMBER_FROM = 'streetNumberFrom';
     case STREET_NUMBER_TO = 'streetNumberTo';
     case SUBMISSION_TYPE = 'submissionTypeFrenchName';
-    case SUBTYPE = 'caseSubType'; /// PE: caseSubtype
+    case SUBTYPE = 'caseSubType';
     case UUID = 'uuid';
     case VERSION = 'caseVersion';
     case WORK_MONTHS = 'workDurationInMonth';
