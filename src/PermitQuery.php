@@ -128,6 +128,9 @@ class PermitQuery
             if($attribute === Attribute::DATE_ARC) {
                 return 'firstCompleteAcknowledgeDate';
             }
+            if($attribute === Attribute::DATE_ARI) {
+                return 'firstUncompleteAcknowledgeDate';
+            }
         }
         return $attribute->value ?? '';
     }
