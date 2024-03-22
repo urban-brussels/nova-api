@@ -4,6 +4,7 @@ namespace UrbanBrussels\NovaApi;
 
 enum Attribute: string
 {
+    case CASE_STATUS_FR = 'caseStatusFr';
     case CASE_TYPE = 'procedureType';
     case CHARGES = 'deliveredPermitTotalCharges';
     case CUT_TREES = 'cutTreesNumber';
