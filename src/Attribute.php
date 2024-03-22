@@ -8,9 +8,9 @@ enum Attribute: string
     case CHARGES = 'deliveredPermitTotalCharges';
     case CUT_TREES = 'cutTreesNumber';
     case DATE_ADDITIONAL_ELEMENTS = 'additionalInformationReceptionLastDate';
-    case DATE_ARC = 'completeAcknowledgeFirstDate'; // PE: firstCompleteAcknowledgeDate
+    case DATE_ARC = 'completeAcknowledgeFirstDate';
     case DATE_ARC_MODIFIED_PLANS_LAST = 'modifiedProjectCompleteAcknowledgeLastDate';
-    case DATE_ARI = 'uncompleteAcknowledgeFirstDate'; // PE: firstUncompleteAcknowledgeDate
+    case DATE_ARI = 'uncompleteAcknowledgeFirstDate';
     case DATE_CC = 'consultationCommitteesDate';
     case DATE_INQUIRY_BEGIN = 'inquiryStartDate';
     case DATE_INQUIRY_END = 'inquiryEndDate';

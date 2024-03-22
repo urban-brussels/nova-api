@@ -124,14 +124,14 @@ class PermitQuery
     public function contextAttribute(Attribute $attribute): string
     {
         // Temporary fix
-        if($this->type === 'PE') {
-            if($attribute === Attribute::DATE_ARC) {
-                return 'firstCompleteAcknowledgeDate';
-            }
-            if($attribute === Attribute::DATE_ARI) {
-                return 'firstUncompleteAcknowledgeDate';
-            }
-        }
+//        if($this->type === 'PE') {
+//            if($attribute === Attribute::DATE_ARC) {
+//                return 'firstCompleteAcknowledgeDate';
+//            }
+//            if($attribute === Attribute::DATE_ARI) {
+//                return 'firstUncompleteAcknowledgeDate';
+//            }
+//        }
         return $attribute->value ?? '';
     }
 
