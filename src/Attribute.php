@@ -16,7 +16,7 @@ enum Attribute: string
     case DATE_INQUIRY_BEGIN = 'inquiryStartDate';
     case DATE_INQUIRY_END = 'inquiryEndDate';
     case DATE_NOTIFICATION = 'decisionNotificationDate';
-    case DATE_SUBMISSION = 'requestSendingDate';
+    case DATE_SUBMISSION = 'requestReceptionDate';
     case DATE_VALIDITY = 'permitValidityDate';
     case DATE_WORK_BEGIN = 'implementationStartDate';
     case DATE_WORK_END = 'implementationEndDate';
