@@ -235,9 +235,9 @@ class PermitQuery
 
         foreach ($attributes as $k => $v) {
             if (!is_null($v)
-                && (str_contains($k, 'authorized') || str_contains($k, 'existing') || str_contains($k, 'projected'))
+                && (str_contains($k, 'Authorized') || str_contains($k, 'Existing') || str_contains($k, 'Projected'))
             ) {
-                $type = str_replace(['authorized', 'existing', 'projected', 'Area'], '', $k);
+                $type = str_replace(['Authorized', 'Existing', 'Projected', 'Area'], '', $k);
                 $subtype = str_replace([$type, 'Area'], '', $k);
                 $typologies[strtolower($type)][strtolower($subtype)] = $v;
             }
