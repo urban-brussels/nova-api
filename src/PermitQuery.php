@@ -9,10 +9,10 @@ use ici\ici_tools\WfsLayer;
 
 class PermitQuery
 {
-    public const PU_PATH = 'https://geoservices-others.irisnetlab.be/geoserver/Nova/ows';
+    public const PU_PATH = 'https://geoservices-others.irisnet.be/geoserver/Nova/ows';
     public const PE_PATH = self::PU_PATH;
-    public const PU_LAYER_NAME = 'Nova:PlanningPermits_sta';
-    public const PE_LAYER_NAME = 'Nova:EnvironmentalPermits_sta';
+    public const PU_LAYER_NAME = 'Nova:PlanningPermits';
+    public const PE_LAYER_NAME = 'Nova:EnvironmentalPermits';
 
     public string $path;
     public string $layer;
