@@ -48,6 +48,7 @@ enum Attribute: string
     case REFERENCE_MIXED_PERMIT = 'mixedCaseReference';
     case REFERENCE_MUNICIPALITY = 'mainMunicipalityReference';
     case REFERENCE_NOVA = 'novaReference';
+    case SUSPENSION_LIST = 'suspensionList';
     case STREET_NAME_FR = 'streetFrenchName';
     case STREET_NAME_NL = 'streetDutchName';
     case STREET_NUMBER_FROM = 'streetNumberFrom';

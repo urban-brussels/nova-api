@@ -197,12 +197,12 @@ class PermitQuery
             $permit->setSortingNumber((int)$result[$this->contextAttribute(Attribute::STREET_NUMBER_FROM)]);
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
             $permit->setProcessingTime($result[$this->contextAttribute(Attribute::PROCESSING_TIME)]);
-            $permit->setSuspensions($this->defineSuspensions($result['suspensions'] ?? null));
+            $permit->setSuspensions($result[$this->contextAttribute(Attribute::SUSPENSION_LIST)]);
             $permit->setUuid($result['uuid']);
             $permit->setReferenceFile($result[$this->contextAttribute(Attribute::REFERENCE_FILE)]);
             $permit->setReferenceMunicipality($result[$this->contextAttribute(Attribute::REFERENCE_MUNICIPALITY)]);
             $permit->setReferenceMixedPermit($this->defineReferenceMixedPermit($result[$this->contextAttribute(Attribute::IS_MIXED)], $result[$this->contextAttribute(Attribute::REFERENCE_MIXED_PERMIT)]));
-            $permit->setChargesTotal($result['deliveredPermitTotalCharge'] ?? null);
+            $permit->setChargesTotal($result[$this->contextAttribute(Attribute::CHARGES)]);
             $permit->setObject($this->defineObjectFromAttributes($result));
             $permit->setStatus($this->defineStatusFromAttributes($result));
             $permit->setCutTrees($this->defineCountTrees($result[$this->contextAttribute(Attribute::CUT_TREES)] ?? 0));
