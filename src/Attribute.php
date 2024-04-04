@@ -34,10 +34,10 @@ enum Attribute: string
     case MUNICIPALITY_NL = 'addressMunicipalityDutchName';
     case MUNICIPALITY_OWNER_FR = 'caseMainMunicipalityFrenchName';
     case MUNICIPALITY_OWNER_NL = 'caseMainMunicipalityDutchName';
-    case OBJECT_REAL_FR = 'caseFrenchObject';
-    case OBJECT_REAL_NL = 'caseDutchObject';
-    case OBJECT_STANDARD_FR = 'permitFrenchObject';
-    case OBJECT_STANDARD_NL = 'permitDutchObject';
+    case OBJECT_REAL_FR = 'permitFrenchObject';
+    case OBJECT_REAL_NL = 'permitDutchObject';
+    case OBJECT_STANDARD_FR = 'caseFrenchObject';
+    case OBJECT_STANDARD_NL = 'caseDutchObject';
     case PROCESSING_TIME = 'instructionGlobalDuration';
     case REFERENCE_FILE = 'caseIdentifier';
     case REFERENCE_MIXED_PERMIT = 'mixedCaseReference';
