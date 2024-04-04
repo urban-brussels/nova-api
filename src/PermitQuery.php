@@ -202,7 +202,7 @@ class PermitQuery
             $permit->setReferenceFile($result[$this->contextAttribute(Attribute::REFERENCE_FILE)]);
             $permit->setReferenceMunicipality($result[$this->contextAttribute(Attribute::REFERENCE_MUNICIPALITY)]);
             $permit->setReferenceMixedPermit($this->defineReferenceMixedPermit($result[$this->contextAttribute(Attribute::IS_MIXED)], $result[$this->contextAttribute(Attribute::REFERENCE_MIXED_PERMIT)]));
-            $permit->setChargesTotal($result[$this->contextAttribute(Attribute::CHARGES)]);
+            $permit->setChargesTotal($result[$this->contextAttribute(Attribute::CHARGES)] ?? 0);
             $permit->setObject($this->defineObjectFromAttributes($result));
             $permit->setStatus($this->defineStatusFromAttributes($result));
             $permit->setCutTrees($this->defineCountTrees($result[$this->contextAttribute(Attribute::CUT_TREES)] ?? 0));
