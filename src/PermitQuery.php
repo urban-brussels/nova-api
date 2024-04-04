@@ -292,10 +292,10 @@ class PermitQuery
             $instances['nl'][] = $instance['translations'][1]['label'];
         }
 
-        $college = $attributes['adviceCollege'] ?? null;
-        $cc = $attributes['adviceConsultationCommission'] ?? null;
-        $fd = $attributes['adviceFd'] ?? null;
-        $crms = $attributes['adviceCrms'] ?? null;
+        $college = $attributes[$this->contextAttribute(Attribute::HAS_COLLEGE_OPINION)] ?? null;
+        $cc = $attributes[$this->contextAttribute(Attribute::HAS_CC_OPINION)] ?? null;
+        $fd = $attributes[$this->contextAttribute(Attribute::HAS_FD_OPINION)] ?? null;
+        $crms = $attributes[$this->contextAttribute(Attribute::HAS_CRMS_OPINION)] ?? null;
 
         if($college === true) { $instances['fr'][] = 'college'; $instances['nl'][] = 'college'; }
         if($cc === true) { $instances['fr'][] = 'cc'; $instances['nl'][] = 'cc'; }
