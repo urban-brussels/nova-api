@@ -419,8 +419,8 @@ class PermitQuery
 
     private function defineStatusFromAttributes(array $attributes): ?string
     {
-        $status_fr = $attributes['caseStatusFr'] ?? null;
-        $final_state = $attributes['caseStatus'] ?? null;
+        $status_fr = $attributes[$this->contextAttribute(Attribute::CASE_STATUS_FR)] ?? null;
+        $final_state = $attributes[$this->contextAttribute(Attribute::CASE_STATUS)] ?? null;
 
         if ($final_state === "R") {
             return 'appeal';

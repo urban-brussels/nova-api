@@ -23,6 +23,8 @@ enum Attribute: string
     case DATE_WORK_END = 'implementationEndDate';
     case GEOMETRY = 'geometry';
     case IS_MIXED = 'isMixedCase';
+    case HAS_FD_ADVICE = 'hasOfficialResponsibleOpinion';
+    case HAS_CC_OPINION = 'hasConsultationCommitteesOpinion';
     case HAS_IMPACT_REPORT = 'hasImpactReport';
     case HAS_IMPACT_STUDY = 'hasImpactStudy';
     case LANGUAGE = 'caseLanguage';
