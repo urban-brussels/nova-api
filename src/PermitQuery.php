@@ -314,6 +314,11 @@ class PermitQuery
         $authority_nl = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_NL)] ?? null;
         $authority_id = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_ID)] ?? null;
 
+        if($authority_fr === 'BUP') {
+            $authority_fr = 'Urban.brussels';
+            $authority_nl = 'Urban.brussels';
+        }
+
         return ['id' => $authority_id, 'fr' => $authority_fr, 'nl' => $authority_nl];
     }
 
