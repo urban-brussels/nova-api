@@ -11,8 +11,8 @@ class PermitQuery
 {
     public const PU_PATH = 'https://geoservices-others.irisnet.be/geoserver/Nova/ows';
     public const PE_PATH = self::PU_PATH;
-    public const PU_LAYER_NAME = 'Nova:vmnovaurbanview';
-    public const PE_LAYER_NAME = 'Nova:vm_nova_pe';
+    public const PU_LAYER_NAME = 'Nova:PlanningPermits';
+    public const PE_LAYER_NAME = 'Nova:EnvironmentalPermits';
 
     public string $path;
     public string $layer;
@@ -40,24 +40,16 @@ class PermitQuery
 
     public function filterById(int $id): self
     {
-        $id_dossier = ($this->type === "PE") ? 'nova_seq' : 's_iddossier';
-        $this->cql_filter[] = $id_dossier.'='.$id;
+        $this->cql_filter[] = 'caseId='.$id;
 
         return $this;
     }
 
     public function filterByIncidence(?int $year = null): self
     {
-        if ($this->type === "PE") {
-            $filter = '(rapport_incidence=true or etude_incidence=true)';
-            if (!is_null($year)) {
-                $filter .= " and date_debut_mpp >= '".$year."-01-01' and date_debut_mpp <= '".$year."-12-31'";
-            }
-        } else {
-            $filter = '(ri=true or ei=true)';
-            if (!is_null($year)) {
-                $filter .= " and datedebutmpp >= '".$year."-01-01' and datedebutmpp <= '".$year."-12-31'";
-            }
+        $filter = '('.Attribute::HAS_IMPACT_REPORT->value.'=true or '.Attribute::HAS_IMPACT_REPORT->value.'=true)';
+        if (!is_null($year)) {
+            $filter .= " and ".Attribute::DATE_INQUIRY_BEGIN->value." >= '".$year."-01-01' and ".Attribute::DATE_INQUIRY_BEGIN->value." <= '".$year."-12-31'";
         }
 
         $this->cql_filter[] = $filter;
@@ -67,21 +59,12 @@ class PermitQuery
 
     public function filterByInquiryDate(string $date = null): self
     {
-        if ($this->type === "PE") {
-            $filter = "date_debut_mpp <= '".date("Y-m-d")."T23:59:59Z' AND date_fin_mpp >= '".date(
-                    "Y-m-d"
-                )."T00:00:00Z' AND date_debut_mpp >= '".date(
-                    "Y-m-d",
-                    strtotime("-70 days")
-                )."T10:00:00Z' AND date_fin_mpp <= '".date("Y-m-d", strtotime("70 days"))."T10:00:00Z'";
-        } else {
-            $filter = "datedebutmpp <= '".date("Y-m-d")."T23:59:59Z' AND datefinmpp >= '".date(
-                    "Y-m-d"
-                )."T00:00:00Z' AND datedebutmpp >= '".date(
-                    "Y-m-d",
-                    strtotime("-70 days")
-                )."T10:00:00Z' AND datefinmpp <= '".date("Y-m-d", strtotime("70 days"))."T10:00:00Z'";
-        }
+        $filter = Attribute::DATE_INQUIRY_BEGIN->value." <= '".date("Y-m-d")."T23:59:59Z' AND ".Attribute::DATE_INQUIRY_END->value." >= '".date(
+                "Y-m-d"
+            )."T00:00:00Z' AND ".Attribute::DATE_INQUIRY_BEGIN->value." >= '".date(
+                "Y-m-d",
+                strtotime("-70 days")
+            )."T10:00:00Z' AND ".Attribute::DATE_INQUIRY_END->value." <= '".date("Y-m-d", strtotime("70 days"))."T10:00:00Z'";
 
         $this->cql_filter[] = $filter;
 
@@ -111,26 +94,14 @@ class PermitQuery
 
     public function filterByDataError(): self
     {
-        if ($this->type === "PE") {
-            $filter = "date_depot>'" . date("Y-m-d") . "T23:59:59Z' OR date_arc>'" . date("Y-m-d") . "T23:59:59Z' OR date_decision>'" . date("Y-m-d") . "T23:59:59Z'";
-            $filter .= " OR date_depot<'1800-01-01'";
-            $filter .= " OR date_depot is null";
-            $filter .= " OR date_depot>date_decision";
-            $filter .= " OR date_cc < date_depot";
-            $filter .= " OR streetname_fr == '' OR streetname_nl == ''";
-            $filter .= " OR (geometry is null AND date_depot>'2019-01-01T00:00:00Z')";
-            $filter .= " OR zipcode is null";
-        }
-        else {
-            $filter = "datedepot>'" . date("Y-m-d") . "T23:59:59Z' OR dateardosscomplet>'" . date("Y-m-d") . "T23:59:59Z' OR datenotifdecision>'" . date("Y-m-d") . "T23:59:59Z'";
-            $filter .= " OR datedepot<'1800-01-01'";
-            $filter .= " OR datedepot is null";
-            $filter .= " OR datedepot>datenotifdecision";
-            $filter .= " OR datecc < datedepot";
-            $filter .= " OR streetnamefr == '' OR streetnamenl == ''";
-            $filter .= " OR (geometry is null AND datedepot>'2019-01-01T00:00:00Z')";
-            $filter .= " OR zipcode == '' OR zipcode is null";
-        }
+        $filter = Attribute::DATE_SUBMISSION->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_ARC->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_NOTIFICATION->value.">'" . date("Y-m-d") . "T23:59:59Z'";
+        $filter .= " OR ".Attribute::DATE_SUBMISSION->value."<'1800-01-01'";
+//        $filter .= " OR ".Attribute::DATE_SUBMISSION->value." is null";
+        $filter .= " OR ".Attribute::DATE_SUBMISSION->value.">".Attribute::DATE_NOTIFICATION->value;
+        $filter .= " OR ".Attribute::DATE_CC->value." < ".Attribute::DATE_SUBMISSION->value;
+        $filter .= " OR ".Attribute::STREET_NAME_FR->value." == '' OR ".Attribute::STREET_NAME_NL->value." == ''";
+        $filter .= " OR (".Attribute::GEOMETRY->value." is null AND ".Attribute::DATE_SUBMISSION->value.">'2019-01-01T00:00:00Z')";
+        $filter .= " OR ".Attribute::ZIPCODE->value." is null";
 
         $this->cql_filter[] = $filter;
 
@@ -152,7 +123,16 @@ class PermitQuery
 
     public function contextAttribute(Attribute $attribute): string
     {
-        return $this->type === "PU" ? $attribute->pu() : $attribute->pe();
+        // Temporary fix
+        if($this->type === 'PE') {
+            if($attribute === Attribute::DATE_NOTIFICATION) {
+                return 'decisionDate';
+            }
+//            if($attribute === Attribute::DATE_ARI) {
+//                return 'firstUncompleteAcknowledgeDate';
+//            }
+        }
+        return $attribute->value ?? '';
     }
 
     public static function toDatetime(?string $date): ?DateTime {
@@ -217,19 +197,18 @@ class PermitQuery
             $permit->setSortingNumber((int)$result[$this->contextAttribute(Attribute::STREET_NUMBER_FROM)]);
             $permit->setSource($this->defineSource($permit->getReferenceNova()));
             $permit->setProcessingTime($result[$this->contextAttribute(Attribute::PROCESSING_TIME)]);
-            $permit->setSuspensions($this->defineSuspensions($result['suspensions'] ?? null));
+            $permit->setSuspensions($this->defineSuspensions($result[$this->contextAttribute(Attribute::SUSPENSION_LIST)]));
             $permit->setUuid($result['uuid']);
             $permit->setReferenceFile($result[$this->contextAttribute(Attribute::REFERENCE_FILE)]);
             $permit->setReferenceMunicipality($result[$this->contextAttribute(Attribute::REFERENCE_MUNICIPALITY)]);
             $permit->setReferenceMixedPermit($this->defineReferenceMixedPermit($result[$this->contextAttribute(Attribute::IS_MIXED)], $result[$this->contextAttribute(Attribute::REFERENCE_MIXED_PERMIT)]));
-            $permit->setChargesTotal($result['deliveredpermittotalcharge'] ?? null);
+            $permit->setChargesTotal($result[$this->contextAttribute(Attribute::CHARGES)] ?? 0);
             $permit->setObject($this->defineObjectFromAttributes($result));
             $permit->setStatus($this->defineStatusFromAttributes($result));
             $permit->setCutTrees($this->defineCountTrees($result[$this->contextAttribute(Attribute::CUT_TREES)] ?? 0));
             $permit->setModifiedTrees($this->defineCountTrees($result[$this->contextAttribute(Attribute::MODIFIED_TREES)] ?? 0));
             $permit->setQueryUrl($this->definePermitQueryUrl($permit->getReferenceNova()));
             $permit->setSubmissionType($result[$this->contextAttribute(Attribute::SUBMISSION_TYPE)]);
-            $permit->setTimeframeGlobalDays($result[$this->contextAttribute(Attribute::TIMEFRAME_GLOBAL_DAYS)] ?? null);
             $permit->setGeometry($this->defineGeometry($result[$this->contextAttribute(Attribute::GEOMETRY)]));
             $permit->setArea($this->defineArea($permit->getGeometry()));
             $permit->setRating($this->defineRating($permit->getArea(), count($permit->getAdvices()['fr'])));
@@ -252,21 +231,45 @@ class PermitQuery
         if ($this->type === "PE") {
             return [];
         }
-        $typology = [];
+        $typologies = [];
 
         foreach ($attributes as $k => $v) {
-            if (!is_null($v) && (str_contains($k, 'autorized') || str_contains($k, 'existing') || str_contains(
-                        $k,
-                        'projected'
-                    ))) {
-                $type = str_replace(['autorized', 'existing', 'projected'], '', $k);
-                $subtype = str_replace($type, '', $k);
-                if($subtype === "autorized") { $subtype = "authorized"; }
-                $typology[$type][$subtype] = $v;
+            if (!is_null($v)
+                && (str_contains($k, 'Authorized') || str_contains($k, 'Existing') || str_contains($k, 'Projected'))
+            ) {
+                $type = str_replace(['Authorized', 'Existing', 'Projected', 'Area'], '', $k);
+                $subtype = str_replace([$type, 'Area'], '', $k);
+                $typologies[strtolower($type)][strtolower($subtype)] = $v;
             }
         }
 
-        return $typology;
+        // Remove entries if none is above 0m²
+        foreach ($typologies as $key => $subArray) {
+            $allZeroOrLess = true;
+            foreach ($subArray as $value) {
+                if ($value > 0) {
+                    $allZeroOrLess = false;
+                    break;
+                }
+            }
+            if ($allZeroOrLess) {
+                unset($typologies[$key]);
+            }
+        }
+
+        // Differences
+        foreach ($typologies as &$typology) {
+            if(isset($typology['authorized']) && isset($typology['existing'])) {
+                $typology['difference'] = round($typology['authorized'] - $typology['existing'], 2);
+            }
+            elseif(isset($typology['projected']) && isset($typology['existing'])) {
+                $typology['difference'] = round($typology['projected'] - $typology['existing'], 2);
+            }
+            else $typology['difference'] = null;
+        }
+        unset($typology);
+
+        return $typologies;
     }
 
     /**
@@ -274,7 +277,7 @@ class PermitQuery
      */
     private function defineAdvicesFromAttributes(array $attributes): array
     {
-        $json_advices = $attributes['avis_instances'] ?? null;
+        $json_advices = $attributes['adviceInstances'] ?? null;
         if(!is_null($json_advices)) {
             $json_advices = json_decode($json_advices, true, 512, JSON_THROW_ON_ERROR);
         }
@@ -289,10 +292,10 @@ class PermitQuery
             $instances['nl'][] = $instance['translations'][1]['label'];
         }
 
-        $college = $attributes['avis_cbe'] ?? $attributes['aviscbe'] ?? null;
-        $cc = $attributes['avis_cc'] ?? $attributes['aviscc'] ?? null;
-        $fd = $attributes['avis_fd'] ?? $attributes['avisfd'] ?? null;
-        $crms = $attributes['avis_crms'] ?? $attributes['aviscrms'] ?? null;
+        $college = $attributes[$this->contextAttribute(Attribute::HAS_COLLEGE_OPINION)] ?? null;
+        $cc = $attributes[$this->contextAttribute(Attribute::HAS_CC_OPINION)] ?? null;
+        $fd = $attributes[$this->contextAttribute(Attribute::HAS_FD_OPINION)] ?? null;
+        $crms = $attributes[$this->contextAttribute(Attribute::HAS_CRMS_OPINION)] ?? null;
 
         if($college === true) { $instances['fr'][] = 'college'; $instances['nl'][] = 'college'; }
         if($cc === true) { $instances['fr'][] = 'cc'; $instances['nl'][] = 'cc'; }
@@ -310,6 +313,11 @@ class PermitQuery
         $authority_fr = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_FR)] ?? null;
         $authority_nl = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_NL)] ?? null;
         $authority_id = $attributes[$this->contextAttribute(Attribute::MANAGING_AUTHORITY_ID)] ?? null;
+
+        if($authority_fr === 'BUP') {
+            $authority_fr = 'Urban.brussels';
+            $authority_nl = 'Urban.brussels';
+        }
 
         return ['id' => $authority_id, 'fr' => $authority_fr, 'nl' => $authority_nl];
     }
@@ -367,14 +375,14 @@ class PermitQuery
                 'base_path' => self::PE_PATH,
                 'layer_name' => self::PE_LAYER_NAME,
             ];
-            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=ref_nova=\''.$reference_nova.'\'';
         } else {
             $source = [
                 'base_path' => self::PU_PATH,
                 'layer_name' => self::PU_LAYER_NAME,
             ];
-            $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter=refnova=\''.$reference_nova.'\'';
         }
+
+        $source['query_url'] = $source['base_path'].'?service=WFS&version=2.0.0&request=GetFeature&typeName='.$source['layer_name'].'&outputFormat=application%2Fjson&count=1&cql_filter='.Attribute::REFERENCE_NOVA->value.'=\''.$reference_nova.'\'';
 
         return $source;
     }
@@ -416,8 +424,8 @@ class PermitQuery
 
     private function defineStatusFromAttributes(array $attributes): ?string
     {
-        $status_fr = $attributes['statutpermisfr'] ?? null;
-        $final_state = $attributes['statut_dossier'] ?? $attributes['etatfinal'] ?? null;
+        $status_fr = $attributes[$this->contextAttribute(Attribute::CASE_STATUS_FR)] ?? null;
+        $final_state = $attributes[$this->contextAttribute(Attribute::CASE_STATUS)] ?? null;
 
         if ($final_state === "R") {
             return 'appeal';
