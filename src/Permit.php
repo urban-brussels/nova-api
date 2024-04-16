@@ -720,8 +720,8 @@ class Permit
 
         if ($this->getCutTrees() === 0 && $this->getType() === 'PU') {
             if(
-                str_contains(strtolower($this->getObject()['fr']['standard']), strtolower('haute tige')) // str_contains(strtolower($haystack), strtolower($needle));
-                || ( str_contains(strtolower($this->getObject()['fr']['real']), strtolower('abattre')) && str_contains(strtolower($this->getObject()['fr']['real']), strtolower('haute tige')) )
+                str_contains(strtolower($this->getObject()['fr']['standard']), strtolower('haute tige'))
+                || ( str_contains(strtolower($this->getObject()['fr']['real']), strtolower('abatt')) && str_contains(strtolower($this->getObject()['fr']['real']), strtolower('haute tige')) )
             ) {
                 $errors[] = 'error.cut_trees.missing';
             }
