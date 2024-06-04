@@ -62,6 +62,7 @@ class DocsListing
             $_ENV['NOVA_API_CONSUMER_KEY'],
             $_ENV['NOVA_API_CONSUMER_SECRET'],
             'NOVA_API_GRAPH');
+        $nova_connection_graph->setJwtKey($_ENV['NOVA_API_JWT_EXTERNALS']);
 
         $linked_cases = (new RestrictedData($nova_connection_graph))->getLinkedCases($uuid);
 
