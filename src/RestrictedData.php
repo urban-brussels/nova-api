@@ -78,7 +78,8 @@ class RestrictedData
     public function getLinkedCases(string $uuid, string $type = "UUID"): array
     {
         $httpClient = HttpClient::create(['timeout' => 7.0]);
-        $response = $httpClient->request('POST', $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql', [
+
+        $content = [
             'auth_bearer' => $this->nova_connection->token,
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -101,7 +102,11 @@ class RestrictedData
             ]
         }
     }}',
-        ]);
+        ];
+        $content = $this->defineHeaders($content);
+
+
+        $response = $httpClient->request('POST', $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql', $content);
 
         try {
             $statusCode = $response->getStatusCode();
