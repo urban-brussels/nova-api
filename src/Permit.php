@@ -713,7 +713,7 @@ class Permit
         }
 
         if (!is_null($this->getDateArc()) && $this->getDateArc() > $tonight) {
-            $errors[] = 'error.notification.before.now';
+            $errors[] = 'error.notification.after.now';
         }
 
         if ($this->getStatus() === "delivered" && $this->getDateInquiryEnd() > $now) {
