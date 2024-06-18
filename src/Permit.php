@@ -712,6 +712,10 @@ class Permit
             $errors[] = 'error.notification.before.inquiry';
         }
 
+        if (!is_null($this->getDateNotification()) && !is_null($this->getDateSubmission()) && $this->getDateNotification() < $this->getDateSubmission()) {
+            $errors[] = 'error.notification.before.submission';
+        }
+
         if (!is_null($this->getDateArc()) && $this->getDateArc() > $tonight) {
             $errors[] = 'error.notification.before.now';
         }
