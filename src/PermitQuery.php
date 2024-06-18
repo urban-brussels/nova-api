@@ -103,7 +103,7 @@ class PermitQuery
         $filter .= " OR ".Attribute::ZIPCODE->value." is null)";
 
         if(!empty($zipcodes)) {
-            $filter .= " AND ".Attribute::ZIPCODE->value." in ['".implode($zipcodes)."']";
+            $filter .= " AND ".Attribute::ZIPCODE->value." in ('".implode($zipcodes)."')";
         }
 
         $this->cql_filter[] = $filter;
