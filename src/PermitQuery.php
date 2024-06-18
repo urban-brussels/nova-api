@@ -92,16 +92,19 @@ class PermitQuery
         return $this;
     }
 
-    public function filterByDataError(): self
+    public function filterByDataError(array $zipcodes = []): self
     {
-        $filter = Attribute::DATE_SUBMISSION->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_ARC->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_NOTIFICATION->value.">'" . date("Y-m-d") . "T23:59:59Z'";
+        $filter = "(".Attribute::DATE_SUBMISSION->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_ARC->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_NOTIFICATION->value.">'" . date("Y-m-d") . "T23:59:59Z'";
         $filter .= " OR ".Attribute::DATE_SUBMISSION->value."<'1800-01-01'";
-//        $filter .= " OR ".Attribute::DATE_SUBMISSION->value." is null";
         $filter .= " OR ".Attribute::DATE_SUBMISSION->value.">".Attribute::DATE_NOTIFICATION->value;
         $filter .= " OR ".Attribute::DATE_CC->value." < ".Attribute::DATE_SUBMISSION->value;
         $filter .= " OR ".Attribute::STREET_NAME_FR->value." == '' OR ".Attribute::STREET_NAME_NL->value." == ''";
         $filter .= " OR (".Attribute::GEOMETRY->value." is null AND ".Attribute::DATE_SUBMISSION->value.">'2019-01-01T00:00:00Z')";
-        $filter .= " OR ".Attribute::ZIPCODE->value." is null";
+        $filter .= " OR ".Attribute::ZIPCODE->value." is null)";
+
+        if(!empty($zipcodes)) {
+            $filter .= " AND ".Attribute::ZIPCODE->value." in ['".implode($zipcodes)."']";
+        }
 
         $this->cql_filter[] = $filter;
 
