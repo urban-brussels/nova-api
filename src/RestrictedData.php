@@ -44,7 +44,7 @@ class RestrictedData
     public function getCharges(string $uuid, string $type = "UUID"): array
     {
         $httpClient = HttpClient::create(['timeout' => 7.0]);
-        $response = $httpClient->request('POST', $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql', [
+        $content = [
             'auth_bearer' => $this->nova_connection->token,
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -57,15 +57,19 @@ class RestrictedData
  "identifiersGroupInputs": [
  { "identifiersInputs": [ {
  "identifier": {
- "key": "'.$uuid.'",
+ "key": "' . $uuid . '",
  "type": "UUID"
  } } ] } ] } }}',
-        ]);
+        ];
+
+        $content = $this->defineHeaders($content);
+        $response = $httpClient->request('POST', $this->nova_connection->endpoint . 'api/nova-api/graph/1.0.0/graphql', $content);
+
 
         try {
             $statusCode = $response->getStatusCode();
             $content = $response->getContent(false);
-            if($statusCode === 200) {
+            if ($statusCode === 200) {
                 $content = $response->toArray();
             }
         } catch (TransportExceptionInterface $e) {
@@ -93,7 +97,7 @@ class RestrictedData
                     "identifiersInputs": [
                         {
                             "identifier": {
-                                "key": "'.$uuid.'",
+                                "key": "' . $uuid . '",
                                 "type": "UUID"
                             }
                         }
@@ -106,12 +110,12 @@ class RestrictedData
         $content = $this->defineHeaders($content);
 
 
-        $response = $httpClient->request('POST', $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql', $content);
+        $response = $httpClient->request('POST', $this->nova_connection->endpoint . 'api/nova-api/graph/1.0.0/graphql', $content);
 
         try {
             $statusCode = $response->getStatusCode();
             $content = $response->getContent(false);
-            if($statusCode === 200) {
+            if ($statusCode === 200) {
                 $content = $response->toArray();
             }
         } catch (TransportExceptionInterface $e) {
@@ -149,7 +153,7 @@ class RestrictedData
 
         return HttpClient::create()->request(
             'GET',
-            $this->nova_connection->endpoint.'api/nova-api/document/1.0.0/download/identifier/UUID/'.$identifier,
+            $this->nova_connection->endpoint . 'api/nova-api/document/1.0.0/download/identifier/UUID/' . $identifier,
             $options
         );
     }
@@ -187,7 +191,7 @@ class RestrictedData
          "identifiers":{
             "identifiersGroupInputs":[
                {
-                  "identifiersInputs":'.json_encode($identifiers).'            
+                  "identifiersInputs":' . json_encode($identifiers) . '            
                }
             ]
          } } } }'
@@ -198,7 +202,7 @@ class RestrictedData
         $httpClient = HttpClient::create(['timeout' => 7.0]);
         $response = $httpClient->request(
             'POST',
-            $this->nova_connection->endpoint.'api/nova-api/graph/1.0.0/graphql',
+            $this->nova_connection->endpoint . 'api/nova-api/graph/1.0.0/graphql',
             $content
         );
 
