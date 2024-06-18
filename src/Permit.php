@@ -642,6 +642,8 @@ class Permit
     {
         $errors = [];
         $now = new DateTime();
+        $tonight = clone $now;
+        $tonight->setTime(23, 59, 59);
         $oldest_date = new DateTime('1800-01-01');
         $geometry_date = new DateTime('2019-01-01');
 
@@ -710,7 +712,7 @@ class Permit
             $errors[] = 'error.notification.before.inquiry';
         }
 
-        if (!is_null($this->getDateNotification()) && $this->getDateNotification() > $now) {
+        if (!is_null($this->getDateNotification()) && $this->getDateNotification() > $tonight) {
             $errors[] = 'error.notification.before.now';
         }
 
