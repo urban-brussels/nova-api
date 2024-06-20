@@ -92,7 +92,7 @@ class PermitQuery
         return $this;
     }
 
-    public function filterByDataError(array $zipcodes = []): self
+    public function filterByDataError(?int $authority_id): self
     {
         $filter = "(".Attribute::DATE_SUBMISSION->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_ARC->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_NOTIFICATION->value.">'" . date("Y-m-d") . "T23:59:59Z'";
         $filter .= " OR ".Attribute::DATE_SUBMISSION->value."<'1800-01-01'";
@@ -102,8 +102,8 @@ class PermitQuery
         $filter .= " OR (".Attribute::GEOMETRY->value." is null AND ".Attribute::DATE_SUBMISSION->value.">'2019-01-01T00:00:00Z')";
         $filter .= " OR ".Attribute::ZIPCODE->value." is null)";
 
-        if(!empty($zipcodes)) {
-            $filter .= " AND ".Attribute::ZIPCODE->value." in (".implode(',', $zipcodes).")";
+        if(!is_null($authority_id)) {
+            $filter .= " AND ".Attribute::MANAGING_AUTHORITY_ID->value." = ".$authority_id;
         }
 
         $this->cql_filter[] = $filter;
