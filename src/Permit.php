@@ -724,10 +724,11 @@ class Permit
             $errors[] = 'error.geometry.missing';
         }
 
-        if ($this->getCutTrees() === 0 && $this->getType() === 'PU') {
+        if ($this->getCutTrees() === 0 && $this->getModifiedTrees() === 0 && $this->getType() === 'PU') {
             if(
                 str_contains(strtolower($this->getObject()['fr']['standard']), strtolower('haute tige'))
                 || ( str_contains(strtolower($this->getObject()['fr']['real']), strtolower('abatt')) && str_contains(strtolower($this->getObject()['fr']['real']), strtolower('haute tige')) )
+                || $this->getSubtype() === 'AA'
             ) {
                 $errors[] = 'error.cut_trees.missing';
             }
