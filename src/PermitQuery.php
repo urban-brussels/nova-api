@@ -128,9 +128,9 @@ class PermitQuery
     {
         // Temporary fix
         if($this->type === 'PE') {
-//            if($attribute === Attribute::DATE_NOTIFICATION) {
-//                return 'decisionDate';
-//            }
+            if($attribute === Attribute::DATE_NOTIFICATION) {
+                return 'decisionDate';
+            }
         }
         return $attribute->value ?? '';
     }
