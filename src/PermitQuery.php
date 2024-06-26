@@ -102,6 +102,8 @@ class PermitQuery
         $filter .= " OR (".Attribute::GEOMETRY->value." is null AND ".Attribute::DATE_SUBMISSION->value.">'2019-01-01T00:00:00Z')";
         $filter .= " OR ".Attribute::ZIPCODE->value." is null)";
 
+        $filter .= " AND ".Attribute::SUBTYPE->value." <> 'CU'";
+
         if(!is_null($authority_id)) {
             $filter .= " AND ".Attribute::MANAGING_AUTHORITY_ID->value." = ".$authority_id;
         }
