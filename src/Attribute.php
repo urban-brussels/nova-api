@@ -55,6 +55,8 @@ enum Attribute: string
     case STREET_NUMBER_TO = 'streetNumberTo';
     case SUBMISSION_TYPE = 'submissionTypeFrenchName';
     case SUBTYPE = 'caseSubType';
+    case SUBTYPE_FR = 'caseSubTypeFrenchName';
+    case SUBTYPE_NL = 'caseSubTypeDutchName';
     case UUID = 'uuid';
     case VERSION = 'caseVersion';
     case WORK_MONTHS = 'workDurationInMonth';

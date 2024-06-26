@@ -10,10 +10,12 @@ class Permit
 {
     public string $reference_nova;
     public string $type;
-    public string $subtype;
+    public ?string $subtype;
+    public ?string $subtype_fr;
+    public ?string $subtype_nl;
     public ?string $language;
     public string $uuid;
-    public $reference_file;
+    public int $reference_file;
     public ?string $reference_municipality;
     public ?string $reference_mixed_permit;
 
@@ -95,19 +97,51 @@ class Permit
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSubtype(): string
+    public function getSubtype(): ?string
     {
         return $this->subtype;
     }
 
     /**
-     * @param string $subtype
+     * @param string|null $subtype
      */
-    public function setSubtype(string $subtype): void
+    public function setSubtype(?string $subtype): void
     {
         $this->subtype = $subtype;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubtypeFr(): ?string
+    {
+        return $this->subtype_fr;
+    }
+
+    /**
+     * @param string|null $subtype_fr
+     */
+    public function setSubtypeFr(?string $subtype_fr): void
+    {
+        $this->subtype_fr = $subtype_fr;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubtypeNl(): ?string
+    {
+        return $this->subtype_nl;
+    }
+
+    /**
+     * @param string|null $subtype_nl
+     */
+    public function setSubtypeNl(?string $subtype_nl): void
+    {
+        $this->subtype_nl = $subtype_nl;
     }
 
     /**
