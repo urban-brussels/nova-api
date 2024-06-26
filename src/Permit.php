@@ -52,7 +52,6 @@ class Permit
     public array $documents;
     public int $cut_trees = 0;
     public int $modified_trees = 0;
-    public ?int $timeframe_global_days = null;
     public ?string $geometry;
     public ?int $processing_time = null;
     public ?int $version;
@@ -790,17 +789,17 @@ class Permit
     /**
      * @return int|null
      */
-    public function getTimeframeGlobalDays(): ?int
+    public function getProcessingtime(): ?int
     {
-        return $this->timeframe_global_days;
+        return $this->processing_time;
     }
 
     /**
-     * @param int|null $timeframe_global_days
+     * @param int|null $processing_time
      */
-    public function setTimeframeGlobalDays(?int $timeframe_global_days): void
+    public function setProcessingtime(?int $processing_time): void
     {
-        $this->timeframe_global_days = $timeframe_global_days;
+        $this->processing_time = $processing_time;
     }
 
     /**
@@ -1001,15 +1000,5 @@ class Permit
     public function setRating(int $rating): void
     {
         $this->rating = $rating;
-    }
-
-    public function getProcessingTime(): ?int
-    {
-        return $this->processing_time;
-    }
-
-    public function setProcessingTime(?int $processing_time): void
-    {
-        $this->processing_time = $processing_time;
     }
 }
