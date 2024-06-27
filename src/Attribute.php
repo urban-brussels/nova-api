@@ -44,6 +44,7 @@ enum Attribute: string
     case OBJECT_STANDARD_FR = 'caseFrenchObject';
     case OBJECT_STANDARD_NL = 'caseDutchObject';
     case PROCESSING_TIME = 'instructionGlobalDuration';
+    case REFERENCE_BE = 'brusselsEnvironmentReference';
     case REFERENCE_FILE = 'caseIdentifier';
     case REFERENCE_MIXED_PERMIT = 'mixedCaseReference';
     case REFERENCE_MUNICIPALITY = 'mainMunicipalityReference';
