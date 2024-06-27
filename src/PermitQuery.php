@@ -420,8 +420,8 @@ class PermitQuery
         $fr_real = $attributes[$this->contextAttribute(Attribute::OBJECT_REAL_FR)] ?? null;
         $nl_real = $attributes[$this->contextAttribute(Attribute::OBJECT_REAL_NL)] ?? null;
 
-        $object['fr']['real'] = !is_null($fr_real) ? ucfirst($fr_real) : null;
-        $object['nl']['real'] = !is_null($nl_real) ? ucfirst($nl_real) : null;
+        $object['fr']['real'] = !is_null($fr_real) ? ucfirst(trim($fr_real)) : null;
+        $object['nl']['real'] = !is_null($nl_real) ? ucfirst(trim($nl_real)) : null;
 
         return $object;
     }
