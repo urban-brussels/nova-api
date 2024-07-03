@@ -92,8 +92,16 @@ class PermitQuery
         return $this;
     }
 
-    public function filterByDataError(?int $authority_id): self
+    public function filterByDataError(array $options = []): self
     {
+        // Default values
+        $defaultOptions = [
+            'authority_id' => null,
+            'submitted_after' => null
+        ];
+        $options = array_merge($defaultOptions, $options);
+
+        // Construire le filtre de base
         $filter = "(".Attribute::DATE_SUBMISSION->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_ARC->value.">'" . date("Y-m-d") . "T23:59:59Z' OR ".Attribute::DATE_NOTIFICATION->value.">'" . date("Y-m-d") . "T23:59:59Z'";
         $filter .= " OR ".Attribute::DATE_SUBMISSION->value."<'1800-01-01'";
         $filter .= " OR ".Attribute::DATE_SUBMISSION->value.">".Attribute::DATE_NOTIFICATION->value;
@@ -101,17 +109,23 @@ class PermitQuery
         $filter .= " OR ".Attribute::STREET_NAME_FR->value." == '' OR ".Attribute::STREET_NAME_NL->value." == ''";
         $filter .= " OR (".Attribute::GEOMETRY->value." is null AND ".Attribute::DATE_SUBMISSION->value.">'2019-01-01T00:00:00Z')";
         $filter .= " OR ".Attribute::ZIPCODE->value." is null)";
-
         $filter .= " AND ".Attribute::SUBTYPE->value." <> 'AC'";
 
-        if(!is_null($authority_id)) {
-            $filter .= " AND ".Attribute::MANAGING_AUTHORITY_ID->value." = ".$authority_id;
+        // Filter by authority ID
+        if (!is_null($options['authority_id'])) {
+            $filter .= " AND ".Attribute::MANAGING_AUTHORITY_ID->value." = ".$options['authority_id'];
+        }
+
+        // Filter by submission date
+        if (!is_null($options['submitted_after'])) {
+            $filter .= " AND ".Attribute::DATE_SUBMISSION->value.">'" . $options['submitted_after'] . "T00:00:00Z'";
         }
 
         $this->cql_filter[] = $filter;
 
         return $this;
     }
+
 
     public function setLimit(int $limit): self
     {
