@@ -6,7 +6,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class DocsListing
 {
-    public function listingFromRefnova(string $refnova, bool $externals = true, string $linked_cases = 'VERSIONING'): array
+    public function listingFromRefnova(string $refnova, bool $externals = true, array $linked_cases = ['VERSIONING']): array
     {
         $query = new PermitQuery(Permit::guessPermitType($refnova));
         $collection = $query
@@ -55,7 +55,7 @@ class DocsListing
         return ['files' => count($docs), 'size' => $total_size];
     }
 
-    public function getLinkedCases(string $uuid, $type = 'VERSIONING'): array
+    public function getLinkedCases(string $uuid, array $types = ['VERSIONING', 'REFERRAL']): array
     {
         $nova_connection_graph = new NovaConnection(
             $_ENV['NOVA_API_ENDPOINT'],
@@ -66,7 +66,7 @@ class DocsListing
 
         $linked_cases = (new RestrictedData($nova_connection_graph))->getLinkedCases($uuid);
 
-        if($type === 'VERSIONING') {
+        if(in_array('VERSIONING', $types)) {
             $versions = [$uuid];
         }
         else {
@@ -74,7 +74,7 @@ class DocsListing
         }
 
         foreach ($linked_cases as $case) {
-            if ($case['type'] === $type) { $versions[] = $case['uuid']; }
+            if (in_array($case['type'], $types)) { $versions[] = $case['uuid']; }
         }
 
         return $versions;
