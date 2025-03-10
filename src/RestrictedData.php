@@ -199,7 +199,7 @@ class RestrictedData
 
         $content = $this->defineHeaders($content);
 
-        $httpClient = HttpClient::create(['timeout' => 7.0]);
+        $httpClient = HttpClient::create(['timeout' => 15.0]);
         $response = $httpClient->request(
             'POST',
             $this->nova_connection->endpoint . 'api/nova-api/graph/1.0.0/graphql',
